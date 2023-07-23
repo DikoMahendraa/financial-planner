@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "prettier --write .",
-    "lint": "prettier --check ."
+    "format": "lint --write .",
+    "lint": "lint --check ."
   },
   "engines": {
     "node": ">=16.0.0",
@@ -32,10 +32,5 @@
     "postcss": "^8.4.27",
     "prettier": "^3.0.0",
     "tailwindcss": "^3.3.3"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "prettier --write . && git add -A ."
-    }
   }
 }
