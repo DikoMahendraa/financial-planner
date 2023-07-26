@@ -1,5 +1,5 @@
 import React from 'react';
-import MNavigation from '@/components/molecules/Navigation';
+
 import MCardInEx from '@/components/molecules/CardInEx';
 import MCard from '@/components/molecules/Card';
 import MHeaderProfile from '@/components/molecules/HeaderProfile';
@@ -49,14 +49,11 @@ const SectionMainCard = () => {
 
 export default function HomePage() {
   return (
-    <main className="h-full">
-      <div className="md:max-w-[360px] w-full h-full m-auto relative bg-aero-blue">
-        <SectionProfile />
-        <SectionMainCard />
-        <SectionCardTarget />
-        <SectionListExpenseIncome />
-        <MNavigation />
-      </div>
-    </main>
+    <React.Fragment>
+      <SectionProfile />
+      <SectionMainCard />
+      <SectionCardTarget />
+      <SectionListExpenseIncome />
+    </React.Fragment>
   );
 }
