@@ -7,13 +7,13 @@ type PropsButtonNavigation = {
   text: string;
 };
 
-export default function ButtonNavigation(
+export default function AButtonNavigation(
   props: Partial<PropsButtonNavigation>
 ) {
   const { rootStyle, parentStyle, atomStyle, text } = props;
 
   const _rootStyle = [rootStyle, 'cursor-pointer'].join(' ');
-  const _atomStyle = [atomStyle, 'text-main-white m-0'].join(' ');
+  const _atomStyle = [atomStyle, 'text-main-white'].join(' ');
   const _parentStyle = [
     parentStyle,
     'w-full h-16 rounded-full flex items-center justify-center'
