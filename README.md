@@ -1,34 +1,41 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Financial Planner App
+Financial Planner App
 
-## Getting Started
+The Financial Planner App is a powerful and user-friendly tool designed to help you manage your finances effectively. This application is built using Next.js and Tailwind CSS, following Atomic Design principles and adhering to clean coding practices to ensure maintainability and scalability.
 
-First, run the development server:
+Features
+1. Expands
+Keep track of your expenses effortlessly with the "Expands" feature. Record your daily, weekly, or monthly expenses and categorize them to get a clear overview of your spending habits.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+2. Incomes
+Monitor your sources of income using the "Incomes" feature. Log your salary, freelance earnings, or any other income streams to understand your cash flow better.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Settings
+The "Settings" section allows you to customize the app according to your preferences. Personalize categories, set budget limits, or change the currency to tailor the app to your specific financial needs.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Technologies Used
+Next.js: The app is built on Next.js, a popular React framework that provides server-side rendering and efficient code splitting for enhanced performance.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Tailwind CSS: Styling is done using Tailwind CSS, a utility-first CSS framework that offers a wide range of pre-designed components and enables rapid development.
 
-## Learn More
+Atomic Design: The application's UI components and design system follow Atomic Design principles, promoting modularity and reusability throughout the project.
 
-To learn more about Next.js, take a look at the following resources:
+Clean Code: The codebase adheres to best practices of clean coding, ensuring readability, maintainability, and easy collaboration among developers.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+How to Use
+Clone the repository: git clone https://github.com/DikoMahendraa/financial-planner-app.git
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Install dependencies: npm install
 
-## Deploy on Vercel
+Run the development server: npm run dev
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Access the app in your browser at http://localhost:3000
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Contributing
+Contributions to the Financial Planner App are welcome! If you find any issues or have suggestions for new features, feel free to submit a pull request.
+
+License
+This project is licensed under the MIT License.
+
+Acknowledgments
+Special thanks to the open-source community for providing valuable resources and inspiration for building this financial planner app.
