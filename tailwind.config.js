@@ -11,6 +11,9 @@ module.exports = {
       'vampire-black': '#070807',
       'main-white': '#FFFFFF'
     },
+    fontFamily: {
+      poppins: ['Poppins', 'sans-serif']
+    },
     extend: {}
   },
   plugins: []

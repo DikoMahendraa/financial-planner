@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <main className="h-screen">
+    <main className="h-screen font-poppins">
       <div className="md:max-w-[360px] w-full h-full m-auto relative bg-aero-blue">
         <section className=" bg-blue-400 px-5">card</section>
 
