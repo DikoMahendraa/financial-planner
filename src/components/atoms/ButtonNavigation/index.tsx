@@ -10,6 +10,7 @@ type PropsButtonNavigation = {
   parentStyle: string;
   atomStyle: string;
   text: string | boolean;
+  active: boolean;
   label: 'home' | 'expands' | 'income' | 'settings' | string;
   onClick: () => void;
 };
@@ -17,7 +18,8 @@ type PropsButtonNavigation = {
 export default function AButtonNavigation(
   props: Partial<PropsButtonNavigation>
 ) {
-  const { rootStyle, parentStyle, atomStyle, text, label, onClick } = props;
+  const { rootStyle, parentStyle, atomStyle, text, label, onClick, active } =
+    props;
 
   const _rootStyle = [rootStyle, 'cursor-pointer'].join(' ');
   const _atomStyle = [atomStyle, 'text-main-white capitalize'].join(' ');
@@ -32,19 +34,18 @@ export default function AButtonNavigation(
         return <ICHome />;
       case 'income':
         return <ICIncome />;
-      case 'expands':
+      case 'expenses':
         return <ICExpense />;
       case 'settings':
-        return <ICSetting />;
       default:
-        return null;
+        return <ICSetting />;
     }
   };
 
   return (
     <div className={_rootStyle} onClick={onClick}>
       <div className={_parentStyle}>
-        <Icon />
+        {!active && <Icon />}
         <p className={_atomStyle}>{text}</p>
       </div>
     </div>

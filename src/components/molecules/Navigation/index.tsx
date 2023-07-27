@@ -24,6 +24,7 @@ export default function MNavigation() {
           return (
             <ButtonNavigation
               key={key}
+              active={active}
               rootStyle={setColumn}
               parentStyle={item.color}
               text={setInitial}
