@@ -1,7 +1,8 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
+
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
 import { bottomNavigation } from '@/constants/home';
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
 
 export default function MNavigation() {
   const [activeTab, setActiveTab] = useState('home');
@@ -18,7 +19,7 @@ export default function MNavigation() {
         {bottomNavigation.map((item, key) => {
           const active = activeTab === item.label;
           const setColumn = active ? 'col-span-2' : 'col-span-1';
-          const setInitial = active ? item.label : item.label.slice(0, 1);
+          const setInitial = active && item.label;
 
           return (
             <ButtonNavigation
@@ -26,6 +27,7 @@ export default function MNavigation() {
               rootStyle={setColumn}
               parentStyle={item.color}
               text={setInitial}
+              label={item.label}
               onClick={() => handleActiveTab(item.label, item.route)}
             />
           );
