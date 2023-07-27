@@ -2,7 +2,7 @@ import React from 'react';
 
 import MCardInEx from '@/components/molecules/CardInEx';
 
-export default function PageExpands() {
+export default function PageExpanses() {
   return (
     <div className="h-screen px-5 pt-5">
       <p className="font-bold capitalize text-xl mb-4">Your expense list</p>

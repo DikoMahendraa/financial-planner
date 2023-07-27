@@ -1,25 +1,27 @@
-const bottomNavigation = [
+type TypeBottomNavigation = {
+  label: string;
+  color: string;
+  route: string;
+};
+
+const bottomNavigation: Array<TypeBottomNavigation> = [
   {
     label: 'home',
-    icon: '',
     color: 'bg-forest-green',
     route: '/'
   },
   {
-    label: 'expands',
-    icon: '',
-    color: 'bg-majorelle-blue',
-    route: '/expands'
-  },
-  {
     label: 'income',
-    icon: '',
-    color: 'bg-earth-yellow',
+    color: 'bg-majorelle-blue',
     route: '/incomes'
   },
   {
+    label: 'expanses',
+    color: 'bg-earth-yellow',
+    route: '/expanses'
+  },
+  {
     label: 'settings',
-    icon: '',
     color: 'bg-mid-blue-purple',
     route: '/settings'
   }

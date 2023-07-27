@@ -4,7 +4,7 @@ import MCardInEx from '@/components/molecules/CardInEx';
 
 export default function PageIncomes() {
   return (
-    <div className="h-screen px-5 pt-5">
+    <div className="h-screen px-5 pt-5 ">
       <p className="font-bold capitalize text-xl mb-4">Your incomes list</p>
       <hr />
       <div className="mt-4">
