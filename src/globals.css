@@ -12,3 +12,7 @@
 p {
     margin: 0;
 }
+
+input[type="date"] {
+    display: inline-flex
+  }

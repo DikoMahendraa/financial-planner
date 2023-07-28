@@ -11,7 +11,7 @@ const bottomNavigation: Array<TypeBottomNavigation> = [
     route: '/'
   },
   {
-    label: 'income',
+    label: 'incomes',
     color: 'bg-majorelle-blue',
     route: '/incomes'
   },

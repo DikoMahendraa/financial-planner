@@ -49,11 +49,11 @@ const SectionMainCard = () => {
 
 export default function HomePage() {
   return (
-    <React.Fragment>
+    <div className="h-screen mb-44">
       <SectionProfile />
       <SectionMainCard />
       <SectionCardTarget />
       <SectionListExpenseIncome />
-    </React.Fragment>
+    </div>
   );
 }

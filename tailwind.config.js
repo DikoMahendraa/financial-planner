@@ -12,6 +12,7 @@ module.exports = {
       'vampire-black': '#070807',
       'main-white': '#FFFFFF',
       'spanish-gray': '#989898',
+      'gray-platinum': '#E7E7E7',
       yellow: '#F9EC82'
     },
     fontFamily: {
