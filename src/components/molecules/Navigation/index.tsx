@@ -11,8 +11,8 @@ import AButton from '@/components/atoms/Button';
 const Modal = ({ onClick }: { onClick: () => void }) => {
   return (
     <MModal>
-      <div className="rounded-2xl bg-main-white w-[480px] h-1/2 p-4 border-2 border-vampire-black">
-        <fieldset>
+      <div className="rounded-2xl bg-main-white w-[480px] h-[450px] p-4 border-2 border-vampire-black flex flex-col justify-between">
+        <fieldset className="mt-8">
           <AInput
             name="income"
             rootStyle="mb-2"
@@ -24,7 +24,7 @@ const Modal = ({ onClick }: { onClick: () => void }) => {
             rootStyle="mb-2"
             type="date"
             label="Date"
-            placeholder="Enter your Date"
+            placeholder="DD/MM/YYYY"
           />
           <AInput
             name="amount"

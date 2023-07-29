@@ -11,7 +11,7 @@ export default function AButton(props: Partial<PropsAButton>) {
 
   const _rootStyle = [
     rootStyle,
-    'border-2 rounded-md w-full border-vampire-black px-6 py-2 capitalize'
+    'border-2 rounded-md w-full border-vampire-black px-6 py-3 capitalize'
   ].join(' ');
 
   return (
