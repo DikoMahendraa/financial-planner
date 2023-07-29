@@ -11,7 +11,7 @@ import AButton from '@/components/atoms/Button';
 const Modal = ({ onClick }: { onClick: () => void }) => {
   return (
     <MModal>
-      <div className="rounded-2xl bg-main-white w-[480px] h-[450px] p-4 border-2 border-vampire-black flex flex-col justify-between">
+      <div className="rounded-2xl bg-main-white w-[440px] h-[530px] p-4 border-2 border-vampire-black flex flex-col justify-between">
         <fieldset className="mt-8">
           <AInput
             name="income"
@@ -30,9 +30,24 @@ const Modal = ({ onClick }: { onClick: () => void }) => {
             name="amount"
             prefix="Rp."
             label="Amount"
-            type="number"
             placeholder="Enter your Amount"
           />
+          <div className="mt-2">
+            <label htmlFor="income" className="font-bold">
+              Category
+            </label>
+            <select
+              id="select"
+              name="select"
+              placeholder="Select Category"
+              className="block w-full cursor-pointer mt-1 appearance-none bg-white rounded-md border-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            >
+              <option value="option1">Internet</option>
+              <option value="option2">Jajan</option>
+              <option value="option2">Kebutuhan</option>
+              <option value="option2">Gajian</option>
+            </select>
+          </div>
         </fieldset>
 
         <div className="flex justify-between mt-10 gap-4">
