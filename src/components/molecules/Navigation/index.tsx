@@ -11,7 +11,7 @@ import AButton from '@/components/atoms/Button';
 const Modal = ({ onClick }: { onClick: () => void }) => {
   return (
     <MModal>
-      <div className="rounded-2xl bg-main-white w-[360px] h-1/2 p-4 border-2 border-vampire-black">
+      <div className="rounded-2xl bg-main-white w-[480px] h-1/2 p-4 border-2 border-vampire-black">
         <fieldset>
           <AInput
             name="income"
@@ -44,7 +44,7 @@ const Modal = ({ onClick }: { onClick: () => void }) => {
           <AButton
             onClick={onClick}
             name="Create"
-            rootStyle="bg-mid-blue-purple text-main-white"
+            rootStyle="bg-majorelle-blue text-main-white"
           />
         </div>
       </div>

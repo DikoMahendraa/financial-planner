@@ -1,5 +1,6 @@
 Financial Planner App
-Financial Planner App
+
+check this out: https://financial-planner-gamma.vercel.app/
 
 The Financial Planner App is a powerful and user-friendly tool designed to help you manage your finances effectively. This application is built using Next.js and Tailwind CSS, following Atomic Design principles and adhering to clean coding practices to ensure maintainability and scalability.
 
