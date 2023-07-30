@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { getDatabase, ref, onValue, off, query } from 'firebase/database';
+import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../../../firebaseConfig';
 
 import MCardInEx from '@/components/molecules/CardInEx';
 import MCard from '@/components/molecules/Card';
 import MHeaderProfile from '@/components/molecules/HeaderProfile';
+import { convertToArray } from '@/utils/converToArray';
+import { convertCurrency } from '@/utils/convertCurrency';
+import moment from 'moment';
 
 const SectionProfile = () => {
   return (
@@ -12,18 +19,33 @@ const SectionProfile = () => {
   );
 };
 
-const SectionListExpenseIncome = () => {
+type StateDataType = {
+  amount: number;
+  date: string;
+  name: string;
+  category: string;
+  createdAt: string;
+};
+
+type StateParent = {
+  incomes: any;
+  expenses: any;
+};
+
+const SectionListExpenseIncome = ({ ...props }) => {
   return (
     <section className="px-5 mt-6 mb-10">
       <p className="mb-5 font-bold text-lg">Pengeluaran / Pemasukan Terbaru</p>
-      {[1, 2, 3].map(key => (
+
+      {props.data.map((item: StateDataType, key: number) => (
         <MCardInEx
           key={key}
+          variant="small"
           type="gajian"
-          label="income"
-          name="Gaji bulanan VTR"
-          amount="10.000.000"
-          date="21 may 2023"
+          category={item.category}
+          name={item.name}
+          amount={convertCurrency(item.amount)}
+          date={moment(item.date).format('DD MMM YYYY')}
         />
       ))}
     </section>
@@ -48,12 +70,28 @@ const SectionMainCard = () => {
 };
 
 export default function HomePage() {
+  const [data, setData] = useState<StateParent>();
+  useEffect(() => {
+    /* need fixed type */
+    const database = getDatabase();
+    const databaseRef = query(ref(database, '/'));
+    const onDataChange: any = (snapshot: { val: any }) => {
+      setData(snapshot.val());
+    };
+    onValue(databaseRef, onDataChange);
+    return () => off(databaseRef, onDataChange);
+  }, []);
+
+  const listOfIncomes = convertToArray(data?.incomes);
+  const listOfExpense = convertToArray(data?.expenses);
+  const allData = listOfExpense.concat(listOfIncomes);
+
   return (
     <div className="h-screen mb-44">
       <SectionProfile />
       <SectionMainCard />
       <SectionCardTarget />
-      <SectionListExpenseIncome />
+      <SectionListExpenseIncome data={allData} />
     </div>
   );
 }

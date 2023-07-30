@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { getDatabase, ref, onValue, off, query } from 'firebase/database';
-
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../../../../firebaseConfig';
+import moment from 'moment';
 
 import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
@@ -21,11 +18,6 @@ export default function PageExpanses() {
   const [data, setData] = useState<Array<StateDataType>>([]);
 
   useEffect(() => {
-    /* @ts-ignore */
-    if (!initializeApp?.apps?.length) {
-      initializeApp(firebaseConfig);
-    }
-
     /* need fixed type */
     const database = getDatabase();
     const databaseRef = query(ref(database, 'expenses'));
