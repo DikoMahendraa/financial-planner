@@ -22,7 +22,7 @@ export default function PageSettings() {
 
       <AGap height={10} />
       <div className="bg-main-white rounded-xl p-4 border-2 border-vampire-black flex items-center justify-between">
-        <p className="font-semibold">Theme Color</p>
+        <p className="font-semibold">Atur Tema</p>
         <div
           className="w-11 h-11 border-2 rounded-sm border-vampire-black bg-aero-blue cursor-pointer"
           onClick={() => {}}

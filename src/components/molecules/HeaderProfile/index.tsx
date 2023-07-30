@@ -12,9 +12,9 @@ export default function MHeaderProfile(props: Partial<PropsHeaderProfile>) {
     <div className="flex justify-between items-center">
       <div>
         <p className="text-lg capitalize">
-          Hi, <strong>{name}</strong>
+          Halo, <strong>{name}</strong>
         </p>
-        <p className="font-light">Welcome Back</p>
+        <p className="font-light">Selamat Datang</p>
       </div>
       <div>
         <ICAvatarProfile />

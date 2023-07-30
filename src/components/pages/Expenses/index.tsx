@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { getDatabase, ref, onValue, off } from 'firebase/database';
+import { getDatabase, ref, onValue, off, query } from 'firebase/database';
+
 import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../../../firebaseConfig';
 
 import MCardInEx from '@/components/molecules/CardInEx';
-
-import { firebaseConfig } from '../../../../firebaseConfig';
+import HeaderInEx from '@/components/molecules/HeaderInEx';
 import { convertToArray } from '@/utils/converToArray';
 import { convertCurrency } from '@/utils/convertCurrency';
 
@@ -27,7 +28,7 @@ export default function PageExpanses() {
 
     /* need fixed type */
     const database = getDatabase();
-    const databaseRef = ref(database, 'expenses');
+    const databaseRef = query(ref(database, 'expenses'));
     const onDataChange: any = (snapshot: { val: any }) => {
       setData(snapshot.val());
     };
@@ -40,7 +41,7 @@ export default function PageExpanses() {
 
   return (
     <div className="h-screen px-5 pt-5">
-      <p className="font-bold capitalize text-xl mb-4">Your expense list</p>
+      <HeaderInEx title="Daftar Pengeluaran" amount="Rp. 1.029.991" />
       <hr />
       <div className="mt-4">
         {listOfExpense.map((item, index) => {

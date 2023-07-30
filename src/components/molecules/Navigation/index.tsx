@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import { Controller, useForm } from 'react-hook-form';
+import { getDatabase, ref, set } from 'firebase/database';
 
 import { bottomNavigation } from '@/constants/home';
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
@@ -7,8 +9,6 @@ import AButtonCreate from '@/components/atoms/ButtonCreate';
 import MModal from '@/components/molecules/Modal';
 import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
-import { Controller, useForm } from 'react-hook-form';
-import { getDatabase, ref, set } from 'firebase/database';
 import { generateRandomUUID } from '@/utils/generateID';
 
 const Modal = ({ ...props }) => {
@@ -112,6 +112,7 @@ export default function MNavigation() {
 
   const forms = useForm<FormPayload>();
   const currentPosition = router.route.split('/').pop();
+  const currentDate = new Date();
 
   const handleActiveTab = (tab: string) => {
     router.push(tab);
@@ -127,7 +128,8 @@ export default function MNavigation() {
   const onhandleSubmit = async (data: Partial<FormPayload>) => {
     const db = getDatabase();
     set(ref(db, `${currentPosition}/` + generateRandomUUID()), {
-      ...data
+      ...data,
+      createdAt: String(currentDate)
     })
       .then(() => onHandleShowModal())
       .catch(error => alert(error));

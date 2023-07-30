@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { getDatabase, ref, onValue, off, query } from 'firebase/database';
+
 import { initializeApp } from 'firebase/app';
+import { firebaseConfig } from '../../../../firebaseConfig';
 
 import MCardInEx from '@/components/molecules/CardInEx';
-
-import { firebaseConfig } from '../../../../firebaseConfig';
-import { convertToArray } from '@/utils/converToArray';
+import HeaderInEx from '@/components/molecules/HeaderInEx';
 import { convertCurrency } from '@/utils/convertCurrency';
+import { convertToArray } from '@/utils/converToArray';
 
 type StateDataType = {
   amount: number;
@@ -41,7 +42,7 @@ export default function PageIncomes() {
 
   return (
     <div className="h-screen px-5 pt-5 ">
-      <p className="font-bold capitalize text-xl mb-4">Your incomes list</p>
+      <HeaderInEx title="Daftar Pengeluaran" amount="Rp. 1.029.991" />
       <hr />
       <div className="mt-4">
         {listOfExpense?.map((item, index) => {

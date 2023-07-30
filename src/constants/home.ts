@@ -11,17 +11,17 @@ const bottomNavigation: Array<TypeBottomNavigation> = [
     route: '/'
   },
   {
-    label: 'incomes',
+    label: 'pengeluaran',
     color: 'bg-majorelle-blue',
     route: '/incomes'
   },
   {
-    label: 'expenses',
+    label: 'pemasukan',
     color: 'bg-earth-yellow',
     route: '/expenses'
   },
   {
-    label: 'settings',
+    label: 'pengaturan',
     color: 'bg-mid-blue-purple',
     route: '/settings'
   }

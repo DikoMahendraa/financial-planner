@@ -15,7 +15,7 @@ const SectionProfile = () => {
 const SectionListExpenseIncome = () => {
   return (
     <section className="px-5 mt-6 mb-10">
-      <p className="mb-5 font-bold text-lg">List of expenses / income last</p>
+      <p className="mb-5 font-bold text-lg">Pengeluaran / Pemasukan Terbaru</p>
       {[1, 2, 3].map(key => (
         <MCardInEx
           key={key}
@@ -33,8 +33,8 @@ const SectionListExpenseIncome = () => {
 const SectionCardTarget = () => {
   return (
     <section className="grid grid-cols-2 px-5 mt-2 space-x-2">
-      <MCard label="Your last entry" amount="100k" />
-      <MCard label="Your goals" amount="10Jt" />
+      <MCard label="Total Pengeluaran" amount="100k" />
+      <MCard label="Target Tabunganmu" amount="10Jt" />
     </section>
   );
 };
@@ -42,7 +42,7 @@ const SectionCardTarget = () => {
 const SectionMainCard = () => {
   return (
     <section className="px-5 pt-5">
-      <MCard label="Your Balance" amount="10.000.000" rootStyle="h-52" />
+      <MCard label="Sisa Uangmu" amount="10.000.000" rootStyle="h-52" />
     </section>
   );
 };
