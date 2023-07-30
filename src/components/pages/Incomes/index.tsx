@@ -35,6 +35,7 @@ export default function PageIncomes() {
     return () => off(databaseRef, onDataChange);
   }, []);
 
+  /* @ts-ignore */
   const listOfExpense: Array<StateDataType> = convertToArray(data);
 
   return (

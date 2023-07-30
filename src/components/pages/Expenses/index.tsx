@@ -35,7 +35,9 @@ export default function PageExpanses() {
     return () => off(databaseRef, onDataChange);
   }, []);
 
+  /* @ts-ignore */
   const listOfExpense: Array<StateDataType> = convertToArray(data);
+
   return (
     <div className="h-screen px-5 pt-5">
       <p className="font-bold capitalize text-xl mb-4">Your expense list</p>
