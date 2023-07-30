@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { getDatabase, ref, onValue, off } from 'firebase/database';
+import { getDatabase, ref, onValue, off, query } from 'firebase/database';
 import { initializeApp } from 'firebase/app';
 
 import MCardInEx from '@/components/molecules/CardInEx';
@@ -27,10 +27,11 @@ export default function PageIncomes() {
 
     /* need fixed type */
     const database = getDatabase();
-    const databaseRef = ref(database, 'incomes');
+    const databaseRef = query(ref(database, 'incomes'));
     const onDataChange: any = (snapshot: { val: any }) => {
       setData(snapshot.val());
     };
+
     onValue(databaseRef, onDataChange);
     return () => off(databaseRef, onDataChange);
   }, []);

@@ -8,6 +8,8 @@ import MModal from '@/components/molecules/Modal';
 import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
 import { Controller, useForm } from 'react-hook-form';
+import { getDatabase, ref, set } from 'firebase/database';
+import { generateRandomUUID } from '@/utils/generateID';
 
 const Modal = ({ ...props }) => {
   return (
@@ -17,7 +19,7 @@ const Modal = ({ ...props }) => {
           <fieldset className="mt-8">
             <Controller
               control={props.control}
-              name="income"
+              name="name"
               render={({ field: { onChange } }) => (
                 <AInput
                   label="Income"
@@ -28,7 +30,7 @@ const Modal = ({ ...props }) => {
             />
             <Controller
               control={props.control}
-              name="Date"
+              name="date"
               render={({ field: { onChange } }) => (
                 <AInput
                   label="Date"
@@ -59,7 +61,7 @@ const Modal = ({ ...props }) => {
               </label>
               <Controller
                 control={props.control}
-                name="amunt"
+                name="category"
                 render={({ field: { onChange } }) => (
                   <select
                     id="select"
@@ -68,10 +70,10 @@ const Modal = ({ ...props }) => {
                     placeholder="Select Category"
                     className="block w-full cursor-pointer mt-1 appearance-none bg-white rounded-md border-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   >
-                    <option value="option1">Internet</option>
-                    <option value="option2">Jajan</option>
-                    <option value="option2">Kebutuhan</option>
-                    <option value="option2">Gajian</option>
+                    <option value="internet">Internet</option>
+                    <option value="jajan">Jajan</option>
+                    <option value="kebutuhan">Kebutuhan</option>
+                    <option value="gajian">Gajian</option>
                   </select>
                 )}
               />
@@ -109,6 +111,7 @@ export default function MNavigation() {
   const [visible, setVisible] = useState(false);
 
   const forms = useForm<FormPayload>();
+  const currentPosition = router.route.split('/').pop();
 
   const handleActiveTab = (tab: string) => {
     router.push(tab);
@@ -121,7 +124,14 @@ export default function MNavigation() {
     setVisible(!visible);
   };
 
-  const onhandleSubmit = (data: Partial<FormPayload>) => {};
+  const onhandleSubmit = async (data: Partial<FormPayload>) => {
+    const db = getDatabase();
+    set(ref(db, `${currentPosition}/` + generateRandomUUID()), {
+      ...data
+    })
+      .then(() => onHandleShowModal())
+      .catch(error => alert(error));
+  };
 
   return (
     <React.Fragment>
