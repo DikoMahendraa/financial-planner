@@ -14,6 +14,7 @@ const colors = {
     'main-white': '#FFFFFF',
     'spanish-gray': '#989898',
     'gray-platinum': '#E7E7E7',
+    'deep-carrot-orange': '#EC692C',
     yellow: '#F9EC82'
   }
 };

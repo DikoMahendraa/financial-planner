@@ -9,58 +9,72 @@ import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
 import { Controller, useForm } from 'react-hook-form';
 
-const Modal = ({...props}) => {
+const Modal = ({ ...props }) => {
   return (
     <MModal>
       <div className="rounded-2xl bg-main-white w-[440px] h-[530px] p-4 border-2 border-vampire-black flex flex-col justify-between">
         <form onSubmit={props.handleSubmit(props.onSubmit)}>
           <fieldset className="mt-8">
+            <Controller
+              control={props.control}
+              name="income"
+              render={({ field: { onChange } }) => (
+                <AInput
+                  label="Income"
+                  placeholder="Enter your Income"
+                  onChange={onChange}
+                />
+              )}
+            />
+            <Controller
+              control={props.control}
+              name="Date"
+              render={({ field: { onChange } }) => (
+                <AInput
+                  label="Date"
+                  rootStyle="mt-2"
+                  type="date"
+                  placeholder="Enter Date"
+                  onChange={onChange}
+                />
+              )}
+            />
+            <Controller
+              control={props.control}
+              name="amount"
+              render={({ field: { onChange } }) => (
+                <AInput
+                  prefix="Rp."
+                  label="Amount"
+                  rootStyle="mt-2"
+                  placeholder="Enter your Amount"
+                  onChange={onChange}
+                />
+              )}
+            />
 
-          <Controller
-            control={props.control}
-            name="income"
-            render={({ field: { onChange } }) => (
-              <AInput label='Income' placeholder='Enter your Income' onChange={onChange} />
-            )}
-          />
-          <Controller
-            control={props.control}
-            name="Date"
-            render={({ field: { onChange } }) => (
-              <AInput label='Date' rootStyle='mt-2' type='date' placeholder='Enter Date' onChange={onChange} />
-            )}
-          />
-          <Controller
-            control={props.control}
-            name="amount"
-            render={({ field: { onChange } }) => (
-              <AInput prefix='Rp.' label='Amount' rootStyle='mt-2' placeholder='Enter your Amount' onChange={onChange} />
-            )}
-          />
-            
             <div className="mt-2">
               <label htmlFor="income" className="font-bold">
                 Category
               </label>
               <Controller
-            control={props.control}
-            name="amunt"
-            render={({ field: { onChange } }) => (
-              <select
-                id="select"
-                name="select"
-                onChange={onChange}
-                placeholder="Select Category"
-                className="block w-full cursor-pointer mt-1 appearance-none bg-white rounded-md border-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              >
-                <option value="option1">Internet</option>
-                <option value="option2">Jajan</option>
-                <option value="option2">Kebutuhan</option>
-                <option value="option2">Gajian</option>
-              </select>
-            )}
-          />
-              
+                control={props.control}
+                name="amunt"
+                render={({ field: { onChange } }) => (
+                  <select
+                    id="select"
+                    name="select"
+                    onChange={onChange}
+                    placeholder="Select Category"
+                    className="block w-full cursor-pointer mt-1 appearance-none bg-white rounded-md border-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  >
+                    <option value="option1">Internet</option>
+                    <option value="option2">Jajan</option>
+                    <option value="option2">Kebutuhan</option>
+                    <option value="option2">Gajian</option>
+                  </select>
+                )}
+              />
             </div>
           </fieldset>
 
@@ -83,11 +97,11 @@ const Modal = ({...props}) => {
 };
 
 type FormPayload = {
-  amount: string
-  date: string
-  category: string
-  income: string
-}
+  amount: string;
+  date: string;
+  category: string;
+  income: string;
+};
 
 export default function MNavigation() {
   const router = useRouter();
@@ -107,9 +121,7 @@ export default function MNavigation() {
     setVisible(!visible);
   };
 
-  const onhandleSubmit = (data: Partial<FormPayload>) => {
-    console.log(data)
-  };
+  const onhandleSubmit = (data: Partial<FormPayload>) => {};
 
   return (
     <React.Fragment>

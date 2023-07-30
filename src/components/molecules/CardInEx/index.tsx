@@ -9,6 +9,7 @@ type MCardInEx = {
   type: string;
   showLabel: boolean;
   variant: 'small' | 'medium' | 'large';
+  category: string;
 };
 
 export default function MCardInEx(props: Partial<MCardInEx>) {
@@ -17,9 +18,9 @@ export default function MCardInEx(props: Partial<MCardInEx>) {
     name,
     date,
     amount,
-    type,
     variant = 'medium',
-    showLabel = true
+    showLabel = true,
+    category
   } = props;
 
   const isSmall = variant === 'small';
@@ -40,9 +41,8 @@ export default function MCardInEx(props: Partial<MCardInEx>) {
           <p className={[style.name].join(' ')}>{name}</p>
           <p className={[style.amount, 'font-bold'].join(' ')}>Rp. {amount}</p>
         </div>
-
         <div className="flex items-center mt-1">
-          <AChips name={type} rootStyle="bg-majorelle-blue" />
+          {category && <AChips name={category} />}
           <p className="text-xs ml-2 capitalize text-spanish-gray font-light">
             {date}
           </p>
