@@ -4,10 +4,11 @@ type PropsAButton = {
   name: string;
   rootStyle: string;
   onClick: () => void;
+  type: "button" | "submit" | "reset" | undefined
 };
 
 export default function AButton(props: Partial<PropsAButton>) {
-  const { name, rootStyle, onClick } = props;
+  const { name, rootStyle, onClick, type } = props;
 
   const _rootStyle = [
     rootStyle,
@@ -15,7 +16,7 @@ export default function AButton(props: Partial<PropsAButton>) {
   ].join(' ');
 
   return (
-    <button onClick={onClick} className={_rootStyle}>
+    <button type={type} onClick={onClick} className={_rootStyle}>
       {name}
     </button>
   );
