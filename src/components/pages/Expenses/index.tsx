@@ -20,6 +20,7 @@ export default function PageExpanses() {
   const [data, setData] = useState<Array<StateDataType>>([]);
 
   useEffect(() => {
+    /* @ts-ignore */
     if (!initializeApp?.apps?.length) {
       initializeApp(firebaseConfig);
     }
