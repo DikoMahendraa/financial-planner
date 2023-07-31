@@ -6,6 +6,7 @@ import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
 import { convertToArray } from '@/utils/converToArray';
 import { convertCurrency } from '@/utils/convertCurrency';
+import { calculateSum } from '@/utils/calculateNumber';
 
 type StateDataType = {
   amount: number;
@@ -16,6 +17,7 @@ type StateDataType = {
 
 export default function PageExpanses() {
   const [data, setData] = useState<Array<StateDataType>>([]);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const database = getDatabase();
@@ -29,10 +31,21 @@ export default function PageExpanses() {
 
   /* @ts-ignore */
   const listOfExpense: Array<StateDataType> = convertToArray(data);
+  const getAmount = listOfExpense.map(item => Number(item.amount));
+
+  useEffect(() => {
+    if (getAmount.length > 0) {
+      const convertNumber = Number(calculateSum(getAmount));
+      setTotal(convertNumber);
+    }
+  }, [getAmount]);
 
   return (
     <div className="h-screen px-5 pt-5">
-      <HeaderInEx title="Daftar Pengeluaran" amount="Rp. 1.029.991" />
+      <HeaderInEx
+        title="Daftar Pengeluaran"
+        amount={`Rp. ${convertCurrency(total)}`}
+      />
       <hr />
       <div className="mt-4">
         {listOfExpense.map((item, index) => {

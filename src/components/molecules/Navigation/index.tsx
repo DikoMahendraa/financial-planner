@@ -62,10 +62,10 @@ const Modal = ({ ...props }) => {
               <Controller
                 control={props.control}
                 name="category"
+                defaultValue="internet"
                 render={({ field: { onChange } }) => (
                   <select
-                    id="select"
-                    name="select"
+                    defaultValue="internet"
                     onChange={onChange}
                     placeholder="Select Category"
                     className="block w-full cursor-pointer mt-1 appearance-none bg-white rounded-md border-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
