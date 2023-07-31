@@ -18,7 +18,6 @@ export default function PageExpanses() {
   const [data, setData] = useState<Array<StateDataType>>([]);
 
   useEffect(() => {
-    /* need fixed type */
     const database = getDatabase();
     const databaseRef = query(ref(database, 'expenses'));
     const onDataChange: any = (snapshot: { val: any }) => {

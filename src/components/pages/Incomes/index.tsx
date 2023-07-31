@@ -18,7 +18,6 @@ export default function PageIncomes() {
   const [data, setData] = useState<Array<StateDataType>>([]);
 
   useEffect(() => {
-    /* need fixed type */
     const database = getDatabase();
     const databaseRef = query(ref(database, 'incomes'));
     const onDataChange: any = (snapshot: { val: any }) => {
