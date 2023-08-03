@@ -44,7 +44,7 @@ export default function PageIncomes() {
   return (
     <div className="h-screen px-5 pt-5 ">
       <HeaderInEx
-        title="Daftar Pengeluaran"
+        title="Daftar Pemasukan"
         amount={`Rp. ${convertCurrency(total)}`}
       />
       <hr />

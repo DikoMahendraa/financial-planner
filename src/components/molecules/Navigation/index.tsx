@@ -15,7 +15,7 @@ const Modal = ({ ...props }) => {
   return (
     <MModal>
       <div className="rounded-2xl bg-main-white w-[440px] h-[530px] p-4 border-2 border-vampire-black flex flex-col justify-between">
-        <form onSubmit={props.handleSubmit(props.onSubmit)}>
+        <form id="form" onSubmit={props.handleSubmit(props.onSubmit)}>
           <fieldset className="mt-8">
             <Controller
               control={props.control}
@@ -82,6 +82,7 @@ const Modal = ({ ...props }) => {
 
           <div className="flex justify-between mt-10 gap-4">
             <AButton
+              type="reset"
               onClick={props.onClick}
               name="Cancel"
               rootStyle="bg-gray-platinum"
@@ -127,11 +128,16 @@ export default function MNavigation() {
 
   const onhandleSubmit = async (data: Partial<FormPayload>) => {
     const db = getDatabase();
-    set(ref(db, `${currentPosition}/` + generateRandomUUID()), {
+    await set(ref(db, `${currentPosition}/` + generateRandomUUID()), {
       ...data,
       createdAt: String(currentDate)
     })
-      .then(() => onHandleShowModal())
+      .then(() => {
+        forms.reset({
+          category: 'internet'
+        });
+        onHandleShowModal();
+      })
       .catch(error => alert(error));
   };
 
