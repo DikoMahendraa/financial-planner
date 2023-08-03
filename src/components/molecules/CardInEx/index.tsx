@@ -51,9 +51,11 @@ export default function MCardInEx(props: Partial<MCardInEx>) {
               {date}
             </p>
           </div>
-          <div onClick={onRemove} className="cursor-pointer">
-            <ICTrash />
-          </div>
+          {!!onRemove && (
+            <div onClick={onRemove} className="cursor-pointer">
+              <ICTrash />
+            </div>
+          )}
         </div>
       </div>
     </div>

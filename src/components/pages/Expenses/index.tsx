@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  getDatabase,
-  ref,
-  onValue,
-  off,
-  query,
-  remove
-} from 'firebase/database';
+import { getDatabase, ref, onValue, off, remove } from 'firebase/database';
 import moment from 'moment';
 
 import MCardInEx from '@/components/molecules/CardInEx';
@@ -31,13 +24,13 @@ export default function PageExpanses() {
   const database = getDatabase();
 
   useEffect(() => {
-    const databaseRef = ref(database, '/expenses');
+    const databaseRef = ref(database, 'expenses');
     const onDataChange: any = (snapshot: { val: any }) => {
       setData(snapshot.val());
     };
     onValue(databaseRef, onDataChange);
     return () => off(databaseRef, onDataChange);
-  }, []);
+  }, [database]);
 
   /* @ts-ignore */
   const listOfExpense: Array<StateDataType> = convertToArray(data);
@@ -52,8 +45,8 @@ export default function PageExpanses() {
 
   const onRemove = async ({ uuid }: { uuid: string }) => {
     return await remove(ref(database, `expenses/${uuid}`))
-      .then(() => console.log('successs'))
-      .catch(err => console.log(err));
+      .then(() => {})
+      .catch(() => {});
   };
 
   return (

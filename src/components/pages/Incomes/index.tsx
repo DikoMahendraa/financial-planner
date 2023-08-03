@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { getDatabase, ref, onValue, off, query } from 'firebase/database';
+import { getDatabase, ref, onValue, off, remove } from 'firebase/database';
 
 import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
@@ -12,6 +12,8 @@ type StateDataType = {
   amount: number;
   date: string;
   name: string;
+  uuid: string;
+  id: string;
   category: string;
 };
 
@@ -19,16 +21,17 @@ export default function PageIncomes() {
   const [data, setData] = useState<Array<StateDataType>>([]);
   const [total, setTotal] = useState<number>(0);
 
+  const database = getDatabase();
+
   useEffect(() => {
-    const database = getDatabase();
-    const databaseRef = query(ref(database, 'incomes'));
+    const databaseRef = ref(database, 'incomes');
     const onDataChange: any = (snapshot: { val: any }) => {
       setData(snapshot.val());
     };
 
     onValue(databaseRef, onDataChange);
     return () => off(databaseRef, onDataChange);
-  }, []);
+  }, [database]);
 
   /* @ts-ignore */
   const listOfExpense: Array<StateDataType> = convertToArray(data);
@@ -41,6 +44,12 @@ export default function PageIncomes() {
     }
   }, [getAmount]);
 
+  const onRemove = async ({ uuid }: { uuid: string }) => {
+    return await remove(ref(database, `incomes/${uuid}`))
+      .then(() => {})
+      .catch(() => {});
+  };
+
   return (
     <div className="h-screen px-5 pt-5 ">
       <HeaderInEx
@@ -52,6 +61,7 @@ export default function PageIncomes() {
         {listOfExpense?.map((item, index) => {
           return (
             <MCardInEx
+              onRemove={() => onRemove(item)}
               key={index}
               name={item?.name}
               date={moment(item?.date).format('DD MMM YYYY')}
