@@ -10,10 +10,10 @@ export const ICCreate = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="34" height="34" fill="url(#pattern11)" />
+      <rect width="34" height="34" fill="url(#iconCreate)" />
       <defs>
         <pattern
-          id="pattern11"
+          id="iconCreate"
           patternContentUnits="objectBoundingBox"
           width="1"
           height="1"

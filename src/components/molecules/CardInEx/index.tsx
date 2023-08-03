@@ -1,4 +1,5 @@
 import AChips from '@/components/atoms/Chips';
+import { ICTrash } from '@/icons/ICTrash';
 import React from 'react';
 
 type MCardInEx = {
@@ -10,6 +11,7 @@ type MCardInEx = {
   showLabel: boolean;
   variant: 'small' | 'medium' | 'large';
   category: string;
+  onRemove: () => void;
 };
 
 export default function MCardInEx(props: Partial<MCardInEx>) {
@@ -20,7 +22,8 @@ export default function MCardInEx(props: Partial<MCardInEx>) {
     amount,
     variant = 'medium',
     showLabel = true,
-    category
+    category,
+    onRemove
   } = props;
 
   const isSmall = variant === 'small';
@@ -41,11 +44,16 @@ export default function MCardInEx(props: Partial<MCardInEx>) {
           <p className={[style.name].join(' ')}>{name}</p>
           <p className={[style.amount, 'font-bold'].join(' ')}>Rp. {amount}</p>
         </div>
-        <div className="flex items-center mt-1">
-          {category && <AChips name={category} />}
-          <p className="text-xs ml-2 capitalize text-spanish-gray font-light">
-            {date}
-          </p>
+        <div className="flex justify-between mt-1">
+          <div className="flex items-center">
+            {category && <AChips name={category} />}
+            <p className="text-xs ml-2 capitalize text-spanish-gray font-light">
+              {date}
+            </p>
+          </div>
+          <div onClick={onRemove} className="cursor-pointer">
+            <ICTrash />
+          </div>
         </div>
       </div>
     </div>

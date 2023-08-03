@@ -10,10 +10,10 @@ export const ICDownload = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="34" height="34" fill="url(#pattern12)" />
+      <rect width="34" height="34" fill="url(#icDownload)" />
       <defs>
         <pattern
-          id="pattern12"
+          id="icDownload"
           patternContentUnits="objectBoundingBox"
           width="1"
           height="1"

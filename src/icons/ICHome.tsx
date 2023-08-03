@@ -10,10 +10,10 @@ export const ICHome = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="34" height="34" fill="url(#pattern0)" />
+      <rect width="34" height="34" fill="url(#icHome)" />
       <defs>
         <pattern
-          id="pattern0"
+          id="icHome"
           patternContentUnits="objectBoundingBox"
           width="1"
           height="1"

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, off, query } from 'firebase/database';
+import {
+  getDatabase,
+  ref,
+  onValue,
+  off,
+  query,
+  remove
+} from 'firebase/database';
 import moment from 'moment';
 
 import MCardInEx from '@/components/molecules/CardInEx';
@@ -11,6 +18,8 @@ import { calculateSum } from '@/utils/calculateNumber';
 type StateDataType = {
   amount: number;
   date: string;
+  id: string;
+  uuid: string;
   name: string;
   category: string;
 };
@@ -19,9 +28,10 @@ export default function PageExpanses() {
   const [data, setData] = useState<Array<StateDataType>>([]);
   const [total, setTotal] = useState(0);
 
+  const database = getDatabase();
+
   useEffect(() => {
-    const database = getDatabase();
-    const databaseRef = query(ref(database, 'expenses'));
+    const databaseRef = ref(database, '/expenses');
     const onDataChange: any = (snapshot: { val: any }) => {
       setData(snapshot.val());
     };
@@ -40,6 +50,12 @@ export default function PageExpanses() {
     }
   }, [getAmount]);
 
+  const onRemove = async ({ uuid }: { uuid: string }) => {
+    return await remove(ref(database, `expenses/${uuid}`))
+      .then(() => console.log('successs'))
+      .catch(err => console.log(err));
+  };
+
   return (
     <div className="h-screen px-5 pt-5">
       <HeaderInEx
@@ -51,6 +67,7 @@ export default function PageExpanses() {
         {listOfExpense.map((item, index) => {
           return (
             <MCardInEx
+              onRemove={() => onRemove(item)}
               key={index}
               name={item?.name}
               date={moment(item?.date).format('DD MMM YYYY')}

@@ -7,7 +7,6 @@ export const ICAvatarProfile = () => {
       width={62}
       height={62}
       viewBox="0 0 62 62"
-      id="avatar"
     >
       <circle cx="30.9" cy="30.9" r="30.9" fill="#ffc200"></circle>
       <path

@@ -6,8 +6,11 @@ export const convertToArray = <T>(data: Partial<Params<T>>): Array<T> => {
   const dataArray: Array<T> = [];
 
   for (const key in data) {
-    /* @ts-ignore */
-    dataArray.push(data[key]);
+    dataArray.push({
+      /* @ts-ignore */
+      ...data[key],
+      uuid: key
+    });
   }
 
   return dataArray;

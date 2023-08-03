@@ -130,7 +130,8 @@ export default function MNavigation() {
     const db = getDatabase();
     await set(ref(db, `${currentPosition}/` + generateRandomUUID()), {
       ...data,
-      createdAt: String(currentDate)
+      createdAt: String(currentDate),
+      id: generateRandomUUID()
     })
       .then(() => {
         forms.reset({

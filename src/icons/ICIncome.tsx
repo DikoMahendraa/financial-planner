@@ -10,10 +10,10 @@ export const ICIncome = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="34" height="34" fill="url(#pattern3)" />
+      <rect width="34" height="34" fill="url(#icIncome)" />
       <defs>
         <pattern
-          id="pattern3"
+          id="icIncome"
           patternContentUnits="objectBoundingBox"
           width="1"
           height="1"
