@@ -7,7 +7,8 @@ type PropsAInput = {
   suffix: string;
   prefix: string;
   name: string;
-  onChange: () => void
+  onChange: () => void;
+  rest: any;
   type: 'text' | 'date' | 'number';
 };
 
@@ -43,6 +44,7 @@ export default function AInput(props: Partial<PropsAInput>) {
           </span>
         )}
         <input
+          {...props}
           onChange={onChange}
           type={type}
           name={name}

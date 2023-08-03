@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getDatabase, ref, onValue, off, remove } from 'firebase/database';
+import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
 import MCardInEx from '@/components/molecules/CardInEx';
@@ -7,6 +8,7 @@ import HeaderInEx from '@/components/molecules/HeaderInEx';
 import { convertToArray } from '@/utils/converToArray';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { calculateSum } from '@/utils/calculateNumber';
+import { onShowModal } from '@/redux/features/incomes';
 
 type StateDataType = {
   amount: number;
@@ -21,6 +23,9 @@ export default function PageExpanses() {
   const [data, setData] = useState<Array<StateDataType>>([]);
   const [total, setTotal] = useState(0);
 
+  const dispatch = useDispatch();
+  /* @ts-ignore */
+  const { visible } = useSelector(state => state?.incomesReducer.edit) || {};
   const database = getDatabase();
 
   useEffect(() => {
@@ -49,6 +54,16 @@ export default function PageExpanses() {
       .catch(() => {});
   };
 
+  const onEdit = async (items: StateDataType) => {
+    dispatch(
+      onShowModal({
+        isUpdate: true,
+        visible: !visible,
+        data: items
+      })
+    );
+  };
+
   return (
     <div className="h-screen px-5 pt-5">
       <HeaderInEx
@@ -60,6 +75,7 @@ export default function PageExpanses() {
         {listOfExpense.map((item, index) => {
           return (
             <MCardInEx
+              onEdit={() => onEdit(item)}
               onRemove={() => onRemove(item)}
               key={index}
               name={item?.name}

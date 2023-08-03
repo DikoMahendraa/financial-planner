@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Controller, useForm } from 'react-hook-form';
 import { getDatabase, ref, set } from 'firebase/database';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { bottomNavigation } from '@/constants/home';
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
@@ -10,6 +11,7 @@ import MModal from '@/components/molecules/Modal';
 import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
 import { generateRandomUUID } from '@/utils/generateID';
+import { onShowModal } from '@/redux/features/incomes';
 
 const Modal = ({ ...props }) => {
   return (
@@ -20,8 +22,9 @@ const Modal = ({ ...props }) => {
             <Controller
               control={props.control}
               name="name"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, ...rest } }) => (
                 <AInput
+                  {...rest}
                   label="Income"
                   placeholder="Enter your Income"
                   onChange={onChange}
@@ -31,8 +34,9 @@ const Modal = ({ ...props }) => {
             <Controller
               control={props.control}
               name="date"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, ...rest } }) => (
                 <AInput
+                  {...rest}
                   label="Date"
                   rootStyle="mt-2"
                   type="date"
@@ -44,8 +48,9 @@ const Modal = ({ ...props }) => {
             <Controller
               control={props.control}
               name="amount"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, ...rest } }) => (
                 <AInput
+                  {...rest}
                   prefix="Rp."
                   label="Amount"
                   rootStyle="mt-2"
@@ -63,8 +68,9 @@ const Modal = ({ ...props }) => {
                 control={props.control}
                 name="category"
                 defaultValue="internet"
-                render={({ field: { onChange } }) => (
+                render={({ field: { onChange, ...rest } }) => (
                   <select
+                    {...rest}
                     defaultValue="internet"
                     onChange={onChange}
                     placeholder="Select Category"
@@ -100,18 +106,25 @@ const Modal = ({ ...props }) => {
 };
 
 type FormPayload = {
-  amount: string;
+  amount: number;
   date: string;
+  id: string;
+  uuid: string;
+  name: string;
   category: string;
-  income: string;
 };
 
 export default function MNavigation() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(router.route);
-  const [visible, setVisible] = useState(false);
 
   const forms = useForm<FormPayload>();
+  const {
+    isUpdate,
+    edit: { visible, data }
+    /* @ts-ignore */
+  } = useSelector(state => state?.incomesReducer) || {};
+  const dispatch = useDispatch();
   const currentPosition = router.route.split('/').pop();
   const currentDate = new Date();
 
@@ -123,16 +136,30 @@ export default function MNavigation() {
   const showCreateInEx = ['/incomes', '/expenses'].includes(activeTab);
 
   const onHandleShowModal = () => {
-    setVisible(!visible);
+    dispatch(
+      onShowModal({
+        isUpdate: false,
+        data: {},
+        visible: !visible
+      })
+    );
   };
 
   const onhandleSubmit = async (data: Partial<FormPayload>) => {
-    const db = getDatabase();
-    await set(ref(db, `${currentPosition}/` + generateRandomUUID()), {
-      ...data,
-      createdAt: String(currentDate),
-      id: generateRandomUUID()
-    })
+    const database = getDatabase();
+    const pathCreate = `${currentPosition}/${generateRandomUUID()}`;
+    const pathEdit = `${currentPosition}/${data.uuid}`;
+    const isPath = isUpdate ? pathEdit : pathCreate;
+
+    const payload = isUpdate
+      ? { ...data }
+      : { ...data, createdAt: String(currentDate), id: generateRandomUUID() };
+
+    const paramsCreate = set(ref(database, isPath), {
+      ...payload
+    });
+
+    await paramsCreate
       .then(() => {
         forms.reset({
           category: 'internet'
@@ -141,6 +168,12 @@ export default function MNavigation() {
       })
       .catch(error => alert(error));
   };
+
+  useEffect(() => {
+    if (visible) {
+      forms.reset({ ...data });
+    }
+  }, [data, forms, visible]);
 
   return (
     <React.Fragment>

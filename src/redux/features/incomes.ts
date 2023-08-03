@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  values: {
-    name: 'cocomahendra',
-    isStatus: false
+  isUpdate: false,
+  edit: {
+    visible: false,
+    data: {}
   }
 };
 
@@ -11,16 +12,20 @@ export const incomes = createSlice({
   name: 'incomes',
   initialState,
   reducers: {
-    setReducerIncomes: (_, action: PayloadAction<string>) => {
+    onShowModal: (
+      _,
+      action: PayloadAction<{ visible: boolean; data: {}; isUpdate: boolean }>
+    ) => {
       return {
-        values: {
-          name: action.payload,
-          isStatus: true
+        isUpdate: action.payload.isUpdate,
+        edit: {
+          visible: action.payload.visible,
+          data: action.payload.data
         }
       };
     }
   }
 });
 
-export const { setReducerIncomes } = incomes.actions;
+export const { onShowModal } = incomes.actions;
 export default incomes.reducer;

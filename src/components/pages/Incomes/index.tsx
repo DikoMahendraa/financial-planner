@@ -7,6 +7,8 @@ import HeaderInEx from '@/components/molecules/HeaderInEx';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { convertToArray } from '@/utils/converToArray';
 import { calculateSum } from '@/utils/calculateNumber';
+import { useDispatch, useSelector } from 'react-redux';
+import { onShowModal } from '@/redux/features/incomes';
 
 type StateDataType = {
   amount: number;
@@ -21,6 +23,9 @@ export default function PageIncomes() {
   const [data, setData] = useState<Array<StateDataType>>([]);
   const [total, setTotal] = useState<number>(0);
 
+  const dispatch = useDispatch();
+  /* @ts-ignore */
+  const { visible } = useSelector(state => state?.incomesReducer.edit) || {};
   const database = getDatabase();
 
   useEffect(() => {
@@ -50,6 +55,16 @@ export default function PageIncomes() {
       .catch(() => {});
   };
 
+  const onEdit = async (items: StateDataType) => {
+    dispatch(
+      onShowModal({
+        isUpdate: true,
+        visible: !visible,
+        data: items
+      })
+    );
+  };
+
   return (
     <div className="h-screen px-5 pt-5 ">
       <HeaderInEx
@@ -61,15 +76,16 @@ export default function PageIncomes() {
         {listOfExpense?.map((item, index) => {
           return (
             <MCardInEx
-              onRemove={() => onRemove(item)}
               key={index}
+              type="expense"
+              variant="small"
               name={item?.name}
               date={moment(item?.date).format('DD MMM YYYY')}
               amount={convertCurrency(item.amount)}
-              type="expense"
-              variant="small"
               category={item?.category}
               showLabel={false}
+              onEdit={() => onEdit(item)}
+              onRemove={() => onRemove(item)}
             />
           );
         })}

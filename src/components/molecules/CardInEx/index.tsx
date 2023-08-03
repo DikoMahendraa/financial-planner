@@ -12,6 +12,7 @@ type MCardInEx = {
   variant: 'small' | 'medium' | 'large';
   category: string;
   onRemove: () => void;
+  onEdit: () => void;
 };
 
 export default function MCardInEx(props: Partial<MCardInEx>) {
@@ -23,7 +24,8 @@ export default function MCardInEx(props: Partial<MCardInEx>) {
     variant = 'medium',
     showLabel = true,
     category,
-    onRemove
+    onRemove,
+    onEdit
   } = props;
 
   const isSmall = variant === 'small';
@@ -40,7 +42,7 @@ export default function MCardInEx(props: Partial<MCardInEx>) {
         {showLabel && (
           <p className={[style.label, 'capitalize'].join(' ')}>{label}</p>
         )}
-        <div className="flex justify-between w-full">
+        <div onClick={onEdit} className="flex justify-between w-full">
           <p className={[style.name].join(' ')}>{name}</p>
           <p className={[style.amount, 'font-bold'].join(' ')}>Rp. {amount}</p>
         </div>
