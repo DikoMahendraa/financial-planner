@@ -5,7 +5,7 @@ import MModal from '@/components/molecules/Modal';
 import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
 
-export const ModalForm = ({ ...props }) => {
+export const MModalForm = ({ ...props }) => {
   return (
     <MModal>
       <div className="rounded-2xl bg-main-white w-[440px] h-[530px] p-4 border-2 border-vampire-black flex flex-col justify-between">

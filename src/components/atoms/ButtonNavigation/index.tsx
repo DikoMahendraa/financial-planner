@@ -4,19 +4,10 @@ import { ICExpense } from '@/components/icons/ICExpanse';
 import { ICHome } from '@/components/icons/ICHome';
 import { ICIncome } from '@/components/icons/ICIncome';
 import { ICSetting } from '@/components/icons/ICSetting';
-
-type PropsButtonNavigation = {
-  rootStyle: string;
-  parentStyle: string;
-  atomStyle: string;
-  text: string | boolean;
-  active: boolean;
-  label: 'home' | 'expands' | 'income' | 'settings' | string;
-  onClick: () => void;
-};
+import { TypeButtonNavigation } from '@/types';
 
 export default function AButtonNavigation(
-  props: Partial<PropsButtonNavigation>
+  props: Partial<TypeButtonNavigation>
 ) {
   const { rootStyle, parentStyle, atomStyle, text, label, onClick, active } =
     props;

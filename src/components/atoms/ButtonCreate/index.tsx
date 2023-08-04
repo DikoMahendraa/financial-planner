@@ -12,7 +12,7 @@ export default function AButtonCreate(props: Partial<PropsAButtonCreate>) {
   return (
     <section
       onClick={onClick}
-      className="sticky cursor-pointer bottom-28 flex justify-end px-4"
+      className="fixed cursor-pointer bottom-28 flex justify-end w-full md:max-w-[480px] px-4"
     >
       <p className="bg-yellow w-16 h-16 flex rounded-full items-center justify-center">
         <ICCreate />

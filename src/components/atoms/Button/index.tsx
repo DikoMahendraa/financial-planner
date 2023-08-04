@@ -1,13 +1,7 @@
 import React from 'react';
+import { TypeAButton } from '@/types';
 
-type PropsAButton = {
-  name: string;
-  rootStyle: string;
-  onClick: () => void;
-  type: "button" | "submit" | "reset" | undefined
-};
-
-export default function AButton(props: Partial<PropsAButton>) {
+export default function AButton(props: Partial<TypeAButton>) {
   const { name, rootStyle, onClick, type } = props;
 
   const _rootStyle = [

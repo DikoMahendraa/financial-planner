@@ -32,7 +32,7 @@ input[type=time] {
 
  input[type=date]::placeholder,
  input[type=time]::placeholder {
-     font-family    : 'Roboto';
+     font-family    : 'Poppins';
      font-size      : 17px;
      font-style     : normal;
      font-weight    : 400;

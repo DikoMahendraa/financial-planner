@@ -19,3 +19,20 @@ export type TypeMCardInEx = {
   onRemove: () => void;
   onEdit: () => void;
 };
+
+export type TypeAButton = {
+  name: string;
+  rootStyle: string;
+  onClick: () => void;
+  type: 'button' | 'submit' | 'reset' | undefined;
+};
+
+export type TypeButtonNavigation = {
+  rootStyle: string;
+  parentStyle: string;
+  atomStyle: string;
+  text: string | boolean;
+  active: boolean;
+  label: 'home' | 'expands' | 'income' | 'settings' | string;
+  onClick: () => void;
+};

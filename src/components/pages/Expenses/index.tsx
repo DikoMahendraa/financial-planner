@@ -59,7 +59,7 @@ export default function PageExpanses() {
   };
 
   return (
-    <div className="h-screen px-5 pt-5">
+    <div className="h-full px-5 pt-5 mb-48">
       <HeaderInEx
         title="Daftar Pengeluaran"
         amount={`Rp. ${convertCurrency(total)}`}

@@ -9,7 +9,7 @@ export default function MainLayout(props: PropsMainLayout) {
   const { children } = props;
   return (
     <main className="h-full">
-      <div className="md:max-w-[480px] w-full h-full m-auto relative bg-aero-blue">
+      <div className="md:w-[480px] overflow-hidden w-full h-full m-auto relative bg-aero-blue">
         {children}
         <MNavigation />
       </div>

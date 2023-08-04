@@ -10,7 +10,7 @@ import { onShowModal } from '@/redux/features/incomes';
 
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
 import AButtonCreate from '@/components/atoms/ButtonCreate';
-import { ModalForm } from '@/components/molecules/ModalForm';
+import { MModalForm } from '@/components/molecules/ModalForm';
 import { generateRandomUUID } from '@/utils/generateID';
 
 export default function MNavigation() {
@@ -78,8 +78,8 @@ export default function MNavigation() {
     <React.Fragment>
       {showCreateInEx && <AButtonCreate onClick={onHandleShowModal} />}
 
-      <section className="sticky bottom-5 w-full px-4">
-        <div className="bg-vampire-black h-18 w-full rounded-[40px] grid grid-cols-5 p-1 space-x-1">
+      <section className="fixed md:max-w-[480px] bottom-3  w-full px-2">
+        <div className="bg-vampire-black h-18 rounded-[40px] grid grid-cols-5 p-1 space-x-1">
           {bottomNavigation.map((item, key) => {
             const active = activeTab === item.route;
             const setColumn = active ? 'col-span-2' : 'col-span-1';
@@ -101,7 +101,7 @@ export default function MNavigation() {
       </section>
 
       {visible && (
-        <ModalForm
+        <MModalForm
           {...forms}
           onSubmit={onhandleSubmit}
           onClick={onHandleShowModal}

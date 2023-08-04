@@ -87,7 +87,7 @@ export default function HomePage() {
   const allData = listOfExpense.concat(listOfIncomes);
 
   return (
-    <div className="h-screen mb-44">
+    <div className="h-full mb-48">
       <SectionProfile />
       <SectionMainCard />
       <SectionCardTarget />
