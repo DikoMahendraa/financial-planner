@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getDatabase, ref, onValue, off, remove } from 'firebase/database';
 import moment from 'moment';
 
@@ -10,14 +10,16 @@ import { calculateSum } from '@/utils/calculateNumber';
 import { onShowModal } from '@/redux/features/incomes';
 import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
+import { useAppSelector } from '@/redux/store';
+import { listFilterIncomes } from '@/constants/home';
 
 export default function PageIncomes() {
   const [data, setData] = useState<Array<TypeFormPayload>>([]);
+  const [category, setCategory] = useState<string>('gajian');
   const [total, setTotal] = useState<number>(0);
 
   const dispatch = useDispatch();
-  /* @ts-ignore */
-  const { visible } = useSelector(state => state?.incomesReducer.edit) || {};
+  const { visible } = useAppSelector(state => state?.incomesReducer.edit) || {};
   const database = getDatabase();
 
   useEffect(() => {
@@ -64,6 +66,29 @@ export default function PageIncomes() {
         amount={`Rp. ${convertCurrency(total)}`}
       />
       <hr />
+      <div className="mt-4 bg-main-white rounded-3xl border-2 border-vampire-black p-[2px] flex items-center gap-2">
+        {listFilterIncomes.map(item => {
+          const isActiveTab = item === category;
+          const setBackground = isActiveTab
+            ? 'bg-earth-yellow'
+            : 'bg-main-white';
+          const setColor = isActiveTab
+            ? 'text-white'
+            : 'text-vampire-black font-semibold';
+
+          return (
+            <div
+              key={item}
+              onClick={() => setCategory(item)}
+              className={`${setBackground} rounded-3xl w-1/2 cursor-pointer`}
+            >
+              <p className={`${setColor} text-sm text-center py-2 capitalize`}>
+                {item}
+              </p>
+            </div>
+          );
+        })}
+      </div>
       <div className="mt-4">
         {listOfExpense?.map((item, index) => {
           return (

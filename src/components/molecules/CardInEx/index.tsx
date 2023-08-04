@@ -31,7 +31,10 @@ export default function MCardInEx(props: Partial<TypeMCardInEx>) {
         {showLabel && (
           <p className={[style.label, 'capitalize'].join(' ')}>{label}</p>
         )}
-        <div onClick={onEdit} className="flex justify-between w-full">
+        <div
+          onClick={onEdit}
+          className="flex cursor-pointer justify-between w-full"
+        >
           <p className={[style.name].join(' ')}>{name}</p>
           <p className={[style.amount, 'font-bold'].join(' ')}>Rp. {amount}</p>
         </div>
