@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { ICAvatarProfile } from '@/icons/ICAvatarProfile';
+import { ICAvatarProfile } from '@/components/icons/ICAvatarProfile';
 import AGap from '@/components/atoms/Gap';
-import { ICDownload } from '@/icons/ICDownload';
+import { ICDownload } from '@/components/icons/ICDownload';
 
 export default function PageSettings() {
   return (

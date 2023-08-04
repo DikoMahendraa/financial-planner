@@ -1,21 +1,10 @@
-import AChips from '@/components/atoms/Chips';
-import { ICTrash } from '@/icons/ICTrash';
 import React from 'react';
 
-type MCardInEx = {
-  label: string;
-  name: string;
-  date: string;
-  amount: string;
-  type: string;
-  showLabel: boolean;
-  variant: 'small' | 'medium' | 'large';
-  category: string;
-  onRemove: () => void;
-  onEdit: () => void;
-};
+import { TypeMCardInEx } from '@/types';
+import AChips from '@/components/atoms/Chips';
+import { ICTrash } from '@/components/icons/ICTrash';
 
-export default function MCardInEx(props: Partial<MCardInEx>) {
+export default function MCardInEx(props: Partial<TypeMCardInEx>) {
   const {
     label,
     name,

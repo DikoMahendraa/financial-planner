@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { ICExpense } from '@/icons/ICExpanse';
-import { ICHome } from '@/icons/ICHome';
-import { ICIncome } from '@/icons/ICIncome';
-import { ICSetting } from '@/icons/ICSetting';
+import { ICExpense } from '@/components/icons/ICExpanse';
+import { ICHome } from '@/components/icons/ICHome';
+import { ICIncome } from '@/components/icons/ICIncome';
+import { ICSetting } from '@/components/icons/ICSetting';
 
 type PropsButtonNavigation = {
   rootStyle: string;

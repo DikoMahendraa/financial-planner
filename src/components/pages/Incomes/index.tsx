@@ -1,26 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
 import { getDatabase, ref, onValue, off, remove } from 'firebase/database';
+import moment from 'moment';
 
-import MCardInEx from '@/components/molecules/CardInEx';
-import HeaderInEx from '@/components/molecules/HeaderInEx';
+import { TypeFormPayload } from '@/types';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { convertToArray } from '@/utils/converToArray';
 import { calculateSum } from '@/utils/calculateNumber';
-import { useDispatch, useSelector } from 'react-redux';
 import { onShowModal } from '@/redux/features/incomes';
-
-type StateDataType = {
-  amount: number;
-  date: string;
-  name: string;
-  uuid: string;
-  id: string;
-  category: string;
-};
+import MCardInEx from '@/components/molecules/CardInEx';
+import HeaderInEx from '@/components/molecules/HeaderInEx';
 
 export default function PageIncomes() {
-  const [data, setData] = useState<Array<StateDataType>>([]);
+  const [data, setData] = useState<Array<TypeFormPayload>>([]);
   const [total, setTotal] = useState<number>(0);
 
   const dispatch = useDispatch();
@@ -39,7 +31,7 @@ export default function PageIncomes() {
   }, [database]);
 
   /* @ts-ignore */
-  const listOfExpense: Array<StateDataType> = convertToArray(data);
+  const listOfExpense: Array<TypeFormPayload> = convertToArray(data);
   const getAmount = listOfExpense.map(item => Number(item.amount));
 
   useEffect(() => {
@@ -55,7 +47,7 @@ export default function PageIncomes() {
       .catch(() => {});
   };
 
-  const onEdit = async (items: StateDataType) => {
+  const onEdit = async (items: TypeFormPayload) => {
     dispatch(
       onShowModal({
         isUpdate: true,

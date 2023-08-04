@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICAvatarProfile } from '@/icons/ICAvatarProfile';
+import { ICAvatarProfile } from '@/components/icons/ICAvatarProfile';
 
 type PropsHeaderProfile = {
   name: string;

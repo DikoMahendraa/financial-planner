@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ICCreate } from '@/icons/ICCreate';
+import { ICCreate } from '@/components/icons/ICCreate';
 
 type PropsAButtonCreate = {
   onClick: () => void;

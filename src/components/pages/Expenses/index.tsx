@@ -3,24 +3,16 @@ import { getDatabase, ref, onValue, off, remove } from 'firebase/database';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 
-import MCardInEx from '@/components/molecules/CardInEx';
-import HeaderInEx from '@/components/molecules/HeaderInEx';
+import { TypeFormPayload } from '@/types';
 import { convertToArray } from '@/utils/converToArray';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { calculateSum } from '@/utils/calculateNumber';
 import { onShowModal } from '@/redux/features/incomes';
-
-type StateDataType = {
-  amount: number;
-  date: string;
-  id: string;
-  uuid: string;
-  name: string;
-  category: string;
-};
+import MCardInEx from '@/components/molecules/CardInEx';
+import HeaderInEx from '@/components/molecules/HeaderInEx';
 
 export default function PageExpanses() {
-  const [data, setData] = useState<Array<StateDataType>>([]);
+  const [data, setData] = useState<Array<TypeFormPayload>>([]);
   const [total, setTotal] = useState(0);
 
   const dispatch = useDispatch();
@@ -38,7 +30,7 @@ export default function PageExpanses() {
   }, [database]);
 
   /* @ts-ignore */
-  const listOfExpense: Array<StateDataType> = convertToArray(data);
+  const listOfExpense: Array<TypeFormPayload> = convertToArray(data);
   const getAmount = listOfExpense.map(item => Number(item.amount));
 
   useEffect(() => {
@@ -54,7 +46,7 @@ export default function PageExpanses() {
       .catch(() => {});
   };
 
-  const onEdit = async (items: StateDataType) => {
+  const onEdit = async (items: TypeFormPayload) => {
     dispatch(
       onShowModal({
         isUpdate: true,
