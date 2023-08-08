@@ -13,7 +13,7 @@ export default function useCreateValues() {
     try {
       const rootReference = ref(database);
       const dbPath = child(rootReference, path);
-      const dbPush = await push(dbPath, values);
+      const dbPush = await push(dbPath, { ...values });
       data.current = { key: dbPush.key, values };
       success.current = true;
     } catch (errorMsg: any) {

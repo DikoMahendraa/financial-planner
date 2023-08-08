@@ -12,11 +12,16 @@ import { onShowModal } from '@/redux/features/main';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { listFilterIncomes } from '@/constants/home';
 import useGetValues from '@/hooks/useGetValues';
+import useRemoveValues from '@/hooks/useRemoveValues';
+import { convertToArray } from '@/utils/convertToArray';
+import MEmptyState from '@/components/molecules/EmptyData';
+import { ANLoading } from '@/components/animations/ANLoading';
 
 type GetValues = {
   isLoading: boolean;
   snapshot: any;
   error: any;
+  isEmpty: boolean;
 };
 
 export default function PageIncomes() {
@@ -27,7 +32,8 @@ export default function PageIncomes() {
   const { visible } = useAppSelector(state => state?.incomesReducer.edit) || {};
 
   const incomes: GetValues = useGetValues({ path: 'incomes' });
-  const data: Array<TypeFormPayload> = Object.values(incomes.snapshot || {});
+  const removeExpense = useRemoveValues();
+  const data: Array<TypeFormPayload> = convertToArray(incomes.snapshot || {});
 
   const onEdit = async (items: TypeFormPayload) => {
     dispatch(
@@ -39,12 +45,21 @@ export default function PageIncomes() {
     );
   };
 
+  const onRemove = async (items: { uuid: string }) => {
+    const path = `incomes/${items.uuid}`;
+    await removeExpense.removeValue(path);
+  };
+
   if (incomes.isLoading) {
     return (
       <div className="w-full flex items-center justify-center h-screen">
-        <p>Loading...</p>
+        <ANLoading />
       </div>
     );
+  }
+
+  if (incomes.isEmpty) {
+    return <MEmptyState title="Pemasukan" onClick={() => {}} />;
   }
 
   return (
@@ -82,6 +97,7 @@ export default function PageIncomes() {
           return (
             <MCardInEx
               key={index}
+              onRemove={() => onRemove(item)}
               type="expense"
               variant="small"
               name={item?.name}

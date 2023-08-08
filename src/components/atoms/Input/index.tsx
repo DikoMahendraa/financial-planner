@@ -22,7 +22,7 @@ export default function AInput(props: Partial<TypePropsAInput>) {
   return (
     <div className={_rootStyle}>
       {label && (
-        <label htmlFor="income" className="font-bold">
+        <label htmlFor="income" className="font-bold capitalize">
           {label}
         </label>
       )}

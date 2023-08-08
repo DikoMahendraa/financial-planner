@@ -68,7 +68,7 @@ export default function HomePage() {
   const allData: Array<TypeResponse> = dataIncomes.concat(dataIexpenses) || [];
 
   return (
-    <div className="h-full mb-48">
+    <div className="h-screen mb-48">
       <SectionProfile />
       <SectionMainCard />
       <SectionCardTarget />

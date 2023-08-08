@@ -37,6 +37,6 @@ export default function useGetValues({ path }: UseGetValues) {
     isLoading,
     snapshot: snapshot.current,
     error: error.current,
-    isEmpty
+    isEmpty: isEmpty.current
   };
 }

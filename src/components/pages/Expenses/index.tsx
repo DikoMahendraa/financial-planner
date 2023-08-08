@@ -12,11 +12,16 @@ import { onShowModal } from '@/redux/features/main';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { listFilterExpenses } from '@/constants/home';
 import useGetValues from '@/hooks/useGetValues';
+import { convertToArray } from '@/utils/convertToArray';
+import useRemoveValues from '@/hooks/useRemoveValues';
+import { ANLoading } from '@/components/animations/ANLoading';
+import MEmptyState from '@/components/molecules/EmptyData';
 
 type GetValues = {
   isLoading: boolean;
   snapshot: any;
   error: any;
+  isEmpty: boolean;
 };
 
 export default function PageExpanses() {
@@ -26,7 +31,8 @@ export default function PageExpanses() {
   const { visible } = useAppSelector(state => state?.incomesReducer.edit) || {};
 
   const expenses: GetValues = useGetValues({ path: 'expenses' });
-  const data: Array<TypeFormPayload> = Object.values(expenses.snapshot || {});
+  const removeExpense = useRemoveValues();
+  const data: Array<TypeFormPayload> = convertToArray(expenses.snapshot || {});
 
   const onEdit = async (items: TypeFormPayload) => {
     dispatch(
@@ -38,12 +44,21 @@ export default function PageExpanses() {
     );
   };
 
+  const onRemove = async (items: { uuid: string }) => {
+    const path = `expenses/${items.uuid}`;
+    await removeExpense.removeValue(path);
+  };
+
   if (expenses.isLoading) {
     return (
       <div className="w-full flex items-center justify-center h-screen">
-        <p>Loading...</p>
+        <ANLoading />
       </div>
     );
+  }
+
+  if (expenses.isEmpty) {
+    return <MEmptyState title="Pengeluaran" onClick={() => {}} />;
   }
 
   return (
@@ -81,7 +96,7 @@ export default function PageExpanses() {
           return (
             <MCardInEx
               onEdit={() => onEdit(item)}
-              // onRemove={() => onRemove(item)}
+              onRemove={() => onRemove(item)}
               key={index}
               name={item?.name}
               date={moment(item?.date).format('DD MMM YYYY')}

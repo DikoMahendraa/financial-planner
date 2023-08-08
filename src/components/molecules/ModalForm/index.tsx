@@ -17,7 +17,7 @@ export const MModalForm = ({ ...props }) => {
               render={({ field: { onChange, ...rest } }) => (
                 <AInput
                   {...rest}
-                  label="Income"
+                  label={props.label}
                   placeholder="Enter your Income"
                   onChange={onChange}
                 />
@@ -81,7 +81,7 @@ export const MModalForm = ({ ...props }) => {
           <div className="flex justify-between mt-10 gap-4">
             <AButton
               type="reset"
-              onClick={props.onClick}
+              onClick={props.onCancel}
               name="Cancel"
               rootStyle="bg-gray-platinum"
             />

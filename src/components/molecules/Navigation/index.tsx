@@ -23,6 +23,7 @@ export default function MNavigation() {
   const createValues = useCreateValues();
 
   const showCTA = ['/incomes', '/expenses'].includes(activeTab);
+  const currentPath = router.route.split('/').pop();
 
   const {
     isUpdate,
@@ -45,9 +46,7 @@ export default function MNavigation() {
   };
 
   const onSubmit = async (data: any) => {
-    const currentPath = router.route;
-
-    await createValues.pushValue(currentPath, data);
+    await createValues.pushValue(String(currentPath), data);
   };
 
   useEffect(() => {
@@ -83,7 +82,12 @@ export default function MNavigation() {
       </section>
 
       {visible && (
-        <MModalForm {...forms} onSubmit={onSubmit} onClick={onShowModal} />
+        <MModalForm
+          {...forms}
+          label={currentPath}
+          onSubmit={onSubmit}
+          onCancel={onVisible}
+        />
       )}
     </React.Fragment>
   );
