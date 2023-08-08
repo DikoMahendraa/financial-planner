@@ -81,3 +81,11 @@ export type TypePropsAInput = {
   rest: any;
   type: 'text' | 'date' | 'number';
 };
+
+export type TypeResponse = {
+  amount: number;
+  date: string;
+  name: string;
+  category: string;
+  createdAt: string;
+};

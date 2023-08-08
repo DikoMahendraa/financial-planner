@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import moment from 'moment';
 
-import { getDatabase, ref, onValue, off, query } from 'firebase/database';
-import { initializeApp } from 'firebase/app';
-import { firebaseConfig } from '../../../../firebaseConfig';
+import { TypeResponse } from '@/types';
+import { convertCurrency } from '@/utils/convertCurrency';
+import useGetValues from '@/hooks/useGetValues';
 
 import MCardInEx from '@/components/molecules/CardInEx';
 import MCard from '@/components/molecules/Card';
 import MHeaderProfile from '@/components/molecules/HeaderProfile';
-import { convertToArray } from '@/utils/converToArray';
-import { convertCurrency } from '@/utils/convertCurrency';
-import moment from 'moment';
 
 const SectionProfile = () => {
   return (
@@ -19,25 +17,12 @@ const SectionProfile = () => {
   );
 };
 
-type StateDataType = {
-  amount: number;
-  date: string;
-  name: string;
-  category: string;
-  createdAt: string;
-};
-
-type StateParent = {
-  incomes: any;
-  expenses: any;
-};
-
 const SectionListExpenseIncome = ({ ...props }) => {
   return (
     <section className="px-5 mt-6 mb-10">
       <p className="mb-5 font-bold text-lg">Pengeluaran / Pemasukan Terbaru</p>
 
-      {props.data.map((item: StateDataType, key: number) => (
+      {props.data.map((item: TypeResponse, key: number) => (
         <MCardInEx
           key={key}
           variant="small"
@@ -70,21 +55,17 @@ const SectionMainCard = () => {
 };
 
 export default function HomePage() {
-  const [data, setData] = useState<StateParent>();
-  useEffect(() => {
-    /* need fixed type */
-    const database = getDatabase();
-    const databaseRef = query(ref(database, '/'));
-    const onDataChange: any = (snapshot: { val: any }) => {
-      setData(snapshot.val());
-    };
-    onValue(databaseRef, onDataChange);
-    return () => off(databaseRef, onDataChange);
-  }, []);
+  const incomes = useGetValues({ path: 'incomes' });
+  const expenses = useGetValues({ path: 'expenses' });
 
-  const listOfIncomes = convertToArray(data?.incomes);
-  const listOfExpense = convertToArray(data?.expenses);
-  const allData = listOfExpense.concat(listOfIncomes);
+  const dataIncomes: Array<TypeResponse> = Object.values(
+    incomes.snapshot || {}
+  );
+  const dataIexpenses: Array<TypeResponse> = Object.values(
+    expenses.snapshot || {}
+  );
+
+  const allData: Array<TypeResponse> = dataIncomes.concat(dataIexpenses) || [];
 
   return (
     <div className="h-full mb-48">
