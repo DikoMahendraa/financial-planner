@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { getDatabase, ref, set } from 'firebase/database';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { TypeFormPayload } from '@/types';
 import { bottomNavigation } from '@/constants/home';
@@ -11,30 +10,31 @@ import { onShowModal } from '@/redux/features/main';
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
 import AButtonCreate from '@/components/atoms/ButtonCreate';
 import { MModalForm } from '@/components/molecules/ModalForm';
-import { generateRandomUUID } from '@/utils/generateID';
+import { useAppSelector } from '@/redux/store';
+import useCreateValues from '@/hooks/useCreateValues';
 
 export default function MNavigation() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState(router.route);
-
+  const dispatch = useDispatch();
   const forms = useForm<TypeFormPayload>();
+
+  const [activeTab, setActiveTab] = useState<string>(router.route);
+
+  const createValues = useCreateValues();
+
+  const showCTA = ['/incomes', '/expenses'].includes(activeTab);
+
   const {
     isUpdate,
     edit: { visible, data }
-    /* @ts-ignore */
-  } = useSelector<>(state => state?.incomesReducer) || {};
-  const dispatch = useDispatch();
-  const currentPosition = router.route.split('/').pop();
-  const currentDate = new Date();
+  } = useAppSelector(state => state?.incomesReducer) || {};
 
   const handleActiveTab = (tab: string) => {
     router.push(tab);
     setActiveTab(tab);
   };
 
-  const showCreateInEx = ['/incomes', '/expenses'].includes(activeTab);
-
-  const onHandleShowModal = () => {
+  const onVisible = () => {
     dispatch(
       onShowModal({
         isUpdate: false,
@@ -44,28 +44,10 @@ export default function MNavigation() {
     );
   };
 
-  const onhandleSubmit = async (data: Partial<TypeFormPayload>) => {
-    const database = getDatabase();
-    const pathCreate = `${currentPosition}/${generateRandomUUID()}`;
-    const pathEdit = `${currentPosition}/${data.uuid}`;
-    const isPath = isUpdate ? pathEdit : pathCreate;
+  const onSubmit = async (data: any) => {
+    const currentPath = router.route;
 
-    const payload = isUpdate
-      ? { ...data }
-      : { ...data, createdAt: String(currentDate), id: generateRandomUUID() };
-
-    const paramsCreate = set(ref(database, isPath), {
-      ...payload
-    });
-
-    await paramsCreate
-      .then(() => {
-        forms.reset({
-          category: 'internet'
-        });
-        onHandleShowModal();
-      })
-      .catch(error => alert(error));
+    await createValues.pushValue(currentPath, data);
   };
 
   useEffect(() => {
@@ -76,7 +58,7 @@ export default function MNavigation() {
 
   return (
     <React.Fragment>
-      {showCreateInEx && <AButtonCreate onClick={onHandleShowModal} />}
+      {showCTA && <AButtonCreate onClick={onVisible} />}
 
       <section className="fixed md:max-w-[480px] bottom-3  w-full px-2">
         <div className="bg-vampire-black h-18 rounded-[40px] grid grid-cols-5 p-1 space-x-1">
@@ -101,11 +83,7 @@ export default function MNavigation() {
       </section>
 
       {visible && (
-        <MModalForm
-          {...forms}
-          onSubmit={onhandleSubmit}
-          onClick={onHandleShowModal}
-        />
+        <MModalForm {...forms} onSubmit={onSubmit} onClick={onShowModal} />
       )}
     </React.Fragment>
   );
