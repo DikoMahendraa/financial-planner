@@ -1,12 +1,9 @@
 import React from 'react';
 
 import { ICCreate } from '@/components/icons/ICCreate';
+import { TypeAButtonCreate } from '@/types';
 
-type PropsAButtonCreate = {
-  onClick: () => void;
-};
-
-export default function AButtonCreate(props: Partial<PropsAButtonCreate>) {
+export default function AButtonCreate(props: Partial<TypeAButtonCreate>) {
   const { onClick } = props;
 
   return (

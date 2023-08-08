@@ -1,12 +1,7 @@
 import React from 'react';
+import { TypeMCardTarget } from '@/types';
 
-type MCardTarget = {
-  label: string;
-  amount: string;
-  rootStyle?: string;
-};
-
-export default function MCard(props: MCardTarget) {
+export default function MCard(props: TypeMCardTarget) {
   const { label, amount, rootStyle } = props;
 
   const _rootStyle = [

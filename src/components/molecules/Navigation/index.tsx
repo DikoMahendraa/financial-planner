@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { TypeFormPayload } from '@/types';
 import { bottomNavigation } from '@/constants/home';
-import { onShowModal } from '@/redux/features/incomes';
+import { onShowModal } from '@/redux/features/main';
 
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
 import AButtonCreate from '@/components/atoms/ButtonCreate';

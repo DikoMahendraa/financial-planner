@@ -1,52 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { getDatabase, ref, onValue, off, remove } from 'firebase/database';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useAppSelector } from '@/redux/store';
 import moment from 'moment';
 
-import { TypeFormPayload } from '@/types';
-import { useAppSelector } from '@/redux/store';
-import { convertToArray } from '@/utils/converToArray';
-import { convertCurrency } from '@/utils/convertCurrency';
-import { calculateSum } from '@/utils/calculateNumber';
-import { onShowModal } from '@/redux/features/incomes';
 import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
+
+import { TypeFormPayload } from '@/types';
+
+import { onShowModal } from '@/redux/features/main';
+import { convertCurrency } from '@/utils/convertCurrency';
 import { listFilterExpenses } from '@/constants/home';
+import useGetValues from '@/hooks/useGetValues';
+
+type GetValues = {
+  isLoading: boolean;
+  snapshot: any;
+  error: any;
+};
 
 export default function PageExpanses() {
-  const [data, setData] = useState<Array<TypeFormPayload>>([]);
-  const [category, setCategory] = useState<string>('kebutuhan');
-  const [total, setTotal] = useState<number>(0);
-
   const dispatch = useDispatch();
+  const [category, setCategory] = useState<string>('kebutuhan');
+
   const { visible } = useAppSelector(state => state?.incomesReducer.edit) || {};
-  const database = getDatabase();
 
-  useEffect(() => {
-    const databaseRef = ref(database, 'expenses');
-    const onDataChange: any = (snapshot: { val: any }) => {
-      setData(snapshot.val());
-    };
-    onValue(databaseRef, onDataChange);
-    return () => off(databaseRef, onDataChange);
-  }, [database]);
-
-  /* @ts-ignore */
-  const listOfExpense: Array<TypeFormPayload> = convertToArray(data);
-  const getAmount = listOfExpense.map(item => Number(item.amount));
-
-  useEffect(() => {
-    if (getAmount.length > 0) {
-      const convertNumber = Number(calculateSum(getAmount));
-      setTotal(convertNumber);
-    }
-  }, [getAmount]);
-
-  const onRemove = async ({ uuid }: { uuid: string }) => {
-    return await remove(ref(database, `expenses/${uuid}`))
-      .then(() => {})
-      .catch(() => {});
-  };
+  const expenses: GetValues = useGetValues({ path: 'expenses' });
+  const data: Array<TypeFormPayload> = Object.values(expenses.snapshot || {});
 
   const onEdit = async (items: TypeFormPayload) => {
     dispatch(
@@ -58,11 +38,19 @@ export default function PageExpanses() {
     );
   };
 
+  if (expenses.isLoading) {
+    return (
+      <div className="w-full flex items-center justify-center h-screen">
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="h-full px-5 pt-5 mb-48">
+    <div className="h-screen px-5 pt-5 mb-48">
       <HeaderInEx
         title="Daftar Pengeluaran"
-        amount={`Rp. ${convertCurrency(total)}`}
+        amount={`Rp. ${convertCurrency(2132101)}`}
       />
       <hr />
       <div className="mt-4 bg-main-white rounded-3xl border-2 border-vampire-black p-[2px] flex items-center gap-2">
@@ -89,11 +77,11 @@ export default function PageExpanses() {
         })}
       </div>
       <div className="mt-4">
-        {listOfExpense.map((item, index) => {
+        {data?.map((item, index) => {
           return (
             <MCardInEx
               onEdit={() => onEdit(item)}
-              onRemove={() => onRemove(item)}
+              // onRemove={() => onRemove(item)}
               key={index}
               name={item?.name}
               date={moment(item?.date).format('DD MMM YYYY')}

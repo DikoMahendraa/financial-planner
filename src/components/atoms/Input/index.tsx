@@ -1,18 +1,7 @@
 import React from 'react';
+import { TypePropsAInput } from '@/types';
 
-type PropsAInput = {
-  label: string;
-  rootStyle: string;
-  placeholder: string;
-  suffix: string;
-  prefix: string;
-  name: string;
-  onChange: () => void;
-  rest: any;
-  type: 'text' | 'date' | 'number';
-};
-
-export default function AInput(props: Partial<PropsAInput>) {
+export default function AInput(props: Partial<TypePropsAInput>) {
   const {
     label,
     placeholder,

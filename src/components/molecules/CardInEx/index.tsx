@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { TypeMCardInEx } from '@/types';
 import AChips from '@/components/atoms/Chips';
+import { TypeMCardInEx } from '@/types';
 import { ICTrash } from '@/components/icons/ICTrash';
 
 export default function MCardInEx(props: Partial<TypeMCardInEx>) {

@@ -1,11 +1,7 @@
 import React from 'react';
+import { TypeMHeaderInEx } from '@/types';
 
-type PropsHeaderInEx = {
-  title: string;
-  amount: string;
-};
-
-export default function MHeaderInEx(props: Partial<PropsHeaderInEx>) {
+export default function MHeaderInEx(props: Partial<TypeMHeaderInEx>) {
   const { title, amount } = props;
 
   return (

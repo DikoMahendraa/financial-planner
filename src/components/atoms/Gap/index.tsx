@@ -1,11 +1,6 @@
 import React from 'react';
+import { TypeAGap } from '@/types';
 
-export default function AGap({
-  height,
-  width
-}: {
-  height?: string | number;
-  width?: string | number;
-}) {
+export default function AGap({ height, width }: Partial<TypeAGap>) {
   return <div style={{ width, height }} />;
 }

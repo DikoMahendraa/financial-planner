@@ -1,11 +1,7 @@
 import React from 'react';
+import { TypeAChips } from '@/types';
 
-type AChips = {
-  rootStyle: string;
-  name: string;
-};
-
-export default function AChips(props: Partial<AChips>) {
+export default function AChips(props: Partial<TypeAChips>) {
   const { name, rootStyle } = props;
 
   const setColorChips = (() => {

@@ -1,11 +1,8 @@
 import React from 'react';
 import { ICAvatarProfile } from '@/components/icons/ICAvatarProfile';
+import { TypeMHeaderProfile } from '@/types';
 
-type PropsHeaderProfile = {
-  name: string;
-};
-
-export default function MHeaderProfile(props: Partial<PropsHeaderProfile>) {
+export default function MHeaderProfile(props: Partial<TypeMHeaderProfile>) {
   const { name } = props;
 
   return (
