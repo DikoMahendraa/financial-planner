@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
+import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from '@/redux/store';
-import moment from 'moment';
+
+import { TypeFormPayload } from '@/types';
+import useGetValues from '@/hooks/useGetValues';
+import { listFilterIncomes } from '@/constants/home';
+import useRemoveValues from '@/hooks/useRemoveValues';
+import { convertCurrency } from '@/utils/convertCurrency';
+import { convertToArray } from '@/utils/convertToArray';
+import { onShowModal } from '@/redux/features/main';
 
 import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
-
-import { TypeFormPayload } from '@/types';
-
-import { onShowModal } from '@/redux/features/main';
-import { convertCurrency } from '@/utils/convertCurrency';
-import { listFilterIncomes } from '@/constants/home';
-import useGetValues from '@/hooks/useGetValues';
-import useRemoveValues from '@/hooks/useRemoveValues';
-import { convertToArray } from '@/utils/convertToArray';
 import MEmptyState from '@/components/molecules/EmptyData';
 import { ANLoading } from '@/components/animations/ANLoading';
+import AButtonCreate from '@/components/atoms/ButtonCreate';
 
 type GetValues = {
   isLoading: boolean;
@@ -50,6 +50,16 @@ export default function PageIncomes() {
     await removeExpense.removeValue(path);
   };
 
+  const onVisible = () => {
+    dispatch(
+      onShowModal({
+        isUpdate: false,
+        data: {},
+        visible: !visible
+      })
+    );
+  };
+
   if (incomes.isLoading) {
     return (
       <div className="w-full flex items-center justify-center h-screen">
@@ -59,57 +69,62 @@ export default function PageIncomes() {
   }
 
   if (incomes.isEmpty) {
-    return <MEmptyState title="Pemasukan" onClick={() => {}} />;
+    return <MEmptyState title="Pemasukan" onClick={onVisible} />;
   }
 
   return (
-    <div className="h-screen px-5 pt-5 mb-48">
-      <HeaderInEx
-        title="Daftar Pemasukan"
-        amount={`Rp. ${convertCurrency(total)}`}
-      />
-      <hr />
-      <div className="mt-4 bg-main-white rounded-3xl border-2 border-vampire-black p-[2px] flex items-center gap-2">
-        {listFilterIncomes.map(item => {
-          const isActiveTab = item === category;
-          const setBackground = isActiveTab
-            ? 'bg-earth-yellow'
-            : 'bg-main-white';
-          const setColor = isActiveTab
-            ? 'text-white'
-            : 'text-vampire-black font-semibold';
+    <React.Fragment>
+      <AButtonCreate onClick={onVisible} />
+      <div className="h-screen px-5 pt-5 mb-48">
+        <HeaderInEx
+          title="Daftar Pemasukan"
+          amount={`Rp. ${convertCurrency(total)}`}
+        />
+        <hr />
+        <div className="mt-4 bg-main-white rounded-3xl border-2 border-vampire-black p-[2px] flex items-center gap-2">
+          {listFilterIncomes.map(item => {
+            const isActiveTab = item === category;
+            const setBackground = isActiveTab
+              ? 'bg-earth-yellow'
+              : 'bg-main-white';
+            const setColor = isActiveTab
+              ? 'text-white'
+              : 'text-vampire-black font-semibold';
 
-          return (
-            <div
-              key={item}
-              onClick={() => setCategory(item)}
-              className={`${setBackground} rounded-3xl w-1/2 cursor-pointer`}
-            >
-              <p className={`${setColor} text-sm text-center py-2 capitalize`}>
-                {item}
-              </p>
-            </div>
-          );
-        })}
+            return (
+              <div
+                key={item}
+                onClick={() => setCategory(item)}
+                className={`${setBackground} rounded-3xl w-1/2 cursor-pointer`}
+              >
+                <p
+                  className={`${setColor} text-sm text-center py-2 capitalize`}
+                >
+                  {item}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="mt-4">
+          {data?.map((item, index) => {
+            return (
+              <MCardInEx
+                key={index}
+                onRemove={() => onRemove(item)}
+                type="expense"
+                variant="small"
+                name={item?.name}
+                date={moment(item?.date).format('DD MMM YYYY')}
+                amount={convertCurrency(item.amount)}
+                category={item?.category}
+                showLabel={false}
+                onEdit={() => onEdit(item)}
+              />
+            );
+          })}
+        </div>
       </div>
-      <div className="mt-4">
-        {data?.map((item, index) => {
-          return (
-            <MCardInEx
-              key={index}
-              onRemove={() => onRemove(item)}
-              type="expense"
-              variant="small"
-              name={item?.name}
-              date={moment(item?.date).format('DD MMM YYYY')}
-              amount={convertCurrency(item.amount)}
-              category={item?.category}
-              showLabel={false}
-              onEdit={() => onEdit(item)}
-            />
-          );
-        })}
-      </div>
-    </div>
+    </React.Fragment>
   );
 }

@@ -4,14 +4,13 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import { TypeFormPayload } from '@/types';
+import { useAppSelector } from '@/redux/store';
 import { bottomNavigation } from '@/constants/home';
 import { onShowModal } from '@/redux/features/main';
+import useCreateValues from '@/hooks/useCreateValues';
 
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
-import AButtonCreate from '@/components/atoms/ButtonCreate';
 import { MModalForm } from '@/components/molecules/ModalForm';
-import { useAppSelector } from '@/redux/store';
-import useCreateValues from '@/hooks/useCreateValues';
 
 export default function MNavigation() {
   const router = useRouter();
@@ -22,11 +21,9 @@ export default function MNavigation() {
 
   const createValues = useCreateValues();
 
-  const showCTA = ['/incomes', '/expenses'].includes(activeTab);
   const currentPath = router.route.split('/').pop();
 
   const {
-    isUpdate,
     edit: { visible, data }
   } = useAppSelector(state => state?.incomesReducer) || {};
 
@@ -57,8 +54,6 @@ export default function MNavigation() {
 
   return (
     <React.Fragment>
-      {showCTA && <AButtonCreate onClick={onVisible} />}
-
       <section className="fixed md:max-w-[480px] bottom-3  w-full px-2">
         <div className="bg-vampire-black h-18 rounded-[40px] grid grid-cols-5 p-1 space-x-1">
           {bottomNavigation.map((item, key) => {
