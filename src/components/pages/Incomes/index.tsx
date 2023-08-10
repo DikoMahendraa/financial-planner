@@ -16,6 +16,7 @@ import HeaderInEx from '@/components/molecules/HeaderInEx';
 import MEmptyState from '@/components/molecules/EmptyData';
 import { ANLoading } from '@/components/animations/ANLoading';
 import AButtonCreate from '@/components/atoms/ButtonCreate';
+import { calculateSum } from '@/utils/calculateNumber';
 
 type GetValues = {
   isLoading: boolean;
@@ -26,7 +27,6 @@ type GetValues = {
 
 export default function PageIncomes() {
   const [category, setCategory] = useState<string>('gajian');
-  const [total, setTotal] = useState<number>(0);
 
   const dispatch = useDispatch();
   const { visible } = useAppSelector(state => state?.incomesReducer.edit) || {};
@@ -34,6 +34,7 @@ export default function PageIncomes() {
   const incomes: GetValues = useGetValues({ path: 'incomes' });
   const removeExpense = useRemoveValues();
   const data: Array<TypeFormPayload> = convertToArray(incomes.snapshot || {});
+  const getAmount = data.map(item => Number(item.amount));
 
   const onEdit = async (items: TypeFormPayload) => {
     dispatch(
@@ -78,7 +79,7 @@ export default function PageIncomes() {
       <div className="h-screen px-5 pt-5 mb-48">
         <HeaderInEx
           title="Daftar Pemasukan"
-          amount={`Rp. ${convertCurrency(total)}`}
+          amount={`Rp. ${convertCurrency(calculateSum(getAmount))}`}
         />
         <hr />
         <div className="mt-4 bg-main-white rounded-3xl border-2 border-vampire-black p-[2px] flex items-center gap-2">

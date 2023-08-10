@@ -16,6 +16,7 @@ import HeaderInEx from '@/components/molecules/HeaderInEx';
 import { ANLoading } from '@/components/animations/ANLoading';
 import MEmptyState from '@/components/molecules/EmptyData';
 import AButtonCreate from '@/components/atoms/ButtonCreate';
+import { calculateSum } from '@/utils/calculateNumber';
 
 type GetValues = {
   isLoading: boolean;
@@ -33,6 +34,7 @@ export default function PageExpanses() {
   const expenses: GetValues = useGetValues({ path: 'expenses' });
   const removeExpense = useRemoveValues();
   const data: Array<TypeFormPayload> = convertToArray(expenses.snapshot || {});
+  const getAmount = data.map(item => Number(item.amount));
 
   const onEdit = async (items: TypeFormPayload) => {
     dispatch(
@@ -77,7 +79,7 @@ export default function PageExpanses() {
       <div className="h-screen px-5 pt-5 mb-48">
         <HeaderInEx
           title="Daftar Pengeluaran"
-          amount={`Rp. ${convertCurrency(2132101)}`}
+          amount={`Rp. ${convertCurrency(calculateSum(getAmount))}`}
         />
         <hr />
         <div className="mt-4 bg-main-white rounded-3xl border-2 border-vampire-black p-[2px] flex items-center gap-2">

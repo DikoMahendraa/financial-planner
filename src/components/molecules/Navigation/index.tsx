@@ -25,7 +25,7 @@ export default function MNavigation() {
 
   const createValues = useCreateValues();
 
-  const currentPath = router.route.split('/').pop();
+  const currentPath = router.route?.split('/').pop();
 
   const listCategory = currentPath?.includes('expenses')
     ? listCategoryExpenses
