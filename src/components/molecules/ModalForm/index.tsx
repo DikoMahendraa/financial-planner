@@ -59,19 +59,19 @@ export const MModalForm = ({ ...props }) => {
               <Controller
                 control={props.control}
                 name="category"
-                defaultValue="internet"
+                defaultValue={props.defaultValue}
                 render={({ field: { onChange, ...rest } }) => (
                   <select
                     {...rest}
-                    defaultValue="internet"
                     onChange={onChange}
                     placeholder="Select Category"
-                    className="block w-full cursor-pointer mt-1 appearance-none bg-white rounded-md border-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                    className="block w-full capitalize cursor-pointer mt-1 appearance-none bg-white rounded-md border-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   >
-                    <option value="internet">Internet</option>
-                    <option value="jajan">Jajan</option>
-                    <option value="kebutuhan">Kebutuhan</option>
-                    <option value="gajian">Gajian</option>
+                    {props.category.map((item: string, key: number) => (
+                      <option value={item} key={key} className="capitalize">
+                        {item}
+                      </option>
+                    ))}
                   </select>
                 )}
               />

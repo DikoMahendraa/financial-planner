@@ -29,5 +29,13 @@ const bottomNavigation: Array<TypeBottomNavigation> = [
 
 const listFilterExpenses = ['pulsa', 'kebutuhan', 'jajan', 'lainnya'];
 const listFilterIncomes = ['gajian', 'tabungan', 'investasi', 'lainnya'];
+const listCategoryExpenses = ['pulsa', 'kebutuhan', 'jajan', 'lainnya'];
+const listCategoryIncomes = ['gajian', 'tabungan', 'investasi', 'lainnya'];
 
-export { bottomNavigation, listFilterExpenses, listFilterIncomes };
+export {
+  bottomNavigation,
+  listFilterExpenses,
+  listFilterIncomes,
+  listCategoryExpenses,
+  listCategoryIncomes
+};

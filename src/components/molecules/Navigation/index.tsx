@@ -5,7 +5,11 @@ import { useDispatch } from 'react-redux';
 
 import { TypeFormPayload } from '@/types';
 import { useAppSelector } from '@/redux/store';
-import { bottomNavigation } from '@/constants/home';
+import {
+  bottomNavigation,
+  listCategoryExpenses,
+  listCategoryIncomes
+} from '@/constants/home';
 import { onShowModal } from '@/redux/features/main';
 import useCreateValues from '@/hooks/useCreateValues';
 
@@ -22,6 +26,14 @@ export default function MNavigation() {
   const createValues = useCreateValues();
 
   const currentPath = router.route.split('/').pop();
+
+  const listCategory = currentPath?.includes('expenses')
+    ? listCategoryExpenses
+    : listCategoryIncomes;
+
+  const defaultCategory = currentPath?.includes('expenses')
+    ? 'kebutuhan'
+    : 'gajian';
 
   const {
     edit: { visible, data }
@@ -79,6 +91,8 @@ export default function MNavigation() {
       {visible && (
         <MModalForm
           {...forms}
+          category={listCategory}
+          defaultValue={defaultCategory}
           label={currentPath}
           onSubmit={onSubmit}
           onCancel={onVisible}
