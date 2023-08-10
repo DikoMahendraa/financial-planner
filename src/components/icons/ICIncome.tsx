@@ -1,16 +1,18 @@
 import React from 'react';
 
-export const ICIncome = () => {
+export const ICIncome = (
+  props: React.JSX.IntrinsicAttributes & React.SVGProps<SVGSVGElement>
+) => {
   return (
     <svg
-      width="34"
-      height="34"
-      viewBox="0 0 34 34"
-      fill="none"
+      {...props}
+      width={props.width}
+      height={props.height}
+      viewBox={`0 0 ${props.width} ${props.height}`}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="34" height="34" fill="url(#icIncome)" />
+      <rect width={props.width} height={props.height} fill="url(#icIncome)" />
       <defs>
         <pattern
           id="icIncome"

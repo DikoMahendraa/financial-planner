@@ -1,3 +1,5 @@
+import React from 'react';
+
 export type TypeFormPayload = {
   amount: number;
   date: string;
@@ -11,6 +13,9 @@ export type TypeMCardTarget = {
   label: string;
   amount: string;
   rootStyle?: string;
+  withIcon?: boolean;
+  status?: 'increase' | 'decrease';
+  children?: React.ReactNode;
 };
 
 export type TypeMHeaderInEx = {
@@ -51,6 +56,7 @@ export type TypeButtonNavigation = {
 
 export type TypeAButton = {
   name: string;
+  icon: React.ReactNode;
   rootStyle: string;
   onClick: () => void;
   type: 'button' | 'submit' | 'reset' | undefined;
