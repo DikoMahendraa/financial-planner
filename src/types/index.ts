@@ -12,6 +12,7 @@ export type TypeFormPayload = {
 export type TypeMCardTarget = {
   label: string;
   amount: string;
+  type?: 'small' | 'large' | 'medium';
   rootStyle?: string;
   withIcon?: boolean;
   status?: 'increase' | 'decrease';

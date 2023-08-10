@@ -26,7 +26,7 @@ export default function MCardInEx(props: Partial<TypeMCardInEx>) {
   };
 
   return (
-    <div className="bg-main-white rounded-2xl mt-2 border-vampire-black border-2 p-4 flex justify-between items-center">
+    <div className="border-2 border-b-4 border-r-4 border-black rounded-md shadow-lg gap-2 bg-main-white mt-2 p-3 flex justify-between items-center">
       <div className="w-full">
         {showLabel && (
           <p className={[style.label, 'capitalize'].join(' ')}>{label}</p>

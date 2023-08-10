@@ -83,12 +83,12 @@ export const MModalForm = ({ ...props }) => {
               type="reset"
               onClick={props.onCancel}
               name="Cancel"
-              rootStyle="bg-gray-platinum"
+              rootStyle="border border-b-4 border-r-4 rounded-md border-black bg-gray-platinum"
             />
             <AButton
               type="submit"
               name="Create"
-              rootStyle="bg-majorelle-blue text-main-white"
+              rootStyle="border border-b-4 border-r-4 rounded-md border-black py-2 bg-majorelle-blue text-main-white"
             />
           </div>
         </form>

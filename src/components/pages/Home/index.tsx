@@ -30,7 +30,6 @@ const SectionListExpenseIncome = ({ ...props }) => {
         <MCardInEx
           key={key}
           variant="small"
-          type="gajian"
           category={item.category}
           name={item.name}
           amount={convertCurrency(item.amount)}
@@ -50,8 +49,18 @@ const SectionCardTarget = ({
 }) => {
   return (
     <section className="grid grid-cols-2 px-5 mt-2 space-x-2">
-      <MCard label="Total Pengeluaran" amount={String(totalExpense)} />
-      <MCard label="Total Pemasukan" amount={String(totalIncomes)} />
+      <MCard
+        type="medium"
+        rootStyle="border border-b-4 border-r-4 border-black rounded-md shadow-lg items-center gap-2"
+        label="Total Pengeluaran"
+        amount={String(totalExpense)}
+      />
+      <MCard
+        type="medium"
+        rootStyle="border border-b-4 border-r-4 border-black rounded-md shadow-lg items-center gap-2"
+        label="Total Pemasukan"
+        amount={String(totalIncomes)}
+      />
     </section>
   );
 };
@@ -64,7 +73,8 @@ const SectionMainCard = ({
   minus: boolean;
 }) => {
   const convertTo = convertCurrency(Number(amount));
-  const ifMinus = minus
+  const isIncrease = minus ? 'decrease' : 'increase';
+  const notes = minus
     ? `Wah, SALDO kamu minus nih, coba muhasabah pengeluaranmu`
     : 'Hore, pengeluaranmu stabil, jangan lupa menabung';
   const styleBtn =
@@ -74,13 +84,13 @@ const SectionMainCard = ({
     <section className="px-5 pt-5">
       <MCard
         withIcon
-        status="decrease"
+        status={isIncrease}
         label="Sisa Uangmu"
         amount={String(convertTo)}
         rootStyle="h-52 flex flex-col justify-between"
       >
         <div>
-          <p className="text-xs italic">{ifMinus}</p>
+          <p className="text-xs italic">{notes}</p>
         </div>
         <div className="flex gap-4">
           <AButton
