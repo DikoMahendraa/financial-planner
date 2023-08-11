@@ -82,7 +82,7 @@ export default function PageIncomes() {
           amount={`Rp. ${convertCurrency(calculateSum(getAmount))}`}
         />
         <hr />
-        <div className="mt-4 bg-main-white rounded-3xl border-2 border-vampire-black p-[2px] flex items-center gap-2">
+        <div className="mt-4 bg-main-white rounded-md border-2 border-b-4 border-r-4 border-vampire-black p-[2px] flex items-center gap-2">
           {listFilterIncomes.map(item => {
             const isActiveTab = item === category;
             const setBackground = isActiveTab
@@ -96,7 +96,7 @@ export default function PageIncomes() {
               <div
                 key={item}
                 onClick={() => setCategory(item)}
-                className={`${setBackground} rounded-3xl w-1/2 cursor-pointer`}
+                className={`${setBackground} rounded-md w-1/2 cursor-pointer`}
               >
                 <p
                   className={`${setColor} text-sm text-center py-2 capitalize`}
