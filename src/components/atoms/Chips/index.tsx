@@ -22,7 +22,7 @@ export default function AChips(props: Partial<TypeAChips>) {
   const _rootStyle = [
     rootStyle,
     setColorChips,
-    'text-xs px-2 py-1 rounded-full text-main-white capitalize'
+    'text-xs px-2 py-1 rounded border border-r-2 border-b-2 border-vampire-black  text-main-white capitalize'
   ].join(' ');
 
   return <p className={_rootStyle}>{name}</p>;

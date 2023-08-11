@@ -23,7 +23,7 @@ const SectionProfile = () => {
 
 const SectionListExpenseIncome = ({ ...props }) => {
   return (
-    <section className="px-5 mt-6 mb-10">
+    <section className="px-5 mt-6 pb-24">
       <p className="mb-5 font-bold text-lg">Pengeluaran / Pemasukan Terbaru</p>
 
       {props.data.map((item: TypeResponse, key: number) => (
@@ -131,13 +131,15 @@ export default function HomePage() {
   const allData: Array<TypeResponse> = dataIncomes.concat(dataIexpenses) || [];
 
   return (
-    <div className="h-screen mb-48">
-      <SectionProfile />
-      <SectionMainCard minus={isMinus} amount={balanceAmount} />
-      <SectionCardTarget
-        totalIncomes={convertCurrency(calculateSum(getAmountIncomes))}
-        totalExpense={convertCurrency(calculateSum(getAmountExpenses))}
-      />
+    <div className="bg-aero-blue">
+      <div className="sticky top-0 bg-aero-blue">
+        <SectionProfile />
+        <SectionMainCard minus={isMinus} amount={balanceAmount} />
+        <SectionCardTarget
+          totalIncomes={convertCurrency(calculateSum(getAmountIncomes))}
+          totalExpense={convertCurrency(calculateSum(getAmountExpenses))}
+        />
+      </div>
       <SectionListExpenseIncome data={allData} />
     </div>
   );

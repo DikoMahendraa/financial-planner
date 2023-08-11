@@ -8,8 +8,8 @@ type PropsMainLayout = {
 export default function MainLayout(props: PropsMainLayout) {
   const { children } = props;
   return (
-    <main className="h-full">
-      <div className="md:w-[480px] overflow-hidden w-full h-full m-auto relative bg-aero-blue">
+    <main>
+      <div className="h-screen bg-aero-blue md:w-[480px] w-full m-auto">
         {children}
         <MNavigation />
       </div>

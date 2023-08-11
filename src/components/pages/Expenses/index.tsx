@@ -76,38 +76,40 @@ export default function PageExpanses() {
   return (
     <React.Fragment>
       <AButtonCreate onClick={onVisible} />
-      <div className="h-screen px-5 pt-5 mb-48">
-        <HeaderInEx
-          title="Daftar Pengeluaran"
-          amount={`Rp. ${convertCurrency(calculateSum(getAmount))}`}
-        />
-        <hr />
-        <div className="mt-4 bg-main-white rounded-md border-2 border-b-4 border-r-4 border-vampire-black p-[2px] flex items-center gap-2">
-          {listFilterExpenses.map(item => {
-            const isActiveTab = item === category;
-            const setBackground = isActiveTab
-              ? 'bg-majorelle-blue'
-              : 'bg-main-white';
-            const setColor = isActiveTab
-              ? 'text-white'
-              : 'text-vampire-black font-semibold';
+      <div className="px-5 pt-5 bg-aero-blue">
+        <div className="sticky top-0 bg-aero-blue">
+          <HeaderInEx
+            title="Daftar Pengeluaran"
+            amount={`Rp. ${convertCurrency(calculateSum(getAmount))}`}
+          />
+          <hr />
+          <div className="mt-4 bg-main-white rounded-md border-2 border-b-4 border-r-4 border-vampire-black p-[2px] flex items-center gap-2">
+            {listFilterExpenses.map(item => {
+              const isActiveTab = item === category;
+              const setBackground = isActiveTab
+                ? 'bg-majorelle-blue'
+                : 'bg-main-white';
+              const setColor = isActiveTab
+                ? 'text-white'
+                : 'text-vampire-black font-semibold';
 
-            return (
-              <div
-                key={item}
-                onClick={() => setCategory(item)}
-                className={`${setBackground} rounded-md w-1/2 cursor-pointer`}
-              >
-                <p
-                  className={`${setColor} text-sm text-center py-2 capitalize`}
+              return (
+                <div
+                  key={item}
+                  onClick={() => setCategory(item)}
+                  className={`${setBackground} rounded-md w-1/2 cursor-pointer`}
                 >
-                  {item}
-                </p>
-              </div>
-            );
-          })}
+                  <p
+                    className={`${setColor} text-sm text-center py-2 capitalize`}
+                  >
+                    {item}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 h-full bg-aero-blue pb-24">
           {data?.map((item, index) => {
             return (
               <MCardInEx
