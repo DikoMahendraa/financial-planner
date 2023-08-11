@@ -6,8 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "format": "lint --write .",
-    "lint": "lint --check ."
+    "lint": "next lint",
+    "prepare": "husky install",
+    "pre-commit": "npm run lint --fix && git add ."
   },
   "engines": {
     "node": ">=16.0.0",
@@ -28,6 +29,15 @@
     "react-hook-form": "7.34.2",
     "react-redux": "^8.1.2",
     "typescript": "5.1.6"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": "eslint"
+  },
+
+"husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
