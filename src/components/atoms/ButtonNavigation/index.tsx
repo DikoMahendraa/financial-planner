@@ -23,11 +23,11 @@ export default function AButtonNavigation(
     switch (label) {
       case 'home':
         return <ICHome />;
-      case 'income':
-        return <ICIncome />;
-      case 'expenses':
-        return <ICExpense />;
-      case 'settings':
+      case 'pengeluaran':
+        return <ICIncome width={34} height={34} />;
+      case 'pemasukan':
+        return <ICExpense width={34} height={34} />;
+      case 'pengaturan':
       default:
         return <ICSetting />;
     }

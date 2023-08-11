@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { child, ref, get } from 'firebase/database';
 import { database } from '@/services/firebaseApp';
 
@@ -12,7 +12,7 @@ export default function useGetValues({ path }: UseGetValues) {
   const error = useRef(null);
   const isEmpty = useRef(false);
 
-  const getValue = async () => {
+  const getValue = useCallback(async () => {
     try {
       const rootReference = ref(database);
       const dbGet = await get(child(rootReference, path));
@@ -27,11 +27,11 @@ export default function useGetValues({ path }: UseGetValues) {
     }
 
     setIsLoading(false);
-  };
+  }, [path]);
 
   useEffect(() => {
     getValue();
-  }, []);
+  }, [getValue]);
 
   return {
     isLoading,
