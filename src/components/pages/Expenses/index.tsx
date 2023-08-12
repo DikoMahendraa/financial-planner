@@ -7,8 +7,9 @@ import { TypeFormPayload } from '@/types';
 import { onShowModal } from '@/redux/features/main';
 import { convertToArray } from '@/utils/convertToArray';
 import { convertCurrency } from '@/utils/convertCurrency';
-import { listFilterExpenses } from '@/constants/home';
+import { listCategoryExpenses, listFilterExpenses } from '@/constants/home';
 import useRemoveValues from '@/hooks/useRemoveValues';
+
 import useGetValues from '@/hooks/useGetValues';
 
 import MCardInEx from '@/components/molecules/CardInEx';
@@ -17,6 +18,7 @@ import { ANLoading } from '@/components/animations/ANLoading';
 import MEmptyState from '@/components/molecules/EmptyData';
 import AButtonCreate from '@/components/atoms/ButtonCreate';
 import { calculateSum } from '@/utils/calculateNumber';
+import ChartComponent from '@/components/molecules/Chart';
 
 type GetValues = {
   isLoading: boolean;
@@ -77,6 +79,9 @@ export default function PageExpanses() {
     <React.Fragment>
       <AButtonCreate onClick={onVisible} />
       <div className="px-5 pt-5 bg-aero-blue">
+        <ChartComponent
+          labels={listCategoryExpenses.map((item: string) => item)}
+        />
         <div className="sticky top-0 bg-aero-blue">
           <HeaderInEx
             title="Daftar Pengeluaran"

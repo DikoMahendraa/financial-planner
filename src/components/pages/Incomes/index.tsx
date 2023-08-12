@@ -5,7 +5,7 @@ import { useAppSelector } from '@/redux/store';
 
 import { TypeFormPayload } from '@/types';
 import useGetValues from '@/hooks/useGetValues';
-import { listFilterIncomes } from '@/constants/home';
+import { listCategoryIncomes, listFilterIncomes } from '@/constants/home';
 import useRemoveValues from '@/hooks/useRemoveValues';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { convertToArray } from '@/utils/convertToArray';
@@ -17,6 +17,7 @@ import MEmptyState from '@/components/molecules/EmptyData';
 import { ANLoading } from '@/components/animations/ANLoading';
 import AButtonCreate from '@/components/atoms/ButtonCreate';
 import { calculateSum } from '@/utils/calculateNumber';
+import ChartComponent from '@/components/molecules/Chart';
 
 type GetValues = {
   isLoading: boolean;
@@ -77,6 +78,9 @@ export default function PageIncomes() {
     <React.Fragment>
       <AButtonCreate onClick={onVisible} />
       <div className="px-5 pt-5 bg-aero-blue">
+        <ChartComponent
+          labels={listCategoryIncomes.map((item: string) => item)}
+        />
         <div className="sticky top-0 bg-aero-blue">
           <HeaderInEx
             title="Daftar Pemasukan"
