@@ -10,6 +10,7 @@ export type TypeFormPayload = {
 };
 
 export type TypeMCardTarget = {
+  isEmpty?: boolean;
   label: string;
   amount: string;
   type?: 'small' | 'large' | 'medium';
@@ -95,4 +96,16 @@ export type TypeResponse = {
   name: string;
   category: string;
   createdAt: string;
+};
+
+export type TypeEmptyData = {
+  title: string;
+  onClick: () => void;
+  rootStyle: string;
+  description: React.ReactNode;
+  actionBtn: boolean;
+  illustration: Partial<{
+    height: number;
+    width: number;
+  }>;
 };

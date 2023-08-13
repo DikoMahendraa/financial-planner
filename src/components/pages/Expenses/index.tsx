@@ -72,7 +72,16 @@ export default function PageExpanses() {
   }
 
   if (expenses.isEmpty) {
-    return <MEmptyState title="Pengeluaran" onClick={onVisible} />;
+    return (
+      <MEmptyState
+        rootStyle="h-screen"
+        title="Pengeluaran"
+        description={
+          <p className="italic mb-4 text-gray-600">Belum ada pengeluaran</p>
+        }
+        onClick={onVisible}
+      />
+    );
   }
 
   return (

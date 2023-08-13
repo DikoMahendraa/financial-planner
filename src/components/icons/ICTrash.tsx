@@ -10,10 +10,10 @@ export const ICTrash = () => {
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
     >
-      <rect width="28" height="28" fill="url(#pattern0)" />
+      <rect width="28" height="28" fill="url(#icTrash)" />
       <defs>
         <pattern
-          id="pattern0"
+          id="icTrash"
           patternContentUnits="objectBoundingBox"
           width="1"
           height="1"

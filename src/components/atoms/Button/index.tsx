@@ -6,12 +6,12 @@ export default function AButton(props: Partial<TypeAButton>) {
 
   const _rootStyle = [
     rootStyle,
-    'border-2 w-full border-vampire-black capitalize'
+    'border-2 w-full border-vampire-black capitalize gap-2'
   ].join(' ');
 
   return (
     <button type={type} onClick={onClick} className={_rootStyle}>
-      {icon} {name}
+      {icon} <p>{name}</p>
     </button>
   );
 }

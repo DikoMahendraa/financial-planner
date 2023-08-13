@@ -71,7 +71,16 @@ export default function PageIncomes() {
   }
 
   if (incomes.isEmpty) {
-    return <MEmptyState title="Pemasukan" onClick={onVisible} />;
+    return (
+      <MEmptyState
+        rootStyle="h-screen"
+        description={
+          <p className="italic mb-4 text-gray-600">Belum ada pemasukan</p>
+        }
+        title="Pemasukan"
+        onClick={onVisible}
+      />
+    );
   }
 
   return (

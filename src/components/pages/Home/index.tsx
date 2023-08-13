@@ -8,10 +8,13 @@ import useGetValues from '@/hooks/useGetValues';
 import MCardInEx from '@/components/molecules/CardInEx';
 import MCard from '@/components/molecules/Card';
 import MHeaderProfile from '@/components/molecules/HeaderProfile';
-import { calculateSum } from '@/utils/calculateNumber';
 import AButton from '@/components/atoms/Button';
+
+import { calculateSum } from '@/utils/calculateNumber';
 import { ICExpense } from '@/components/icons/ICExpanse';
 import { ICIncome } from '@/components/icons/ICIncome';
+import { SALDO_DECREASE, SALDO_EMPTY, SALDO_INCREASE } from '@/constants/home';
+import MEmptyState from '@/components/molecules/EmptyData';
 
 const SectionProfile = () => {
   return (
@@ -26,6 +29,16 @@ const SectionListExpenseIncome = ({ ...props }) => {
     <section className="px-5 mt-6 pb-24">
       <p className="mb-5 font-bold text-lg">Pengeluaran / Pemasukan Terbaru</p>
 
+      {props.isEmpty && (
+        <MEmptyState
+          actionBtn={false}
+          illustration={{ height: 300, width: 200 }}
+          onClick={() => {}}
+          description={
+            <p className="italic">Tidak ada pengeluaran atau pemasukan</p>
+          }
+        />
+      )}
       {props.data.map((item: TypeResponse, key: number) => (
         <MCardInEx
           key={key}
@@ -74,16 +87,17 @@ const SectionMainCard = ({
 }) => {
   const convertTo = convertCurrency(Number(amount));
   const isIncrease = minus ? 'decrease' : 'increase';
-  const notes = minus
-    ? `Wah, SALDO kamu minus nih, coba muhasabah pengeluaranmu`
-    : 'Hore, pengeluaranmu stabil, jangan lupa menabung';
+  const isEmpty = amount === 0;
+  const amountNotEmpty = minus ? SALDO_DECREASE : SALDO_INCREASE;
+  const notes = isEmpty ? SALDO_EMPTY : amountNotEmpty;
   const styleBtn =
-    'px-5 py-2 border border-b-4 border-r-4 border-black rounded-md shadow-lg text-main-white flex items-center gap-2';
+    'py-2 pl-2 border border-b-4 border-r-4 border-black rounded-md shadow-lg text-main-white flex items-center md:text-md text-xs';
 
   return (
     <section className="px-5 pt-5">
       <MCard
         withIcon
+        isEmpty={isEmpty}
         status={isIncrease}
         label="Sisa Uangmu"
         amount={String(convertTo)}
@@ -92,7 +106,7 @@ const SectionMainCard = ({
         <div>
           <p className="text-xs italic">{notes}</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex md:gap-4 gap-2">
           <AButton
             rootStyle={`${styleBtn} bg-majorelle-blue `}
             name="Pengeluaran"
@@ -130,17 +144,20 @@ export default function HomePage() {
 
   const allData: Array<TypeResponse> = dataIncomes.concat(dataIexpenses) || [];
 
+  const isEmpty = allData.length === 0;
+
   return (
     <div className="bg-aero-blue">
       <div className="sticky top-0 bg-aero-blue">
         <SectionProfile />
         <SectionMainCard minus={isMinus} amount={balanceAmount} />
-        <SectionCardTarget
-          totalIncomes={convertCurrency(calculateSum(getAmountIncomes))}
-          totalExpense={convertCurrency(calculateSum(getAmountExpenses))}
-        />
       </div>
-      <SectionListExpenseIncome data={allData} />
+      <SectionCardTarget
+        totalIncomes={convertCurrency(calculateSum(getAmountIncomes))}
+        totalExpense={convertCurrency(calculateSum(getAmountExpenses))}
+      />
+
+      <SectionListExpenseIncome isEmpty={isEmpty} data={allData} />
     </div>
   );
 }

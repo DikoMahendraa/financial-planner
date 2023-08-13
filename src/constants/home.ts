@@ -32,10 +32,18 @@ const listFilterIncomes = ['gajian', 'tabungan', 'investasi', 'lainnya'];
 const listCategoryExpenses = ['pulsa', 'kebutuhan', 'jajan', 'lainnya'];
 const listCategoryIncomes = ['gajian', 'tabungan', 'investasi', 'lainnya'];
 
+const SALDO_INCREASE = 'Hore, pengeluaranmu stabil, jangan lupa menabung';
+const SALDO_DECREASE =
+  'Wah, SALDO kamu minus nih, coba muhasabah pengeluaranmu';
+const SALDO_EMPTY = 'Hm, kamu belum buat pemasukanmu nih.';
+
 export {
   bottomNavigation,
   listFilterExpenses,
   listFilterIncomes,
   listCategoryExpenses,
-  listCategoryIncomes
+  listCategoryIncomes,
+  SALDO_INCREASE,
+  SALDO_DECREASE,
+  SALDO_EMPTY
 };

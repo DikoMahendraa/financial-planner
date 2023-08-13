@@ -1,28 +1,41 @@
 import React from 'react';
 import Image from 'next/image';
 import AButton from '@/components/atoms/Button';
+import { TypeEmptyData } from '@/types';
 
-type PropsEmptyData = {
-  title: string;
-  onClick: () => void;
-};
+export default function MEmptyState({
+  title = '',
+  onClick,
+  rootStyle,
+  illustration,
+  description,
+  actionBtn = true
+}: Partial<TypeEmptyData>) {
+  const _rootStyle = [rootStyle, 'flex justify-center items-center'].join(' ');
 
-export default function MEmptyState({ title = '', onClick }: PropsEmptyData) {
   return (
-    <div className="h-screen flex justify-center items-center">
-      <div>
-        <Image
-          src="/illustrations/il-empty-state.png"
-          width={350}
-          height={100}
-          layout="contain"
-          loading="lazy"
-          alt="check-images"
-        />
-        <p className="text-center mb-4">
-          Ups kamu belum punya <strong>{title}</strong> <br /> Yuk Buat
-        </p>
-        <AButton name={`Buat ${title}`} onClick={onClick} />
+    <div className={_rootStyle}>
+      <div className="text-center">
+        <div className="flex w-full justify-center">
+          <Image
+            src="/illustrations/il-empty-state.png"
+            width={illustration?.width || 350}
+            height={illustration?.height || 100}
+            layout="contain"
+            loading="lazy"
+            alt="check-images"
+          />
+        </div>
+        {description}
+        {actionBtn && (
+          <div className="mx-20">
+            <AButton
+              rootStyle="py-2 bg-earth-yellow border border-r-2 border-b-2"
+              name={`Buat ${title}`}
+              onClick={onClick}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

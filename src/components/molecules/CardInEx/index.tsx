@@ -20,8 +20,8 @@ export default function MCardInEx(props: Partial<TypeMCardInEx>) {
   const isSmall = variant === 'small';
 
   const style = {
-    amount: isSmall ? 'text-md' : 'text-lg',
-    name: isSmall ? 'text-md' : 'text-lg',
+    amount: isSmall ? 'text-sm' : 'text-lg',
+    name: isSmall ? 'text-sm' : 'text-lg',
     label: isSmall ? 'text-sm' : 'text-lg'
   };
 
@@ -40,7 +40,7 @@ export default function MCardInEx(props: Partial<TypeMCardInEx>) {
         </div>
         <div className="flex justify-between mt-1">
           <div className="flex items-center">
-            {category && <AChips name={category} />}
+            {category && <AChips rootStyle="text-xs" name={category} />}
             <p className="text-xs ml-2 capitalize text-spanish-gray font-light">
               {date}
             </p>
