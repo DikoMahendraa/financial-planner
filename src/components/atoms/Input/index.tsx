@@ -15,7 +15,7 @@ export default function AInput(props: Partial<TypePropsAInput>) {
 
   const _inputStyle = [
     prefix ? 'pl-11' : 'px-4',
-    'mt-2 w-full rounded-md border-2 border-vampire-black bg-white py-3 text-base text-vampire-black outline-none focus:border-[#6A64F1] focus:shadow-md'
+    'mt-2 w-full rounded border border-b-2 border-r-2 border-vampire-black bg-white py-3 text-base text-vampire-black outline-none focus:border-[#6A64F1] focus:shadow-md'
   ].join(' ');
   const _rootStyle = [rootStyle].join(' ');
 

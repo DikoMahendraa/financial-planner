@@ -8,7 +8,7 @@ export default function useCreateValues() {
   const error = useRef(null);
   const data: any = useRef(null);
 
-  const pushValue = async (path: string, values: any) => {
+  const pushValue = async (path: string, values: any, callback: any) => {
     setIsLoading(true);
     try {
       const rootReference = ref(database);
@@ -16,7 +16,9 @@ export default function useCreateValues() {
       const dbPush = await push(dbPath, { ...values });
       data.current = { key: dbPush.key, values };
       success.current = true;
+      callback('success');
     } catch (errorMsg: any) {
+      callback('error');
       error.current = errorMsg.message;
     }
 

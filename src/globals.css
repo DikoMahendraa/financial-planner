@@ -15,7 +15,6 @@ p {
 
 input[type=date],
 input[type=time] {
-     border             : 2px solid;
     height              : 50px;
      box-sizing         : border-box;
      outline            : 0;

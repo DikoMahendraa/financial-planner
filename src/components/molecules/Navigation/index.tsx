@@ -55,7 +55,17 @@ export default function MNavigation() {
   };
 
   const onSubmit = async (data: any) => {
-    await createValues.pushValue(String(currentPath), data);
+    await createValues.pushValue(
+      String(currentPath),
+      data,
+      (status: string) => {
+        if (status.includes('success')) {
+          onVisible();
+        } else {
+          onVisible;
+        }
+      }
+    );
   };
 
   useEffect(() => {
@@ -93,7 +103,6 @@ export default function MNavigation() {
           {...forms}
           category={listCategory}
           defaultValue={defaultCategory}
-          label={currentPath}
           onSubmit={onSubmit}
           onCancel={onVisible}
         />
