@@ -79,6 +79,9 @@ export type TypeAGap = {
 };
 
 export type TypePropsAInput = {
+  value: any;
+  inputRef: any;
+  isCurrency: boolean;
   label: string;
   rootStyle: string;
   placeholder: string;

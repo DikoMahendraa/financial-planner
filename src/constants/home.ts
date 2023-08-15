@@ -21,6 +21,11 @@ const bottomNavigation: Array<TypeBottomNavigation> = [
     route: '/incomes'
   },
   {
+    label: 'alokasi',
+    color: 'bg-majorelle-blue',
+    route: '/calculation'
+  },
+  {
     label: 'pengaturan',
     color: 'bg-mid-blue-purple',
     route: '/settings'

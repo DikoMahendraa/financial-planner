@@ -16,7 +16,7 @@ export default function AButtonNavigation(
   const _atomStyle = [atomStyle, 'text-main-white capitalize'].join(' ');
   const _parentStyle = [
     parentStyle,
-    'w-full h-16 rounded-full flex items-center justify-center'
+    'w-full h-12 rounded-full flex items-center justify-center'
   ].join(' ');
 
   const Icon = () => {

@@ -87,6 +87,7 @@ export default function PageExpanses() {
   return (
     <React.Fragment>
       <AButtonCreate onClick={onVisible} />
+
       <div className="px-5 pt-5 bg-aero-blue">
         <ChartComponent
           labels={listCategoryExpenses.map((item: string) => item)}

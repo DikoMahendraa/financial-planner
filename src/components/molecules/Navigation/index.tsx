@@ -76,8 +76,8 @@ export default function MNavigation() {
 
   return (
     <React.Fragment>
-      <section className="fixed md:max-w-[480px] bottom-3  w-full px-2">
-        <div className="bg-vampire-black h-18 rounded-[40px] grid grid-cols-5 p-1 space-x-1">
+      <section className="fixed md:max-w-[480px] bottom-0 w-full">
+        <div className="bg-vampire-black h-14 rounded-t-3xl grid grid-cols-6 p-1 space-x-1">
           {bottomNavigation.map((item, key) => {
             const active = activeTab === item.route;
             const setColumn = active ? 'col-span-2' : 'col-span-1';
