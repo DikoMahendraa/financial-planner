@@ -3,15 +3,18 @@ import { TypePropsAInput } from '@/types';
 
 export default function AInput(props: Partial<TypePropsAInput>) {
   const {
+    onChange,
     label,
     placeholder,
     rootStyle,
     suffix,
     prefix,
     name,
-    onChange,
+    inputRef,
     isCurrency = false,
-    type = 'text'
+    type = 'text',
+    value,
+    ...rest
   } = props;
   const [inputValue, setInputValue] = useState<string>('');
 
@@ -29,6 +32,9 @@ export default function AInput(props: Partial<TypePropsAInput>) {
     const numericValue = value.replace(/[^0-9]/g, '');
     return numberFormat.format(Number(numericValue));
   };
+
+  const setCurrency = isCurrency ? inputValue : null;
+  const setValue = value ? formatToRupiah(value) : setCurrency;
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(formatToRupiah(event.target.value));
@@ -48,9 +54,10 @@ export default function AInput(props: Partial<TypePropsAInput>) {
           </span>
         )}
         <input
-          {...props}
+          ref={inputRef}
+          {...rest}
           /* @ts-ignore */
-          value={isCurrency ? inputValue : null}
+          value={setValue}
           onChange={isCurrency ? handleInputChange : onChange}
           type={type}
           name={name}

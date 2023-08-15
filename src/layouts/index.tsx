@@ -11,7 +11,7 @@ export default function MainLayout(props: PropsMainLayout) {
 
   const router = useRouter();
 
-  const hideNavigation = !router?.pathname.includes('calculation');
+  const hideNavigation = !router?.pathname.includes('calculation/create');
 
   return (
     <main>

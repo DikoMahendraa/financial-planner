@@ -1,15 +1,59 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CalculatorComponent from '@/components/molecules/Calculator';
 import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
 import AGap from '@/components/atoms/Gap';
+import { ICArrow } from '@/components/icons/ICArrow';
+import { useRouter } from 'next/router';
 
 export default function CreateCalculation() {
+  const router = useRouter();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [input, setInput] = useState<string>('');
+
+  const onRouterBack = () => {
+    router.push('/calculation');
+  };
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  const onClickButton = (value: number) => {
+    setInput(prevExpression => prevExpression + value);
+  };
+
+  const onClearForm = () => {
+    setInput('');
+  };
+
+  const onDeleteForm = () => {
+    if (input.length > 0) {
+      setInput(prevInput => prevInput.slice(0, -1));
+    }
+  };
+
   return (
     <div>
       <div className="px-4 pt-4">
+        <p
+          onClick={onRouterBack}
+          className="flex cursor-pointer border font-semibold"
+        >
+          <ICArrow />
+        </p>
+      </div>
+      <div className="px-4 pt-4">
         <p className="font-semibold">Masukan Nominal Pendapatan</p>
-        <AInput isCurrency prefix="Rp." placeholder="xxx.xxx.xxx" />
+        <AInput
+          inputRef={inputRef}
+          value={input}
+          isCurrency
+          prefix="Rp."
+          placeholder="xxx.xxx.xxx"
+        />
         <div className="mt-2">
           <label htmlFor="select metode" className="font-semibold">
             Metode
@@ -73,7 +117,11 @@ export default function CreateCalculation() {
       </div>
 
       <div className="fixed cursor-pointer bottom-0 flex justify-end w-full md:max-w-[480px]">
-        <CalculatorComponent />
+        <CalculatorComponent
+          onClickButton={onClickButton}
+          onClear={onClearForm}
+          onDelete={onDeleteForm}
+        />
       </div>
     </div>
   );
