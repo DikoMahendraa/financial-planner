@@ -55,17 +55,7 @@ export default function MNavigation() {
   };
 
   const onSubmit = async (data: any) => {
-    await createValues.pushValue(
-      String(currentPath),
-      data,
-      (status: string) => {
-        if (status.includes('success')) {
-          onVisible();
-        } else {
-          onVisible;
-        }
-      }
-    );
+    await createValues.pushValue(String(currentPath), data);
   };
 
   useEffect(() => {

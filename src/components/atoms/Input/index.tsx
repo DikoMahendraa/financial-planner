@@ -14,6 +14,7 @@ export default function AInput(props: Partial<TypePropsAInput>) {
     isCurrency = false,
     type = 'text',
     value,
+
     ...rest
   } = props;
   const [inputValue, setInputValue] = useState<string>('');
@@ -57,7 +58,7 @@ export default function AInput(props: Partial<TypePropsAInput>) {
           ref={inputRef}
           {...rest}
           /* @ts-ignore */
-          value={setValue}
+          {...(value && isCurrency && setValue)}
           onChange={isCurrency ? handleInputChange : onChange}
           type={type}
           name={name}
