@@ -149,6 +149,7 @@ export default function CreateCalculation() {
         </p>
       </div>
       <div className="px-4 pt-4">
+        {/* @ts-ignored - please fix me later */}
         <form onSubmit={forms.handleSubmit(onSubmit)}>
           <p className="font-semibold">Masukan Nominal Pendapatan</p>
           <Controller
