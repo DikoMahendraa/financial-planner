@@ -55,6 +55,7 @@ export const MModalForm = ({ ...props }) => {
                   prefix="Rp."
                   label="Amount"
                   rootStyle="mt-2"
+                  name="amount"
                   placeholder="Enter your Amount"
                   onChange={onChange}
                 />
