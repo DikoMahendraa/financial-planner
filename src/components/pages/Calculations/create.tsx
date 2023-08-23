@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-// import CalculatorComponent from '@/components/molecules/Calculator';
+import CalculatorComponent from '@/components/molecules/Calculator';
 import AButton from '@/components/atoms/Button';
 import AGap from '@/components/atoms/Gap';
 import { ICArrow } from '@/components/icons/ICArrow';
@@ -10,7 +10,6 @@ import { convertCurrency } from '@/utils/convertCurrency';
 export default function CreateCalculation() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  // const [input, setInput] = useState<string>('');
   const [amount, setAmountValue] = useState<any>(null);
 
   const forms = useForm();
@@ -19,27 +18,42 @@ export default function CreateCalculation() {
     router.push('/calculation');
   };
 
+  const inputValue = forms.watch('salary');
+
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
 
-  // const onClickButton = (value: number) => {
-  //   setInput(prevExpression => prevExpression + value);
-  // };
+  useEffect(() => {
+    if (inputValue) {
+      forms.reset({
+        salary: inputValue
+      });
+    }
+  }, [forms, inputValue]);
 
-  // const onClearForm = () => {
-  //   setInput('');
-  // };
+  const onClickButton = async (value: number) => {
+    const previousValue = forms.getValues('salary') || 0;
+    const newSalary = previousValue + value;
 
-  // const onDeleteForm = () => {
-  //   if (input.length > 0) {
-  //     setInput(prevInput => prevInput.slice(0, -1));
-  //   }
-  // };
+    forms.setValue('salary', String(newSalary));
+  };
 
-  const onSubmit = (data: { salary: string; method: string }) => {
+  const onClearForm = () => {
+    forms.reset({ salary: 0 });
+  };
+
+  const onDeleteForm = () => {
+    const previousValue = forms.getValues('salary') || 0;
+    const newSalary = previousValue.slice(0, -1);
+    if (previousValue.length > 0) {
+      forms.setValue('salary', String(newSalary));
+    }
+  };
+
+  const onSubmit = (data: any) => {
     const { salary, method } = data;
     const numberValue: number = parseFloat(salary?.replace(/\./g, ''));
 
@@ -149,18 +163,19 @@ export default function CreateCalculation() {
         </p>
       </div>
       <div className="px-4 pt-4">
-        {/* @ts-ignored - please fix me later */}
         <form onSubmit={forms.handleSubmit(onSubmit)}>
           <p className="font-semibold">Masukan Nominal Pendapatan</p>
           <Controller
             name="salary"
             control={forms.control}
-            render={({ field: { onChange, ...rest } }) => {
+            render={({ field: { onChange } }) => {
               return (
                 <input
+                  value={inputValue}
+                  defaultValue={0}
                   className="mt-2 w-full pl-4 rounded border border-b-2 border-r-2 border-vampire-black bg-white py-3 text-base text-vampire-black outline-none focus:border-[#6A64F1] focus:shadow-md"
                   onChange={onChange}
-                  {...rest}
+                  ref={inputRef}
                 />
               );
             }}
@@ -204,13 +219,13 @@ export default function CreateCalculation() {
         {sectionResult()}
       </div>
 
-      {/* <div className="fixed cursor-pointer bottom-0 flex justify-end w-full md:max-w-[480px]">
+      <div className="fixed cursor-pointer bottom-0 flex justify-end w-full md:max-w-[480px]">
         <CalculatorComponent
           onClickButton={onClickButton}
           onClear={onClearForm}
           onDelete={onDeleteForm}
         />
-      </div> */}
+      </div>
     </div>
   );
 }
