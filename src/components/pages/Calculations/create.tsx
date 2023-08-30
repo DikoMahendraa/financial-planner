@@ -7,18 +7,32 @@ import { useRouter } from 'next/router';
 import { Controller, useForm } from 'react-hook-form';
 import { convertCurrency } from '@/utils/convertCurrency';
 
+type FormsType = {
+  salary: string;
+  method: string;
+};
+
 export default function CreateCalculation() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [amount, setAmountValue] = useState<any>(null);
 
-  const forms = useForm();
+  const {
+    watch,
+    getValues,
+    reset,
+    handleSubmit,
+    control,
+    setValue,
+    setError,
+    formState: { errors }
+  } = useForm<FormsType>();
 
   const onRouterBack = () => {
     router.push('/calculation');
   };
 
-  const inputValue = forms.watch('salary');
+  const inputValue = watch('salary') || 0;
 
   useEffect(() => {
     if (inputRef.current) {
@@ -28,34 +42,32 @@ export default function CreateCalculation() {
 
   useEffect(() => {
     if (inputValue) {
-      forms.reset({
+      reset({
         salary: inputValue
       });
     }
-  }, [forms, inputValue]);
+  }, [inputValue, reset]);
 
-  const onClickButton = async (value: number) => {
-    const previousValue = forms.getValues('salary') || 0;
+  const onClickButton = async (value: string) => {
+    const previousValue = getValues?.('salary') || 0;
     const newSalary = previousValue + value;
 
-    forms.setValue('salary', String(newSalary));
+    setValue('salary', String(newSalary));
   };
 
-  const onClearForm = () => {
-    forms.reset({ salary: 0 });
-  };
+  const onClearForm = () => reset({ salary: '0' });
 
   const onDeleteForm = () => {
-    const previousValue = forms.getValues('salary') || 0;
+    const previousValue = getValues('salary') || '0';
     const newSalary = previousValue.slice(0, -1);
     if (previousValue.length > 0) {
-      forms.setValue('salary', String(newSalary));
+      setValue('salary', String(newSalary));
     }
   };
 
   const onSubmit = (data: any) => {
     const { salary, method } = data;
-    const numberValue: number = parseFloat(salary?.replace(/\./g, ''));
+    const numberValue: number = parseFloat(String(salary)?.replace(/\./g, ''));
 
     let sixty = 0.6;
     let fifty = 0.5;
@@ -104,7 +116,9 @@ export default function CreateCalculation() {
             <li className="mb-2">
               <strong>{data[data?.length - 1]}%</strong> -{' '}
               <span className="bg-red-200 px-2 py-1 border border-r-2 border-b-2 border-vampire-black">
-                {convertCurrency(amount['50'] || amount['60'] || amount['40'])}
+                {convertCurrency(
+                  amount['50'] || amount['60'] || amount['40'] || 0
+                )}
               </span>{' '}
               <span className="italic">
                 Ini adalah nominal uang tabunganmu, usahakan uang tabunganmu
@@ -114,7 +128,7 @@ export default function CreateCalculation() {
             <li className="mb-2">
               <strong>30%</strong> -{' '}
               <span className="bg-red-200 px-2 py-1 border border-r-2 border-b-2 border-vampire-black">
-                {convertCurrency(amount['30'])}
+                {convertCurrency(amount['30'] || 0)}
               </span>{' '}
               <span className="italic">
                 Ini adalah nominal uang yg akan digunakan untuk membayar kredit,
@@ -127,7 +141,7 @@ export default function CreateCalculation() {
               </strong>{' '}
               -{' '}
               <span className="bg-red-200 px-2 py-1 border border-r-2 border-b-2 border-vampire-black">
-                {convertCurrency(amount['20'] || amount['10'])}
+                {convertCurrency(amount['20'] || amount['10'] || 0)}
               </span>{' '}
               <span className="italic">
                 Ini adalah nominal uang yg akan digunakan untuk kebutuhan
@@ -152,6 +166,14 @@ export default function CreateCalculation() {
     }
   };
 
+  const onErrorSubmit = (error: any) => {
+    if (error.salary) {
+      setError('salary', {
+        message: 'Jumlah uangmu tidak boleh kosong'
+      });
+    }
+  };
+
   return (
     <div>
       <div className="px-4 pt-4">
@@ -163,22 +185,33 @@ export default function CreateCalculation() {
         </p>
       </div>
       <div className="px-4 pt-4">
-        <form onSubmit={forms.handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit, onErrorSubmit)}>
           <p className="font-semibold">Masukan Nominal Pendapatan</p>
           <Controller
             name="salary"
-            control={forms.control}
+            control={control}
             render={({ field: { onChange } }) => {
               return (
-                <input
-                  value={inputValue}
-                  defaultValue={0}
-                  className="mt-2 w-full pl-4 rounded border border-b-2 border-r-2 border-vampire-black bg-white py-3 text-base text-vampire-black outline-none focus:border-[#6A64F1] focus:shadow-md"
-                  onChange={onChange}
-                  ref={inputRef}
-                />
+                <React.Fragment>
+                  <input
+                    readOnly
+                    {...(inputValue && {
+                      value: convertCurrency(Number(inputValue))
+                    })}
+                    className="mt-2 w-full pl-4 rounded border border-b-2 border-r-2 border-vampire-black bg-white py-3 text-base text-vampire-black outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    onChange={onChange}
+                    placeholder="ex 123.456.789"
+                    ref={inputRef}
+                  />
+                  {errors.salary && (
+                    <span className="text-red-500 text-xs italic">
+                      {errors.salary.message}
+                    </span>
+                  )}
+                </React.Fragment>
               );
             }}
+            rules={{ required: true }}
           />
           <div className="mt-2">
             <label htmlFor="select metode" className="font-semibold">
@@ -186,7 +219,7 @@ export default function CreateCalculation() {
             </label>
             <Controller
               name="method"
-              control={forms.control}
+              control={control}
               defaultValue="50/30/20"
               render={({ field: { onChange } }) => {
                 return (
@@ -205,6 +238,7 @@ export default function CreateCalculation() {
                   </select>
                 );
               }}
+              rules={{ required: true }}
             />
           </div>
           <AGap height={20} />
