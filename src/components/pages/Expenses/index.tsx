@@ -25,6 +25,7 @@ type GetValues = {
   snapshot: any;
   error: any;
   isEmpty: boolean;
+  refreshData: () => void;
 };
 
 export default function PageExpanses() {
@@ -33,9 +34,13 @@ export default function PageExpanses() {
 
   const { visible } = useAppSelector(state => state?.incomesReducer.edit) || {};
 
-  const expenses: GetValues = useGetValues({ path: 'expenses' });
+  const { refreshData, isLoading, isEmpty, snapshot }: GetValues = useGetValues(
+    {
+      path: 'expenses'
+    }
+  );
   const removeExpense = useRemoveValues();
-  const data: Array<TypeFormPayload> = convertToArray(expenses.snapshot || {});
+  const data: Array<TypeFormPayload> = convertToArray(snapshot || {});
   const getAmount = data.map(item => Number(item.amount));
 
   const onEdit = async (items: TypeFormPayload) => {
@@ -50,7 +55,13 @@ export default function PageExpanses() {
 
   const onRemove = async (items: { uuid: string }) => {
     const path = `expenses/${items.uuid}`;
-    await removeExpense.removeValue(path);
+    try {
+      await removeExpense.removeValue(path);
+      refreshData();
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Error deleting data:', error);
+    }
   };
 
   const onVisible = () => {
@@ -63,7 +74,7 @@ export default function PageExpanses() {
     );
   };
 
-  if (expenses.isLoading) {
+  if (isLoading) {
     return (
       <div className="w-full flex items-center justify-center h-screen">
         <ANLoading />
@@ -71,7 +82,7 @@ export default function PageExpanses() {
     );
   }
 
-  if (expenses.isEmpty) {
+  if (isEmpty) {
     return (
       <MEmptyState
         rootStyle="h-screen"

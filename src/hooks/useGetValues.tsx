@@ -18,6 +18,7 @@ export default function useGetValues({ path }: UseGetValues) {
       const dbGet = await get(child(rootReference, path));
       const dbValue = dbGet.val();
       const dbExist = dbGet.exists();
+
       if (!dbExist) {
         isEmpty.current = true;
       }
@@ -29,11 +30,17 @@ export default function useGetValues({ path }: UseGetValues) {
     setIsLoading(false);
   }, [path]);
 
+  const refreshData = useCallback(() => {
+    setIsLoading(true);
+    getValue();
+  }, [getValue]);
+
   useEffect(() => {
     getValue();
   }, [getValue]);
 
   return {
+    refreshData,
     isLoading,
     snapshot: snapshot.current,
     error: error.current,
