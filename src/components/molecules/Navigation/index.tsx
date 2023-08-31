@@ -1,68 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
-import { TypeFormPayload } from '@/types';
-import { useAppSelector } from '@/redux/store';
-import {
-  bottomNavigation,
-  listCategoryExpenses,
-  listCategoryIncomes
-} from '@/constants/home';
-import { onShowModal } from '@/redux/features/main';
-import useCreateValues from '@/hooks/useCreateValues';
-
+import { bottomNavigation } from '@/constants/home';
 import ButtonNavigation from '@/components/atoms/ButtonNavigation';
-import { MModalForm } from '@/components/molecules/ModalForm';
 
 export default function MNavigation() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const forms = useForm<TypeFormPayload>();
 
   const [activeTab, setActiveTab] = useState<string>(router.route);
-
-  const createValues = useCreateValues();
-
-  const currentPath = router.route?.split('/').pop();
-
-  const listCategory = currentPath?.includes('expenses')
-    ? listCategoryExpenses
-    : listCategoryIncomes;
-
-  const defaultCategory = currentPath?.includes('expenses')
-    ? 'kebutuhan'
-    : 'gajian';
-
-  const {
-    edit: { visible, data }
-  } = useAppSelector(state => state?.incomesReducer) || {};
 
   const handleActiveTab = (tab: string) => {
     router.push(tab);
     setActiveTab(tab);
   };
-
-  const onVisible = () => {
-    dispatch(
-      onShowModal({
-        isUpdate: false,
-        data: {},
-        visible: !visible
-      })
-    );
-  };
-
-  const onSubmit = async (data: any) => {
-    await createValues.pushValue(String(currentPath), data);
-  };
-
-  useEffect(() => {
-    if (visible) {
-      forms.reset({ ...data });
-    }
-  }, [data, forms, visible]);
 
   return (
     <React.Fragment>
@@ -87,16 +37,6 @@ export default function MNavigation() {
           })}
         </div>
       </section>
-
-      {visible && (
-        <MModalForm
-          {...forms}
-          category={listCategory}
-          defaultValue={defaultCategory}
-          onSubmit={onSubmit}
-          onCancel={onVisible}
-        />
-      )}
     </React.Fragment>
   );
 }

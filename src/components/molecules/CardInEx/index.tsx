@@ -35,7 +35,7 @@ export default function MCardInEx(props: Partial<TypeMCardInEx>) {
           onClick={onEdit}
           className="flex cursor-pointer justify-between w-full"
         >
-          <p className={[style.name].join(' ')}>{name}</p>
+          <p className={[style.name, 'capitalize'].join(' ')}>{name}</p>
           <p className={[style.amount, 'font-bold'].join(' ')}>Rp. {amount}</p>
         </div>
         <div className="flex justify-between mt-1">

@@ -5,6 +5,7 @@ import { ICHome } from '@/components/icons/ICHome';
 import { ICIncome } from '@/components/icons/ICIncome';
 import { ICSetting } from '@/components/icons/ICSetting';
 import { TypeButtonNavigation } from '@/types';
+import { ICPie } from '@/components/icons/ICPie';
 
 export default function AButtonNavigation(
   props: Partial<TypeButtonNavigation>
@@ -27,6 +28,8 @@ export default function AButtonNavigation(
         return <ICIncome width={34} height={34} />;
       case 'pemasukan':
         return <ICExpense width={34} height={34} />;
+      case 'alokasi':
+        return <ICPie width={34} height={34} />;
       case 'pengaturan':
       default:
         return <ICSetting />;
