@@ -28,7 +28,7 @@ export default function PageIncomes() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [formEdit, setFormEdit] = useState<TypeFormPayload>();
+  const [, setFormEdit] = useState<TypeFormPayload>();
 
   const createValues = useCreateValues();
   const removeIncomes = useRemoveValues();
@@ -60,12 +60,6 @@ export default function PageIncomes() {
     }
     setIsLoading(false);
   };
-
-  useEffect(() => {
-    if (visible) {
-      forms.setValue('name', 'mlkasdmaskd');
-    }
-  }, [formEdit, forms, visible]);
 
   useEffect(() => {
     fetchData();
