@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
-import { useAppSelector } from '@/redux/store';
+import { useForm } from 'react-hook-form';
+import { database } from '@/services/firebaseApp';
+import { child, get, ref } from 'firebase/database';
 
 import { TypeFormPayload } from '@/types';
-import useGetValues from '@/hooks/useGetValues';
 import { listCategoryIncomes, listFilterIncomes } from '@/constants/home';
 import useRemoveValues from '@/hooks/useRemoveValues';
 import { convertCurrency } from '@/utils/convertCurrency';
 import { convertToArray } from '@/utils/convertToArray';
-import { onShowModal } from '@/redux/features/main';
+import useCreateValues from '@/hooks/useCreateValues';
 
 import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
@@ -18,83 +18,74 @@ import { ANLoading } from '@/components/animations/ANLoading';
 import AButtonCreate from '@/components/atoms/ButtonCreate';
 import { calculateSum } from '@/utils/calculateNumber';
 import ChartComponent from '@/components/molecules/Chart';
-
-type GetValues = {
-  isLoading: boolean;
-  snapshot: any;
-  error: any;
-  isEmpty: boolean;
-  refreshData: () => void;
-};
+import { MModalForm } from '@/components/molecules/ModalForm';
 
 export default function PageIncomes() {
+  const forms = useForm<TypeFormPayload>();
+
   const [category, setCategory] = useState<string>('gajian');
+  const [dataExpenses, setDataExpenses] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isEmpty, setIsEmpty] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [formEdit, setFormEdit] = useState<TypeFormPayload>();
 
-  const dispatch = useDispatch();
-  const { visible } = useAppSelector(state => state?.incomesReducer.edit) || {};
-
-  const { snapshot, isLoading, refreshData, isEmpty }: GetValues = useGetValues(
-    { path: 'incomes' }
-  );
-  const removeExpense = useRemoveValues();
-  const data: Array<TypeFormPayload> = convertToArray(snapshot || {});
+  const createValues = useCreateValues();
+  const removeIncomes = useRemoveValues();
+  const data: Array<TypeFormPayload> = convertToArray(dataExpenses || {});
   const getAmount = data.map(item => Number(item.amount));
 
+  const fetchData = async () => {
+    const rootReference = ref(database);
+    const dbGet = await get(child(rootReference, '/incomes'));
+    const isEmpty = dbGet.exists();
+    setDataExpenses(dbGet.val());
+    setIsEmpty(!isEmpty);
+  };
+
   const onEdit = async (items: TypeFormPayload) => {
-    dispatch(
-      onShowModal({
-        isUpdate: true,
-        visible: !visible,
-        data: items
-      })
-    );
+    setVisible(true);
+    setFormEdit(items);
   };
 
   const onRemove = async (items: { uuid: string }) => {
+    setIsLoading(true);
     const path = `incomes/${items.uuid}`;
     try {
-      await removeExpense.removeValue(path);
-      refreshData();
+      await removeIncomes.removeValue(path);
+      fetchData();
+      setVisible(false);
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error('Error deleting data:', error);
+      setVisible(false);
     }
+    setIsLoading(false);
   };
 
-  const onVisible = () => {
-    dispatch(
-      onShowModal({
-        isUpdate: false,
-        data: {},
-        visible: !visible
-      })
-    );
+  useEffect(() => {
+    if (visible) {
+      forms.setValue('name', 'mlkasdmaskd');
+    }
+  }, [formEdit, forms, visible]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const onSubmit = async (data: any) => {
+    setIsLoading(true);
+    try {
+      await createValues.pushValue(String('/incomes'), data);
+      fetchData();
+      setVisible(false);
+    } catch (err) {
+      setVisible(false);
+    }
+    setIsLoading(false);
   };
-
-  if (isLoading) {
-    return (
-      <div className="w-full flex items-center justify-center h-screen">
-        <ANLoading />
-      </div>
-    );
-  }
-
-  if (isEmpty) {
-    return (
-      <MEmptyState
-        rootStyle="h-screen"
-        description={
-          <p className="italic mb-4 text-gray-600">Belum ada pemasukan</p>
-        }
-        title="Pemasukan"
-        onClick={onVisible}
-      />
-    );
-  }
 
   return (
     <React.Fragment>
-      <AButtonCreate onClick={onVisible} />
+      <AButtonCreate onClick={() => setVisible(true)} />
       <div className="px-5 pt-5 bg-aero-blue">
         <ChartComponent
           labels={listCategoryIncomes.map((item: string) => item)}
@@ -104,7 +95,6 @@ export default function PageIncomes() {
             title="Daftar Pemasukan"
             amount={`Rp. ${convertCurrency(calculateSum(getAmount))}`}
           />
-          <hr />
           <div className="mt-4 bg-main-white rounded-md border-2 border-b-4 border-r-4 border-vampire-black p-[2px] flex items-center gap-2">
             {listFilterIncomes.map(item => {
               const isActiveTab = item === category;
@@ -132,6 +122,23 @@ export default function PageIncomes() {
           </div>
         </div>
         <div className="mt-4 h-full bg-aero-blue pb-24">
+          {isEmpty && isLoading && (
+            <div className="w-full flex items-center justify-center h-screen">
+              <ANLoading />
+            </div>
+          )}
+          {isEmpty && (
+            <MEmptyState
+              rootStyle="mt-10"
+              title="Pengeluaran"
+              description={
+                <p className="italic mb-4 text-gray-600">
+                  Belum ada pengeluaran
+                </p>
+              }
+              actionBtn={false}
+            />
+          )}
           {data?.map((item, index) => {
             return (
               <MCardInEx
@@ -150,6 +157,15 @@ export default function PageIncomes() {
           })}
         </div>
       </div>
+      {visible && (
+        <MModalForm
+          {...forms}
+          category={listCategoryIncomes}
+          defaultValue={'gajian'}
+          onSubmit={onSubmit}
+          onCancel={() => setVisible(false)}
+        />
+      )}
     </React.Fragment>
   );
 }
