@@ -32,8 +32,14 @@ const bottomNavigation: Array<TypeBottomNavigation> = [
   }
 ];
 
-const listFilterExpenses = ['pulsa', 'kebutuhan', 'jajan', 'lainnya'];
-const listFilterIncomes = ['gajian', 'tabungan', 'investasi', 'lainnya'];
+const listFilterExpenses = ['semua', 'pulsa', 'kebutuhan', 'jajan', 'lainnya'];
+const listFilterIncomes = [
+  'semua',
+  'gajian',
+  'tabungan',
+  'investasi',
+  'lainnya'
+];
 const listCategoryExpenses = ['pulsa', 'kebutuhan', 'jajan', 'lainnya'];
 const listCategoryIncomes = ['gajian', 'tabungan', 'investasi', 'lainnya'];
 

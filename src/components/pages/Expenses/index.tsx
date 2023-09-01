@@ -23,7 +23,7 @@ import useCreateValues from '@/hooks/useCreateValues';
 export default function PageExpanses() {
   const forms = useForm<TypeFormPayload>();
 
-  const [category, setCategory] = useState<string>('kebutuhan');
+  const [category, setCategory] = useState<string>('semua');
   const [dataExpenses, setDataExpenses] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
@@ -34,6 +34,16 @@ export default function PageExpanses() {
   const createValues = useCreateValues();
   const data: Array<TypeFormPayload> = convertToArray(dataExpenses || {});
   const getAmount = data.map(item => Number(item.amount));
+
+  const freshData = (() => {
+    return data.filter(item => {
+      if (category === 'semua') {
+        return { ...item };
+      } else {
+        return item.category === category;
+      }
+    });
+  })();
 
   const fetchData = async () => {
     const rootReference = ref(database);
@@ -134,7 +144,7 @@ export default function PageExpanses() {
               actionBtn={false}
             />
           )}
-          {data?.map((item, index) => {
+          {freshData?.map((item, index) => {
             return (
               <MCardInEx
                 onEdit={() => onEdit(item)}

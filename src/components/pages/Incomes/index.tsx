@@ -23,7 +23,7 @@ import { MModalForm } from '@/components/molecules/ModalForm';
 export default function PageIncomes() {
   const forms = useForm<TypeFormPayload>();
 
-  const [category, setCategory] = useState<string>('gajian');
+  const [category, setCategory] = useState<string>('semua');
   const [dataExpenses, setDataExpenses] = useState<any>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
@@ -42,6 +42,16 @@ export default function PageIncomes() {
     setDataExpenses(dbGet.val());
     setIsEmpty(!isEmpty);
   };
+
+  const freshData = (() => {
+    return data.filter(item => {
+      if (category === 'semua') {
+        return { ...item };
+      } else {
+        return item.category === category;
+      }
+    });
+  })();
 
   const onEdit = async (items: TypeFormPayload) => {
     setVisible(true);
@@ -133,7 +143,7 @@ export default function PageIncomes() {
               actionBtn={false}
             />
           )}
-          {data?.map((item, index) => {
+          {freshData?.map((item, index) => {
             return (
               <MCardInEx
                 key={index}
