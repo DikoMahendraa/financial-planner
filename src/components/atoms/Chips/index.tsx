@@ -10,12 +10,16 @@ export default function AChips(props: Partial<TypeAChips>) {
         return 'bg-majorelle-blue';
       case 'jajan':
         return 'bg-mid-blue-purple';
+      case 'pulsa':
+        return 'bg-earth-yellow';
+      case 'jajan':
+        return 'bg-mid-blue-purple';
       case 'kebutuhan':
         return 'bg-forest-green';
       case 'gajian':
         return 'bg-deep-carrot-orange';
       default:
-        return 'bg-gray-platinum';
+        return 'bg-gray-platinum text-vampire-black';
     }
   })();
 
