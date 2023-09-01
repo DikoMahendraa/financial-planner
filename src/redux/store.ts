@@ -4,6 +4,7 @@ import { TypedUseSelectorHook, useSelector } from 'react-redux';
 
 export const store = configureStore({
   reducer: {
+    // register your reducers here
     incomesReducer
   }
 });
