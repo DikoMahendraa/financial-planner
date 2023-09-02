@@ -9,6 +9,11 @@ export type TypeFormPayload = {
   category: string;
 };
 
+export type TypeFormEdit = {
+  data: Partial<TypeFormPayload>;
+  visible: boolean;
+};
+
 export type TypeMCardTarget = {
   isEmpty?: boolean;
   label: string;

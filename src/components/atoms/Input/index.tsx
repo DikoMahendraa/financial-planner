@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TypePropsAInput } from '@/types';
-import { convertCurrency } from '@/utils/convertCurrency';
 
 export default function AInput(props: Partial<TypePropsAInput>) {
   const {
@@ -12,7 +11,6 @@ export default function AInput(props: Partial<TypePropsAInput>) {
     prefix,
     name,
     inputRef,
-    isCurrency,
     type = 'text',
     ...rest
   } = props;
@@ -22,13 +20,6 @@ export default function AInput(props: Partial<TypePropsAInput>) {
     'mt-2 w-full rounded border border-b-2 border-r-2 border-vampire-black bg-white py-3 text-base text-vampire-black outline-none focus:border-[#6A64F1] focus:shadow-md'
   ].join(' ');
   const _rootStyle = [rootStyle].join(' ');
-
-  const [inputVal, setInputVal] = useState<string>('');
-
-  const handleInputChange = (e: { target: { value?: string } }) => {
-    const newValue = convertCurrency(Number(e.target.value));
-    setInputVal(String(newValue));
-  };
 
   return (
     <div className={_rootStyle}>
@@ -46,14 +37,7 @@ export default function AInput(props: Partial<TypePropsAInput>) {
         <input
           ref={inputRef}
           {...rest}
-          {...(isCurrency
-            ? {
-                value: inputVal,
-                max: 12,
-                maxLength: 12,
-                onChange: handleInputChange
-              }
-            : onChange)}
+          onChange={onChange}
           type={type}
           name={name}
           placeholder={placeholder}

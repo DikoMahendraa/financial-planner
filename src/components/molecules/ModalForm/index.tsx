@@ -6,6 +6,7 @@ import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
 import { useRouter } from 'next/router';
 import moment from 'moment';
+import { convertCurrency } from '@/utils/convertCurrency';
 
 export const MModalForm = ({ ...props }) => {
   const router = useRouter();
@@ -49,9 +50,9 @@ export const MModalForm = ({ ...props }) => {
             <Controller
               control={props.control}
               name="amount"
-              render={({ field: { onChange, ...rest } }) => (
+              render={({ field: { onChange, value } }) => (
                 <AInput
-                  {...rest}
+                  value={convertCurrency(Number(value))}
                   prefix="Rp."
                   label="Amount"
                   isCurrency

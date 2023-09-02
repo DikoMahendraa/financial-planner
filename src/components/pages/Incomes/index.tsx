@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { database } from '@/services/firebaseApp';
 import { child, get, ref } from 'firebase/database';
 
-import { TypeFormPayload } from '@/types';
+import { TypeFormEdit, TypeFormPayload } from '@/types';
 import { listCategoryIncomes, listFilterIncomes } from '@/constants/home';
 import useRemoveValues from '@/hooks/useRemoveValues';
 import { convertCurrency } from '@/utils/convertCurrency';
@@ -19,6 +19,7 @@ import AButtonCreate from '@/components/atoms/ButtonCreate';
 import { calculateSum } from '@/utils/calculateNumber';
 import ChartComponent from '@/components/molecules/Chart';
 import { MModalForm } from '@/components/molecules/ModalForm';
+import useUpdateValues from '@/hooks/useUpdateValues';
 
 export default function PageIncomes() {
   const forms = useForm<TypeFormPayload>();
@@ -28,10 +29,14 @@ export default function PageIncomes() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
-  const [, setFormEdit] = useState<TypeFormPayload>();
+  const [formEdit, setFormEdit] = useState<TypeFormEdit>({
+    visible: false,
+    data: {}
+  });
 
   const createValues = useCreateValues();
   const removeIncomes = useRemoveValues();
+  const updateValues = useUpdateValues();
   const data: Array<TypeFormPayload> = convertToArray(dataExpenses || {});
   const getAmount = data.map(item => Number(item.amount));
 
@@ -55,7 +60,10 @@ export default function PageIncomes() {
 
   const onEdit = async (items: TypeFormPayload) => {
     setVisible(true);
-    setFormEdit(items);
+    setFormEdit({
+      visible: true,
+      data: items
+    });
   };
 
   const onRemove = async (items: { uuid: string }) => {
@@ -71,21 +79,44 @@ export default function PageIncomes() {
     setIsLoading(false);
   };
 
+  const onSubmit = async (data: any) => {
+    setIsLoading(true);
+
+    if (formEdit.visible) {
+      try {
+        const path = `incomes/${formEdit.data.uuid}`;
+        await updateValues.updateValues(String(path), data);
+        fetchData();
+        setVisible(false);
+      } catch (err) {
+        setVisible(false);
+      }
+    } else {
+      try {
+        await createValues.pushValue(String('/incomes'), data);
+        fetchData();
+        setVisible(false);
+      } catch (err) {
+        setVisible(false);
+      }
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
 
-  const onSubmit = async (data: any) => {
-    setIsLoading(true);
-    try {
-      await createValues.pushValue(String('/incomes'), data);
-      fetchData();
-      setVisible(false);
-    } catch (err) {
-      setVisible(false);
+  useEffect(() => {
+    if (formEdit.visible) {
+      forms.reset({
+        name: formEdit.data.name,
+        date: formEdit.data.date,
+        category: formEdit.data.category,
+        amount: formEdit.data.amount
+      });
     }
-    setIsLoading(false);
-  };
+  }, [visible, formEdit, forms]);
 
   return (
     <React.Fragment>
@@ -167,7 +198,11 @@ export default function PageIncomes() {
           category={listCategoryIncomes}
           defaultValue={'gajian'}
           onSubmit={onSubmit}
-          onCancel={() => setVisible(false)}
+          onCancel={() => {
+            setVisible(false);
+            setFormEdit({ visible: false, data: {} });
+            forms.reset({});
+          }}
         />
       )}
     </React.Fragment>
