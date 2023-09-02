@@ -1,12 +1,11 @@
 import React from 'react';
+import moment from 'moment';
 import { Controller } from 'react-hook-form';
 
 import MModal from '@/components/molecules/Modal';
 import AInput from '@/components/atoms/Input';
 import AButton from '@/components/atoms/Button';
 import { useRouter } from 'next/router';
-import moment from 'moment';
-import { convertCurrency } from '@/utils/convertCurrency';
 
 export const MModalForm = ({ ...props }) => {
   const router = useRouter();
@@ -50,9 +49,8 @@ export const MModalForm = ({ ...props }) => {
             <Controller
               control={props.control}
               name="amount"
-              render={({ field: { onChange, value } }) => (
+              render={({ field: { onChange } }) => (
                 <AInput
-                  value={convertCurrency(Number(value))}
                   prefix="Rp."
                   label="Amount"
                   isCurrency
