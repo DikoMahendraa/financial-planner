@@ -45,7 +45,7 @@ const SectionListExpenseIncome = ({ ...props }) => {
           variant="small"
           category={item.category}
           name={item.name}
-          amount={convertCurrency(item.amount)}
+          amount={convertCurrency(item.amount).toString()}
           date={moment(item.date).format('DD MMM YYYY')}
         />
       ))}
