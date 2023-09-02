@@ -49,8 +49,9 @@ export const MModalForm = ({ ...props }) => {
             <Controller
               control={props.control}
               name="amount"
-              render={({ field: { onChange } }) => (
+              render={({ field: { onChange, ...rest } }) => (
                 <AInput
+                  {...rest}
                   prefix="Rp."
                   label="Amount"
                   isCurrency
