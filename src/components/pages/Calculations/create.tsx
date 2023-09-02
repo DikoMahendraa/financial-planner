@@ -177,10 +177,7 @@ export default function CreateCalculation() {
   return (
     <div>
       <div className="px-4 pt-4">
-        <p
-          onClick={onRouterBack}
-          className="flex cursor-pointer border font-semibold"
-        >
+        <p onClick={onRouterBack} className="flex cursor-pointer font-semibold">
           <ICArrow />
         </p>
       </div>
