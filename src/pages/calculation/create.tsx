@@ -8,7 +8,7 @@ export default function PageCreateCalculation() {
       <Head>
         <title>Planner - Calculation Balance</title>
       </Head>
-      <CreateCalculation />;
+      <CreateCalculation />
     </React.Fragment>
   );
 }

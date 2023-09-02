@@ -152,7 +152,7 @@ export default function PageIncomes() {
                 variant="small"
                 name={item?.name}
                 date={moment(item?.date).format('DD MMM YYYY')}
-                amount={convertCurrency(item.amount)}
+                amount={convertCurrency(item.amount).toString()}
                 category={item?.category}
                 showLabel={false}
                 onEdit={() => onEdit(item)}

@@ -9,7 +9,7 @@ export default function Incomes() {
       <Head>
         <title>Planner - Homepage</title>
       </Head>
-      <PageIncomes />;
+      <PageIncomes />
     </React.Fragment>
   );
 }

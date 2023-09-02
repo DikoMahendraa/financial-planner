@@ -152,7 +152,7 @@ export default function PageExpanses() {
                 key={index}
                 name={item?.name}
                 date={moment(item?.date).format('DD MMM YYYY')}
-                amount={convertCurrency(item.amount)}
+                amount={convertCurrency(item.amount).toString()}
                 type="expense"
                 category={item.category}
                 variant="small"
@@ -166,7 +166,7 @@ export default function PageExpanses() {
         <MModalForm
           {...forms}
           category={listCategoryExpenses}
-          defaultValue={'kebutuhan'}
+          defaultValue="kebutuhan"
           onSubmit={onSubmit}
           onCancel={() => setVisible(false)}
         />

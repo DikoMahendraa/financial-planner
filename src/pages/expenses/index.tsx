@@ -9,7 +9,7 @@ export default function Expanses() {
       <Head>
         <title>Planner - Homepage</title>
       </Head>
-      <PageExpenses />;
+      <PageExpenses />
     </React.Fragment>
   );
 }

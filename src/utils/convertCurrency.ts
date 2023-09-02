@@ -1,8 +1,15 @@
 export const convertCurrency = (value: number) => {
-  const currency = Number(value)?.toLocaleString('id-ID', {
-    currency: 'IDR',
-    minimumFractionDigits: 0
-  });
+  const numericValue: number = Number(
+    value?.toString().replace(/[^0-9.]/g, '')
+  );
 
-  return currency;
+  if (!isNaN(numericValue)) {
+    const formattedValue = new Intl.NumberFormat('id-ID', {}).format(
+      parseFloat(String(numericValue))
+    );
+
+    return formattedValue;
+  }
+
+  return value;
 };
