@@ -174,22 +174,38 @@ export default function PageIncomes() {
               actionBtn={false}
             />
           )}
-          {freshData?.map((item, index) => {
-            return (
-              <MCardInEx
-                key={index}
-                onRemove={() => onRemove(item)}
-                type="expense"
-                variant="small"
-                name={item?.name}
-                date={moment(item?.date).format('DD MMM YYYY')}
-                amount={convertCurrency(item.amount).toString()}
-                category={item?.category}
-                showLabel={false}
-                onEdit={() => onEdit(item)}
-              />
-            );
-          })}
+          {freshData?.length > 0 ? (
+            freshData?.map((item, index) => {
+              return (
+                <MCardInEx
+                  key={index}
+                  onRemove={() => onRemove(item)}
+                  type="expense"
+                  variant="small"
+                  name={item?.name}
+                  date={moment(item?.date).format('DD MMM YYYY')}
+                  amount={convertCurrency(item.amount).toString()}
+                  category={item?.category}
+                  showLabel={false}
+                  onEdit={() => onEdit(item)}
+                />
+              );
+            })
+          ) : (
+            <MEmptyState
+              rootStyle="mt-10"
+              title="Pengeluaran"
+              description={
+                <p className="italic mb-4 text-gray-600">
+                  Belum ada pemasukan{' '}
+                  <span className="uppercase font-semibold not-italic">
+                    {category}
+                  </span>
+                </p>
+              }
+              actionBtn={false}
+            />
+          )}
         </div>
       </div>
       {visible && (
