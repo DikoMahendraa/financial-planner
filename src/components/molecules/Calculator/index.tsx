@@ -30,7 +30,7 @@ const CalculatorComponent = ({
           0
         </button>
         <button
-          className="flex justify-center p-2 border border-r-2 border-b-2 border-vampire-black rounded hover:bg-gray-100 text-gray-500"
+          className="flex justify-center items-center p-2 border border-r-2 border-b-2 border-vampire-black rounded hover:bg-gray-100 text-gray-500"
           onClick={onDelete}
         >
           <ICArrow />
