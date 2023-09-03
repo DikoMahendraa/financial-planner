@@ -1,6 +1,6 @@
 export const convertCurrency = (value: number) => {
   const numericValue: number = Number(
-    value?.toString().replace(/[^0-9.]/g, '')
+    value?.toString().replace(/[^0-9.-]/g, '')
   );
 
   if (!isNaN(numericValue)) {

@@ -9,7 +9,7 @@ export default function Home() {
       <Head>
         <title>Planner - Homepage</title>
       </Head>
-      <HomePage />;
+      <HomePage />
     </React.Fragment>
   );
 }
