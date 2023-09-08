@@ -116,6 +116,8 @@ export default function PageExpanses() {
         amount: formEdit.data.amount
       });
     }
+
+    if (!visible) forms.reset({});
   }, [visible, formEdit, forms]);
 
   const findValueByCategory = () => {
