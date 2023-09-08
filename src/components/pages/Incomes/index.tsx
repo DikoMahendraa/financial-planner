@@ -118,12 +118,38 @@ export default function PageIncomes() {
     }
   }, [visible, formEdit, forms]);
 
+  const findValueByCategory = () => {
+    let b = 0;
+    let c = 0;
+    let d = 0;
+    let e = 0;
+
+    data?.map(item => {
+      switch (item.category) {
+        case 'gajian':
+          return (b = Number(item.amount));
+        case 'tabungan':
+          return (c = Number(item.amount));
+        case 'investasi':
+          return (d = Number(item.amount));
+        case 'lainnya':
+          return (e = Number(item.amount));
+        default:
+          return 0;
+      }
+    });
+
+    return [b, c, d, e];
+  };
+
   return (
     <React.Fragment>
       <AButtonCreate onClick={() => setVisible(true)} />
       <div className="px-5 pt-5 bg-aero-blue">
         <ChartComponent
-          labels={listCategoryIncomes.map((item: string) => item)}
+          categories={listFilterIncomes.slice(1, listFilterIncomes.length)}
+          dataValues={findValueByCategory()}
+          label="Pengeluaran"
         />
         <div className="sticky top-0 bg-aero-blue">
           <HeaderInEx

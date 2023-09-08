@@ -118,13 +118,39 @@ export default function PageExpanses() {
     }
   }, [visible, formEdit, forms]);
 
+  const findValueByCategory = () => {
+    let b = 0;
+    let c = 0;
+    let d = 0;
+    let e = 0;
+
+    data?.map(item => {
+      switch (item.category) {
+        case 'pulsa':
+          return (b = Number(item.amount));
+        case 'kebutuhan':
+          return (c = Number(item.amount));
+        case 'jajan':
+          return (d = Number(item.amount));
+        case 'lainnya':
+          return (e = Number(item.amount));
+        default:
+          return 0;
+      }
+    });
+
+    return [b, c, d, e];
+  };
+
   return (
     <React.Fragment>
       <AButtonCreate onClick={() => setVisible(true)} />
 
       <div className="px-5 pt-5 bg-aero-blue">
         <ChartComponent
-          labels={listCategoryExpenses.map((item: string) => item)}
+          categories={listFilterExpenses.slice(1, listFilterExpenses.length)}
+          dataValues={findValueByCategory()}
+          label="Pengeluaran"
         />
         <div className="sticky top-0 bg-aero-blue">
           <HeaderInEx

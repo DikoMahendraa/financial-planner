@@ -5,31 +5,33 @@ import { Doughnut } from 'react-chartjs-2';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const ChartComponent = ({ labels = [] }: { labels: Array<string> }) => {
+const ChartComponent = ({
+  label,
+  categories = [],
+  dataValues = []
+}: {
+  label: string;
+  categories: string[];
+  dataValues: number[];
+}) => {
+  const datasets = [
+    {
+      label: 'Jumlah',
+      data: {},
+      backgroundColor: ['#5C42E2', '#E8AB63', '#8A6DC8', '#989898', '#EC692C'],
+      borderColor: ['#070807'],
+      borderWidth: 2
+    }
+  ];
+
+  categories.forEach((_, index) => {
+    // @ts-ignored
+    datasets[0].data[index] = dataValues[index];
+  });
+
   const data = {
-    labels: labels,
-    datasets: [
-      {
-        label: 'Jumlah',
-        data: {
-          0: 100000,
-          1: 200000,
-          2: 25000,
-          3: 25000,
-          5: 25000
-        },
-        backgroundColor: [
-          '#51AA77',
-          '#5C42E2',
-          '#E8AB63',
-          '#8A6DC8',
-          '#989898',
-          '#EC692C'
-        ],
-        borderColor: ['#070807'],
-        borderWidth: 2
-      }
-    ]
+    labels: categories,
+    datasets: datasets
   };
 
   return (
@@ -39,7 +41,7 @@ const ChartComponent = ({ labels = [] }: { labels: Array<string> }) => {
       options={{
         plugins: {
           title: {
-            text: 'dasdsad'
+            text: label
           },
           legend: {
             display: true,
