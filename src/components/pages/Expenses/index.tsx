@@ -10,6 +10,8 @@ import { convertCurrency } from '@/utils/convertCurrency';
 import { listCategoryExpenses, listFilterExpenses } from '@/constants/home';
 import useRemoveValues from '@/hooks/useRemoveValues';
 
+import { ICPie } from '@/components/icons/ICPie';
+import { ICFilter } from '@/components/icons/ICFilter';
 import { MModalForm } from '@/components/molecules/ModalForm';
 import MCardInEx from '@/components/molecules/CardInEx';
 import HeaderInEx from '@/components/molecules/HeaderInEx';
@@ -29,6 +31,7 @@ export default function PageExpanses() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isEmpty, setIsEmpty] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
+  const [showGrafik, setShowGrafik] = useState<boolean>(false);
   const [formEdit, setFormEdit] = useState<TypeFormEdit>({
     visible: false,
     data: {}
@@ -149,11 +152,26 @@ export default function PageExpanses() {
       <AButtonCreate onClick={() => setVisible(true)} />
 
       <div className="px-5 pt-5 bg-aero-blue">
-        <ChartComponent
-          categories={listFilterExpenses.slice(1, listFilterExpenses.length)}
-          dataValues={findValueByCategory()}
-          label="Pengeluaran"
-        />
+        <div className="flex items-center justify-end mb-4">
+          <p
+            className="flex gap-2 cursor-pointer bg-white items-center px-4 py-2 border border-gray-600 border-b-2 border-r-2 text-sm"
+            onClick={() => setShowGrafik(!showGrafik)}
+          >
+            {showGrafik ? 'Sembunyikan Grafik' : 'Tampilkan Grafik'}
+            {showGrafik ? (
+              <ICFilter height={30} width={30} />
+            ) : (
+              <ICPie height={30} width={30} />
+            )}
+          </p>
+        </div>
+        {showGrafik && (
+          <ChartComponent
+            categories={listFilterExpenses.slice(1, listFilterExpenses.length)}
+            dataValues={findValueByCategory()}
+            label="Pengeluaran"
+          />
+        )}
         <div className="sticky top-0 bg-aero-blue">
           <HeaderInEx
             title="Daftar Pengeluaran"
