@@ -1,4 +1,5 @@
 import React from 'react';
+import { FieldErrorsImpl } from 'react-hook-form';
 
 export type TypeFormPayload = {
   amount: number;
@@ -91,6 +92,7 @@ export type TypePropsAInput = {
   rootStyle: string;
   placeholder: string;
   suffix: string;
+  errors: FieldErrorsImpl<{ [x: string]: string }>;
   prefix: string;
   name: string;
   onChange: () => void;

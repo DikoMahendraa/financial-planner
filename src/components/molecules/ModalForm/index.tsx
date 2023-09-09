@@ -22,9 +22,16 @@ export const MModalForm = ({ ...props }) => {
             <Controller
               control={props.control}
               name="name"
-              render={({ field: { onChange, ...rest } }) => (
+              rules={{
+                required: `${label} tidak boleh kosong`
+              }}
+              render={({
+                field: { onChange, ...rest },
+                formState: { errors }
+              }) => (
                 <AInput
                   {...rest}
+                  errors={errors}
                   label={label}
                   placeholder={`Masukan ${label}`}
                   onChange={onChange}
@@ -38,7 +45,7 @@ export const MModalForm = ({ ...props }) => {
               render={({ field: { onChange, ...rest } }) => (
                 <AInput
                   {...rest}
-                  label="Date"
+                  label="Tanggal"
                   rootStyle="mt-2"
                   type="date"
                   placeholder={`Masukan Tanggal ${label}`}
@@ -49,11 +56,22 @@ export const MModalForm = ({ ...props }) => {
             <Controller
               control={props.control}
               name="amount"
-              render={({ field: { onChange, ...rest } }) => (
+              rules={{
+                required: `jumlah tidak boleh kosong`,
+                pattern: {
+                  value: /^[0-9]*$/,
+                  message: 'Hanya angka yang diperbolehkan'
+                }
+              }}
+              render={({
+                field: { onChange, ...rest },
+                formState: { errors }
+              }) => (
                 <AInput
                   {...rest}
+                  errors={errors}
                   prefix="Rp."
-                  label="Amount"
+                  label="Jumlah"
                   isCurrency
                   rootStyle="mt-2"
                   name="amount"
@@ -65,7 +83,7 @@ export const MModalForm = ({ ...props }) => {
 
             <div className="mt-2">
               <label htmlFor="income" className="font-bold">
-                Category
+                Kategori
               </label>
               <Controller
                 control={props.control}

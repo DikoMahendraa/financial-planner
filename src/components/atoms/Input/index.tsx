@@ -12,6 +12,7 @@ export default function AInput(props: Partial<TypePropsAInput>) {
     name,
     inputRef,
     type = 'text',
+    errors,
     ...rest
   } = props;
 
@@ -49,6 +50,11 @@ export default function AInput(props: Partial<TypePropsAInput>) {
           </span>
         )}
       </div>
+      {errors && (
+        <p className="italic lowercase text-xs text-red-500">
+          {errors?.[`${name}`]?.message}
+        </p>
+      )}
     </div>
   );
 }
