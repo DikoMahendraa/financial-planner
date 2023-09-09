@@ -7,16 +7,15 @@ export default function AChips(props: Partial<TypeAChips>) {
   const setColorChips = (() => {
     switch (name) {
       case 'gajian':
+      case 'pulsa':
       case 'internet':
         return 'bg-majorelle-blue';
       case 'jajan':
         return 'bg-mid-blue-purple';
       case 'tabungan':
-      case 'pulsa':
+      case 'kebutuhan':
         return 'bg-earth-yellow';
       case 'investasi':
-      case 'jajan':
-        return 'bg-mid-blue-purple';
       case 'kebutuhan':
         return 'bg-forest-green';
       default:
