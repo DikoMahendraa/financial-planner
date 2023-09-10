@@ -1,6 +1,7 @@
 import React from 'react';
 import CreateCalculation from '@/components/pages/Calculations/create';
 import Head from 'next/head';
+import MainLayout from '@/layouts';
 
 export default function PageCreateCalculation() {
   return (
@@ -8,7 +9,9 @@ export default function PageCreateCalculation() {
       <Head>
         <title>Planner - Calculation Balance</title>
       </Head>
-      <CreateCalculation />
+      <MainLayout>
+        <CreateCalculation />
+      </MainLayout>
     </React.Fragment>
   );
 }

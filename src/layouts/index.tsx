@@ -26,6 +26,7 @@ export default function MainLayout(props: PropsMainLayout) {
       </Head>
       <div className="h-screen bg-aero-blue md:w-[480px] w-full m-auto">
         {children}
+
         {hideNavigation && <MNavigation />}
       </div>
     </main>

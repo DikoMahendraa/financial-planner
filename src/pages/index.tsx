@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 import HomePage from '@/components/pages/Home';
+import MainLayout from '@/layouts';
 
 export default function Home() {
   return (
@@ -9,7 +10,9 @@ export default function Home() {
       <Head>
         <title>Planner - Homepage</title>
       </Head>
-      <HomePage />
+      <MainLayout>
+        <HomePage />
+      </MainLayout>
     </React.Fragment>
   );
 }

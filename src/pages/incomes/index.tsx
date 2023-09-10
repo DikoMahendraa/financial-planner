@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 import PageIncomes from '@/components/pages/Incomes';
+import MainLayout from '@/layouts';
 
 export default function Incomes() {
   return (
@@ -9,7 +10,9 @@ export default function Incomes() {
       <Head>
         <title>Planner - Homepage</title>
       </Head>
-      <PageIncomes />
+      <MainLayout>
+        <PageIncomes />
+      </MainLayout>
     </React.Fragment>
   );
 }
