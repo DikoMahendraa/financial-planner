@@ -6,12 +6,12 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/setup-node@v2
       with:
         node-version: 16
-    - run: npm ci #install dependecy
+    - run: npm ci
     - run: npx husky install
     - run: npx run lint
     - run: npm run build
