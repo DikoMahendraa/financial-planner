@@ -7,6 +7,7 @@ import AInput from '@/components/atoms/Input';
 import AGap from '@/components/atoms/Gap';
 import AButton from '@/components/atoms/Button';
 import { Authentication } from '@/services/firebaseApp';
+import { useRouter } from 'next/router';
 
 export default function PageLogin() {
   const { control, handleSubmit } = useForm<{
@@ -14,15 +15,21 @@ export default function PageLogin() {
     password: string;
   }>();
 
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onSubmit = (data: { email: string; password: string }) => {
     setErrorMessage('');
+    setIsLoading(true);
     signInWithEmailAndPassword(Authentication(), data.email, data.password)
       .then(() => {
-        // do something here
+        setIsLoading(false);
+        router.push('/');
       })
       .catch(error => {
+        setIsLoading(false);
         const errorCode = error.code;
 
         switch (errorCode) {
@@ -79,6 +86,7 @@ export default function PageLogin() {
         <AGap height={20} />
 
         <AButton
+          disabled={isLoading}
           type="submit"
           name="Masuk"
           rootStyle="bg-deep-carrot-orange/90 hover:bg-deep-carrot-orange rounded-md py-2 mt-4"

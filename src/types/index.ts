@@ -64,6 +64,7 @@ export type TypeButtonNavigation = {
 
 export type TypeAButton = {
   name: string;
+  disabled: boolean;
   icon: React.ReactNode;
   rootStyle: string;
   onClick: () => void;

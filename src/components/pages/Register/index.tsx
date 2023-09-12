@@ -17,21 +17,39 @@ export default function PageRegister() {
   }>();
   const router = useRouter();
 
-  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const onRegister = (data: { email: string; password: string }) => {
+    setErrorMessage('');
+    setIsLoading(true);
     try {
       createUserWithEmailAndPassword(
         Authentication(),
         data.email,
         data.password
-      ).then(() => setLoginSuccess(true));
+      )
+        .then(() => {
+          setIsLoading(false);
+          setRegisterSuccess(true);
+        })
+        .catch(error => {
+          setIsLoading(false);
+          const errorCode = error?.message;
+
+          if (errorCode.includes('auth/email-already-in-use')) {
+            setErrorMessage('Email sudah terdaftar');
+          } else {
+            setErrorMessage('Ups, terjadi kesalahan');
+          }
+        });
     } catch (error) {}
   };
 
   const onRedirectToLogin = () => {
     router.push('/login');
-    setLoginSuccess(false);
+    setRegisterSuccess(false);
   };
 
   return (
@@ -85,11 +103,15 @@ export default function PageRegister() {
           <AGap height={10} />
 
           <AButton
+            disabled={isLoading}
             type="submit"
             name="Daftar"
             rootStyle="bg-deep-carrot-orange/90 hover:bg-deep-carrot-orange rounded-md py-2 mt-4"
           />
         </form>
+        {!!errorMessage && (
+          <p className="text-red-500 italic mt-2 text-sm">{errorMessage}</p>
+        )}
 
         <div className="mt-6">
           <p>
@@ -101,7 +123,7 @@ export default function PageRegister() {
         </div>
       </div>
 
-      {loginSuccess && (
+      {registerSuccess && (
         <MModal>
           <div className="bg-white w-[20rem] h-[10rem] rounded-md flex flex-col items-center justify-center">
             <p className="text-md">
@@ -110,8 +132,8 @@ export default function PageRegister() {
             <div className="mt-6">
               <AButton
                 onClick={onRedirectToLogin}
-                rootStyle=" px-6 py-1 rounded-md"
-                name="login"
+                rootStyle=" px-6 py-1 rounded-md bg-deep-carrot-orange text-white"
+                name="Masuk"
               />
             </div>
           </div>
