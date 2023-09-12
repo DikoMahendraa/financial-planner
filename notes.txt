@@ -2,3 +2,4 @@ fixed issue mini-css-plugins: https://laracasts.com/discuss/channels/elixir/npm-
 husky: https://www.npmjs.com/package/husky
 fixed issue deploy to vercel with environment: https://www.youtube.com/watch?v=lo2GmBahoyI 
 chartjs: https://www.chartjs.org/docs/latest/configuration/legend.html#legend-item-interface
+pre-commit-msg: https://www.techiediaries.com/git-hooks-husky-commitlint/

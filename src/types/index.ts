@@ -64,6 +64,7 @@ export type TypeButtonNavigation = {
 
 export type TypeAButton = {
   name: string;
+  disabled: boolean;
   icon: React.ReactNode;
   rootStyle: string;
   onClick: () => void;
@@ -97,7 +98,7 @@ export type TypePropsAInput = {
   name: string;
   onChange: () => void;
   rest: any;
-  type: 'text' | 'date' | 'number';
+  type: 'text' | 'date' | 'number' | 'email' | 'password';
 };
 
 export type TypeResponse = {

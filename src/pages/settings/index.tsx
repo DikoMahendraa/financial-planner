@@ -2,6 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 
 import PageSettings from '@/components/pages/Settings';
+import MainLayout from '@/layouts';
 
 export default function Settings() {
   return (
@@ -9,7 +10,9 @@ export default function Settings() {
       <Head>
         <title>Planner - Settings</title>
       </Head>
-      <PageSettings />
+      <MainLayout>
+        <PageSettings />
+      </MainLayout>
     </React.Fragment>
   );
 }

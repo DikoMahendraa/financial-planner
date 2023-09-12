@@ -1,14 +1,17 @@
 import type { AppProps } from 'next/app';
 import ReduxProvider from '@/redux/Provider';
-import MainLayout from '@/layouts';
+import { UserProvider } from '@/contexts/useUserContext';
+import AuthStateChangeProvider from '@/contexts/useAuthContext';
+
 import '@/globals.css';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ReduxProvider>
-      <MainLayout>
+    <UserProvider>
+      <ReduxProvider>
+        <AuthStateChangeProvider />
         <Component {...pageProps} />
-      </MainLayout>
-    </ReduxProvider>
+      </ReduxProvider>
+    </UserProvider>
   );
 }

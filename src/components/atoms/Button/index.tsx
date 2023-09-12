@@ -2,7 +2,7 @@ import React from 'react';
 import { TypeAButton } from '@/types';
 
 export default function AButton(props: Partial<TypeAButton>) {
-  const { name, rootStyle, onClick, type, icon } = props;
+  const { name, rootStyle, onClick, type, icon, disabled } = props;
 
   const _rootStyle = [
     rootStyle,
@@ -10,7 +10,12 @@ export default function AButton(props: Partial<TypeAButton>) {
   ].join(' ');
 
   return (
-    <button type={type} onClick={onClick} className={_rootStyle}>
+    <button
+      disabled={disabled}
+      type={type}
+      onClick={onClick}
+      className={_rootStyle}
+    >
       {icon} <p>{name}</p>
     </button>
   );
