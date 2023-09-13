@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 import AChips from '@/components/atoms/Chips';
 import { TypeMCardInEx } from '@/types';
 import { ICTrash } from '@/components/icons/ICTrash';
 
-export default function MCardInEx(props: Partial<TypeMCardInEx>) {
+const MCardInEx = (props: Partial<TypeMCardInEx>) => {
   const {
     label,
     name,
@@ -54,4 +54,6 @@ export default function MCardInEx(props: Partial<TypeMCardInEx>) {
       </div>
     </div>
   );
-}
+};
+
+export default memo(MCardInEx);

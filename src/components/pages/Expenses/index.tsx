@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';
 import { child, ref, get } from 'firebase/database';
 import { useForm } from 'react-hook-form';
@@ -55,13 +55,13 @@ export default function PageExpanses() {
     });
   })();
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const rootReference = ref(database);
     const dbGet = await get(child(rootReference, `${uid}/expenses`));
     const isEmpty = dbGet.exists();
     setDataExpenses(dbGet.val());
     setIsEmpty(!isEmpty);
-  };
+  }, [uid]);
 
   const onEdit = async (items: TypeFormPayload) => {
     setVisible(true);
@@ -110,7 +110,7 @@ export default function PageExpanses() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     if (formEdit.visible) {

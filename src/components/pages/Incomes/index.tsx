@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { database } from '@/services/firebaseApp';
@@ -45,13 +45,13 @@ export default function PageIncomes() {
   const data: Array<TypeFormPayload> = convertToArray(dataExpenses || {});
   const getAmount = data.map(item => Number(item.amount));
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     const rootReference = ref(database);
     const dbGet = await get(child(rootReference, `${uid}/incomes`));
     const isEmpty = dbGet.exists();
     setDataExpenses(dbGet.val());
     setIsEmpty(!isEmpty);
-  };
+  }, [uid]);
 
   const freshData = (() => {
     return data.filter(item => {
@@ -110,7 +110,7 @@ export default function PageIncomes() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   useEffect(() => {
     if (formEdit.visible) {
