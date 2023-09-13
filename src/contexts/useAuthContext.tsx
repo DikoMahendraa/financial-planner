@@ -8,6 +8,7 @@ const AuthStateChangeProvider = () => {
   const initiateAuthStateChange = () => {
     Authentication().onAuthStateChanged(user => {
       if (user) {
+        /* @ts-ignored */
         setCookie('authorization', user.accessToken);
         setCookie('uuid', user.uid);
         setCookie('email', user.email);
