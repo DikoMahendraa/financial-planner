@@ -15,6 +15,7 @@ import { ICExpense } from '@/components/icons/ICExpanse';
 import { ICIncome } from '@/components/icons/ICIncome';
 import { SALDO_DECREASE, SALDO_EMPTY, SALDO_INCREASE } from '@/constants/home';
 import MEmptyState from '@/components/molecules/EmptyData';
+import { getCookie } from 'cookies-next';
 
 const SectionProfile = () => {
   return (
@@ -124,8 +125,9 @@ const SectionMainCard = ({
 };
 
 export default function HomePage() {
-  const incomes = useGetValues({ path: 'incomes' });
-  const expenses = useGetValues({ path: 'expenses' });
+  const uid = getCookie('uuid') ?? '';
+  const incomes = useGetValues({ path: `${uid}/incomes` });
+  const expenses = useGetValues({ path: `${uid}/expenses` });
 
   const dataIncomes: Array<TypeResponse> = Object.values(
     incomes.snapshot || {}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { database } from '@/services/firebaseApp';
+import { getCookie } from 'cookies-next';
 import { child, get, ref } from 'firebase/database';
 
 import { TypeFormEdit, TypeFormPayload } from '@/types';
@@ -25,6 +26,7 @@ import useUpdateValues from '@/hooks/useUpdateValues';
 
 export default function PageIncomes() {
   const forms = useForm<TypeFormPayload>();
+  const uid = getCookie('uuid') ?? '';
 
   const [category, setCategory] = useState<string>('semua');
   const [dataExpenses, setDataExpenses] = useState<any>([]);
@@ -45,7 +47,7 @@ export default function PageIncomes() {
 
   const fetchData = async () => {
     const rootReference = ref(database);
-    const dbGet = await get(child(rootReference, '/incomes'));
+    const dbGet = await get(child(rootReference, `${uid}/incomes`));
     const isEmpty = dbGet.exists();
     setDataExpenses(dbGet.val());
     setIsEmpty(!isEmpty);
@@ -71,7 +73,7 @@ export default function PageIncomes() {
 
   const onRemove = async (items: { uuid: string }) => {
     setIsLoading(true);
-    const path = `incomes/${items.uuid}`;
+    const path = `${uid}/incomes/${items.uuid}`;
     try {
       await removeIncomes.removeValue(path);
       fetchData();
@@ -87,7 +89,7 @@ export default function PageIncomes() {
 
     if (formEdit.visible) {
       try {
-        const path = `incomes/${formEdit.data.uuid}`;
+        const path = `${uid}/incomes/${formEdit.data.uuid}`;
         await updateValues.updateValues(String(path), data);
         fetchData();
         setVisible(false);
@@ -96,7 +98,7 @@ export default function PageIncomes() {
       }
     } else {
       try {
-        await createValues.pushValue(String('/incomes'), data);
+        await createValues.pushValue(String(`${uid}/incomes`), data);
         fetchData();
         setVisible(false);
       } catch (err) {

@@ -1,4 +1,5 @@
 import { Authentication } from '@/services/firebaseApp';
+import { setCookie } from 'cookies-next';
 import React, { useEffect, useState } from 'react';
 
 const AuthStateChangeProvider = () => {
@@ -7,9 +8,13 @@ const AuthStateChangeProvider = () => {
   const initiateAuthStateChange = () => {
     Authentication().onAuthStateChanged(user => {
       if (user) {
-        // do something
+        setCookie('authorization', user.accessToken);
+        setCookie('uuid', user.uid);
+        setCookie('email', user.email);
       } else {
-        // do something
+        setCookie('authorization', null);
+        setCookie('uuid', null);
+        setCookie('email', null);
       }
 
       setIsLoading(false);
