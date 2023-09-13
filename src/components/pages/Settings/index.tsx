@@ -1,10 +1,28 @@
 import React from 'react';
 
-import { ICAvatarProfile } from '@/components/icons/ICAvatarProfile';
 import AGap from '@/components/atoms/Gap';
+import { ICAvatarProfile } from '@/components/icons/ICAvatarProfile';
 import { ICDownload } from '@/components/icons/ICDownload';
+import { ICArrowRightStop } from '@/components/icons/ICArrowRightStop';
+import { Authentication } from '@/services/firebaseApp';
+import { signOut } from 'firebase/auth';
+import { useRouter } from 'next/router';
 
 export default function PageSettings() {
+  const router = useRouter();
+
+  const onSignOut = () => {
+    signOut(Authentication())
+      .then(() => {
+        router.push('/login');
+      })
+      .catch(() => {
+        // An error happened.
+        // eslint-disable-next-line no-console
+        console.log('something went wrong');
+      });
+  };
+
   return (
     <div className="h-screen px-4 pt-4">
       <div
@@ -35,6 +53,18 @@ export default function PageSettings() {
 
         <div className="cursor-pointer" onClick={() => {}}>
           <ICDownload />
+        </div>
+      </div>
+
+      <AGap height={10} />
+      <div
+        className="bg-red-100 rounded-xl cursor-pointer py-5 px-4 border-2 border-vampire-black flex items-center justify-between"
+        onClick={onSignOut}
+      >
+        <p className="font-semibold">Keluar</p>
+
+        <div className="cursor-pointer">
+          <ICArrowRightStop />
         </div>
       </div>
     </div>
