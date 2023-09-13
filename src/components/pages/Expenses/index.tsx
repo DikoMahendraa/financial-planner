@@ -211,18 +211,6 @@ export default function PageExpanses() {
               <ANLoading />
             </div>
           )}
-          {isEmpty && (
-            <MEmptyState
-              rootStyle="mt-10"
-              title="Pengeluaran"
-              description={
-                <p className="italic mb-4 text-gray-600">
-                  Belum ada pengeluaran
-                </p>
-              }
-              actionBtn={false}
-            />
-          )}
           {freshData?.length > 0 ? (
             freshData?.map((item, index) => {
               return (
