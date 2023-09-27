@@ -40,9 +40,9 @@ const SectionListExpenseIncome = ({ ...props }) => {
           }
         />
       )}
-      {props.data.map((item: TypeResponse, key: number) => (
+      {props.data.map((item: TypeResponse) => (
         <MCardInEx
-          key={key}
+          key={item.createdAt}
           variant="small"
           category={item.category}
           name={item.name}
@@ -58,8 +58,8 @@ const SectionCardTarget = ({
   totalExpense = 0,
   totalIncomes = 0
 }: {
-  totalExpense: Number | string;
-  totalIncomes: Number | string;
+  totalExpense: number | string;
+  totalIncomes: number | string;
 }) => {
   return (
     <section className="grid grid-cols-2 px-5 mt-2 space-x-2">
@@ -83,7 +83,7 @@ const SectionMainCard = ({
   amount = 0,
   minus = false
 }: {
-  amount: Number;
+  amount: number;
   minus: boolean;
 }) => {
   const convertTo = convertCurrency(Number(amount));
@@ -130,10 +130,10 @@ export default function HomePage() {
   const expenses = useGetValues({ path: `${uid}/expenses` });
 
   const dataIncomes: Array<TypeResponse> = Object.values(
-    incomes.snapshot || {}
+    incomes.snapshot ?? {}
   );
   const dataIexpenses: Array<TypeResponse> = Object.values(
-    expenses.snapshot || {}
+    expenses.snapshot ?? {}
   );
 
   const getAmountIncomes = dataIncomes.map(item => Number(item.amount));

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 type PropsMainLayout = {
-  children: string | JSX.Element | JSX.Element[] | React.ReactNode;
+  children: string | React.JSX.Element | React.JSX.Element[] | React.ReactNode;
 };
 
 export default function MainLayout(props: PropsMainLayout) {

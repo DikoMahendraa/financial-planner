@@ -19,9 +19,8 @@ export default function MEmptyState({
         <div className="flex w-full justify-center">
           <Image
             src="/illustrations/il-empty-state.png"
-            width={illustration?.width || 350}
-            height={illustration?.height || 100}
-            layout="contain"
+            width={illustration?.width ?? 350}
+            height={illustration?.height ?? 100}
             loading="lazy"
             alt="check-images"
           />

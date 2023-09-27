@@ -1,4 +1,4 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useContext, useMemo } from 'react';
 
 export const initialState: { email: unknown; uid: unknown } = {
   email: null,
@@ -22,7 +22,10 @@ export const UserProvider = (props: any) => {
     setUserState(initialState);
   };
 
-  const value = { ...userState, setUser, resetUser };
+  const value = useMemo(
+    () => ({ ...userState, setUser, resetUser }),
+    [userState]
+  );
 
   return <UserContext.Provider value={value} {...props} />;
 };
