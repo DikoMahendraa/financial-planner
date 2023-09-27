@@ -93,8 +93,8 @@ export default function PageRegister() {
                 {...rest}
                 type="password"
                 errors={errors}
-                label={'password'}
-                placeholder={`Masukan password`}
+                label={'Kata Sandi'}
+                placeholder={`Masukan Kata Sandi`}
                 onChange={onChange}
               />
             )}
