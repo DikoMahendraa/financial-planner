@@ -7,6 +7,7 @@ import { ICArrowRightStop } from '@/components/icons/ICArrowRightStop';
 import { Authentication } from '@/services/firebaseApp';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { deleteCookie } from 'cookies-next';
 
 export default function PageSettings() {
   const router = useRouter();
@@ -14,6 +15,9 @@ export default function PageSettings() {
   const onSignOut = () => {
     signOut(Authentication())
       .then(() => {
+        deleteCookie('email');
+        deleteCookie('uuid');
+        deleteCookie('authorization');
         router.push('/login');
       })
       .catch(() => {

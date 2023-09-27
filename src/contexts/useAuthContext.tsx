@@ -12,10 +12,6 @@ const AuthStateChangeProvider = () => {
         setCookie('authorization', user.accessToken);
         setCookie('uuid', user.uid);
         setCookie('email', user.email);
-      } else {
-        setCookie('authorization', null);
-        setCookie('uuid', null);
-        setCookie('email', null);
       }
 
       setIsLoading(false);
