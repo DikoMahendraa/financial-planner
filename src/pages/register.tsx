@@ -1,15 +1,13 @@
 import React from 'react';
-import Head from 'next/head';
 
 import LayoutAuthentication from '@/layouts/LayoutAuthentication';
 import PageRegister from '@/components/pages/Register';
+import ASEO from '@/components/atoms/SEO';
 
 export default function Register() {
   return (
     <React.Fragment>
-      <Head>
-        <title>Planner - Register</title>
-      </Head>
+      <ASEO title="Daftar" />
 
       <LayoutAuthentication>
         <PageRegister />

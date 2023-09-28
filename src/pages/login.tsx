@@ -1,14 +1,12 @@
 import React from 'react';
-import Head from 'next/head';
 import LayoutAuthentication from '@/layouts/LayoutAuthentication';
 import PageLogin from '@/components/pages/Login';
+import ASEO from '@/components/atoms/SEO';
 
 export default function Login() {
   return (
     <React.Fragment>
-      <Head>
-        <title>Planner - Masuk</title>
-      </Head>
+      <ASEO title="Masuk" />
       <LayoutAuthentication>
         <PageLogin />
       </LayoutAuthentication>

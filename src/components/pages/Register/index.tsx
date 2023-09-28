@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { Authentication } from '@/services/firebaseApp';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -14,6 +14,7 @@ export default function PageRegister() {
   const { control, handleSubmit } = useForm<{
     email: string;
     password: string;
+    name: string;
   }>();
   const router = useRouter();
 
@@ -21,7 +22,11 @@ export default function PageRegister() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const onRegister = (data: { email: string; password: string }) => {
+  const onRegister = (data: {
+    email: string;
+    password: string;
+    name: string;
+  }) => {
     setErrorMessage('');
     setIsLoading(true);
     try {
@@ -30,9 +35,14 @@ export default function PageRegister() {
         data.email,
         data.password
       )
-        .then(() => {
-          setIsLoading(false);
-          setRegisterSuccess(true);
+        .then(async ({ user }) => {
+          // @ts-ignore
+          await updateProfile(user?.auth.currentUser, {
+            displayName: data.name
+          }).then(() => {
+            setIsLoading(false);
+            setRegisterSuccess(true);
+          });
         })
         .catch(error => {
           setIsLoading(false);
@@ -56,6 +66,29 @@ export default function PageRegister() {
     <>
       <div className=" w-[20rem] py-6 px-4 min-h-[20rem]">
         <form onSubmit={handleSubmit(onRegister)}>
+          <Controller
+            control={control}
+            name="name"
+            rules={{
+              required: `username tidak boleh kosong`
+            }}
+            render={({
+              field: { onChange, ...rest },
+              formState: { errors }
+            }) => (
+              <AInput
+                {...rest}
+                type="text"
+                errors={errors}
+                label={'Username'}
+                placeholder={`Masukan Username`}
+                onChange={onChange}
+              />
+            )}
+          />
+
+          <AGap height={10} />
+
           <Controller
             control={control}
             name="email"
@@ -100,7 +133,7 @@ export default function PageRegister() {
             )}
           />
 
-          <AGap height={10} />
+          <AGap height={20} />
 
           <AButton
             disabled={isLoading}

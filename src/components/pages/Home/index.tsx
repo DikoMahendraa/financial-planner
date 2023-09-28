@@ -18,9 +18,10 @@ import MEmptyState from '@/components/molecules/EmptyData';
 import { getCookie } from 'cookies-next';
 
 const SectionProfile = () => {
+  const username = getCookie('username') ?? 'No Name';
   return (
     <section className="px-5 pt-5">
-      <MHeaderProfile name="Diko Mahendra" />
+      <MHeaderProfile name={username} />
     </section>
   );
 };
@@ -40,9 +41,9 @@ const SectionListExpenseIncome = ({ ...props }) => {
           }
         />
       )}
-      {props.data.map((item: TypeResponse) => (
+      {props.data.map((item: TypeResponse, index: number) => (
         <MCardInEx
-          key={item.createdAt}
+          key={index}
           variant="small"
           category={item.category}
           name={item.name}

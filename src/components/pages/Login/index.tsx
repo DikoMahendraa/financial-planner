@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'next/router';
+import { setCookie } from 'cookies-next';
 import Link from 'next/link';
 
 import AInput from '@/components/atoms/Input';
 import AGap from '@/components/atoms/Gap';
 import AButton from '@/components/atoms/Button';
 import { Authentication } from '@/services/firebaseApp';
-import { useRouter } from 'next/router';
 
 export default function PageLogin() {
   const { control, handleSubmit } = useForm<{
@@ -25,8 +26,18 @@ export default function PageLogin() {
     setIsLoading(true);
     signInWithEmailAndPassword(Authentication(), data.email, data.password)
       .then(() => {
-        setIsLoading(false);
-        router.push('/');
+        Authentication().onAuthStateChanged(user => {
+          if (user) {
+            // @ts-ignore
+            setCookie('authorization', user.accessToken);
+            setCookie('uuid', user.uid);
+            setCookie('email', user.email);
+            setCookie('username', user.displayName);
+          }
+
+          setIsLoading(false);
+          router.push('/');
+        });
       })
       .catch(error => {
         setIsLoading(false);

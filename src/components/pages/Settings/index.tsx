@@ -7,10 +7,12 @@ import { ICArrowRightStop } from '@/components/icons/ICArrowRightStop';
 import { Authentication } from '@/services/firebaseApp';
 import { signOut } from 'firebase/auth';
 import { useRouter } from 'next/router';
-import { deleteCookie } from 'cookies-next';
+import { deleteCookie, getCookie } from 'cookies-next';
 
 export default function PageSettings() {
   const router = useRouter();
+
+  const username = getCookie('username') ?? 'No Name';
 
   const onSignOut = () => {
     signOut(Authentication())
@@ -18,13 +20,10 @@ export default function PageSettings() {
         deleteCookie('email');
         deleteCookie('uuid');
         deleteCookie('authorization');
+        deleteCookie('username');
         router.push('/login');
       })
-      .catch(() => {
-        // An error happened.
-        // eslint-disable-next-line no-console
-        console.log('something went wrong');
-      });
+      .catch(() => {});
   };
 
   return (
@@ -36,7 +35,7 @@ export default function PageSettings() {
         <div>
           <p className="font-light text-sm">Profile</p>
           <p>
-            Hi, <strong>Diko Mahendra</strong>
+            Hi, <strong className="capitalize">{username}</strong>
           </p>
         </div>
         <ICAvatarProfile />

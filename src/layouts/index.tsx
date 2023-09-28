@@ -1,7 +1,8 @@
 import React from 'react';
 import MNavigation from '@/components/molecules/Navigation';
 import { useRouter } from 'next/router';
-import Head from 'next/head';
+
+import ASEO from '@/components/atoms/SEO';
 
 type PropsMainLayout = {
   children: string | React.JSX.Element | React.JSX.Element[] | React.ReactNode;
@@ -13,17 +14,25 @@ export default function MainLayout(props: PropsMainLayout) {
   const router = useRouter();
 
   const hideNavigation = !router?.pathname.includes('calculation/create');
+  const currentPath = (() => {
+    switch (router.pathname) {
+      case '/incomes':
+        return 'Pemasukan';
+      case '/expenses':
+        return 'Pengeluaran';
+      case '/calculation':
+        return 'Hitung Anggaranmu';
+      case '/settings':
+        return 'Pengaturan';
+      case '/':
+      default:
+        return 'Halaman Utama';
+    }
+  })();
 
   return (
     <main>
-      <Head>
-        <title>Financial planner | Homepage</title>
-        <meta
-          name="financial planner"
-          content="financial planner is web application for calculate your balanced salary, within a lot of variant/method/type"
-          key="financial"
-        />
-      </Head>
+      <ASEO title={currentPath} />
       <div className="h-screen bg-aero-blue md:w-[480px] w-full m-auto">
         {children}
 
