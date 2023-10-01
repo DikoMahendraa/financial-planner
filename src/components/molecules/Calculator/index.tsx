@@ -1,4 +1,5 @@
 import { ICArrow } from '@/components/icons/ICArrow';
+import { memo } from 'react';
 
 type CalculatorProps = {
   onClickButton: (params: string) => void;
@@ -47,4 +48,4 @@ const CalculatorComponent = ({
   );
 };
 
-export default CalculatorComponent;
+export default memo(CalculatorComponent);

@@ -16,6 +16,7 @@ export default function CreateCalculation() {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [amount, setAmountValue] = useState<any>(null);
+  const [visiblePad, setVisiblePad] = useState<boolean>(false);
 
   const {
     watch,
@@ -65,6 +66,10 @@ export default function CreateCalculation() {
     }
   };
 
+  const onShowPad = () => {
+    setVisiblePad(!visiblePad);
+  };
+
   const onSubmit = (data: any) => {
     const { salary, method } = data;
     const numberValue: number = parseFloat(String(salary)?.replace(/\./g, ''));
@@ -75,7 +80,7 @@ export default function CreateCalculation() {
     let thirty = 0.3;
     let twenty = 0.2;
     let ten = 0.1;
-
+    onShowPad();
     switch (String(method)) {
       case '40/30/20/10': {
         return setAmountValue({
@@ -104,7 +109,7 @@ export default function CreateCalculation() {
   };
 
   const sectionResult = () => {
-    if (!!amount) {
+    if (amount) {
       const data = Object.keys(amount) || [];
       const is4length = data.length > 3;
 
@@ -175,13 +180,13 @@ export default function CreateCalculation() {
   };
 
   return (
-    <div>
+    <div className="h-screen relative">
       <div className="px-4 pt-4">
         <p onClick={onRouterBack} className="flex cursor-pointer font-semibold">
           <ICArrow />
         </p>
       </div>
-      <div className="px-4 pt-4">
+      <div className="px-4 pt-4 h-full">
         <form onSubmit={handleSubmit(onSubmit, onErrorSubmit)}>
           <p className="font-semibold">Masukan Nominal Pendapatan</p>
           <Controller
@@ -195,6 +200,7 @@ export default function CreateCalculation() {
                     {...(inputValue && {
                       value: convertCurrency(Number(inputValue))
                     })}
+                    onFocus={onShowPad}
                     className="mt-2 w-full pl-4 rounded border border-b-2 border-r-2 border-vampire-black bg-white py-3 text-base text-vampire-black outline-none focus:border-[#6A64F1] focus:shadow-md"
                     onChange={onChange}
                     placeholder="ex 123.456.789"
@@ -226,8 +232,8 @@ export default function CreateCalculation() {
                     className="block w-full capitalize cursor-pointer mt-1 appearance-none bg-white rounded border border-b-2 border-r-2 border-vampire-black text-gray-700 py-4 px-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   >
                     {['50/30/20', '60/30/10', '40/30/20/10'].map(
-                      (item: string, key: number) => (
-                        <option value={item} key={key} className="capitalize">
+                      (item: string) => (
+                        <option value={item} key={item} className="capitalize">
                           {item}
                         </option>
                       )
@@ -249,14 +255,15 @@ export default function CreateCalculation() {
 
         {sectionResult()}
       </div>
-
-      <div className="fixed cursor-pointer bottom-0 flex justify-end w-full md:max-w-[480px]">
-        <CalculatorComponent
-          onClickButton={onClickButton}
-          onClear={onClearForm}
-          onDelete={onDeleteForm}
-        />
-      </div>
+      {visiblePad && (
+        <div className="fixed cursor-pointer bottom-0 flex justify-end w-full md:max-w-[480px]">
+          <CalculatorComponent
+            onClickButton={onClickButton}
+            onClear={onClearForm}
+            onDelete={onDeleteForm}
+          />
+        </div>
+      )}
     </div>
   );
 }
